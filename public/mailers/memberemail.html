@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome to Medical Boons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    @media only screen and (max-width: 600px) {
+      .btn {
+        display: block !important;
+        width: 100% !important;
+        text-align: center !important;
+      }
+      .content {
+        padding: 22px !important;
+      }
+    }
+  </style>
+</head>
+
+<body style="margin:0;padding:0;background:#f6f7fb;font-family:Arial,Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+         style="background:#f6f7fb;padding:24px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+               style="max-width:640px;border:2px solid #1D2B4F;border-radius:12px;overflow:hidden;">
+
+          <!-- Header Logo -->
+          <tr>
+            <td style="background:#ffffff;padding:20px;text-align:center;">
+              <img src="https://medicalboons.com/assets/images/Front/new-logo-color.png" 
+                   alt="Medical Boons" width="180"
+                   style="display:inline-block;max-width:180px;height:auto;border:0;">
+            </td>
+          </tr>
+
+          <!-- Welcome Banner -->
+          <tr>
+            <td style="background:linear-gradient(90deg,#3396D3 0%, #3A6C8E 100%);
+                       padding:16px;text-align:center;color:#fff;">
+              <h1 style="margin:0;font-size:22px;line-height:1.4;font-weight:700;">
+                Welcome to Medical Boons Family 🎉
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Body Content -->
+          <tr>
+            <td style="background:#ffffff;padding:28px;color:#334155;">
+              <h2 style="margin:0 0 12px;color:#1D2B4F;font-size:18px;">
+                Dear <strong>#contact_person</strong>,
+              </h2>
+
+              <p style="font-size:15px;line-height:1.7;margin:12px 0;">
+                Welcome to the <strong>Medical Boons</strong> family!  
+                We’re delighted to have you with us. At Medical Boons, we are committed 
+                to making healthcare simpler, faster, and more affordable for you and your loved ones.
+              </p>
+
+              <!-- Plan Details -->
+              <div style="background:#f0f4f8;border:1px solid #3A6C8E;border-radius:10px;
+                          padding:16px;margin:20px 0;">
+                <h3 style="margin:0 0 12px;font-size:16px;color:#1D2B4F;">Your Plan Details</h3>
+                <p style="margin:6px 0;font-size:14px;"><strong>Plan Name:</strong> #plan_name</p>
+                <p style="margin:6px 0;font-size:14px;"><strong>Total Amount:</strong> #plan_amount</p>
+                <p style="margin:6px 0;font-size:14px;"><strong>Validity:</strong> #start_date – #end_date</p>
+                <p style="margin:6px 0;font-size:14px;"><strong>Family Members Covered:</strong> #plan_no_of_members</p>
+                <p style="margin:6px 0;font-size:14px;"><strong>Activation:</strong> Within 3 working days</p>
+              </div>
+
+              <!-- Credentials -->
+              <div style="background:#f0f4f8;border:1px solid #3A6C8E;border-radius:10px;
+                          padding:16px;margin:20px 0;">
+                <h3 style="margin:0 0 12px;font-size:16px;color:#1D2B4F;">Your Login Credentials</h3>
+                <p style="margin:6px 0;font-size:14px;"><strong>Customer ID:</strong> #Mobile</p>
+                <p style="margin:6px 0;font-size:14px;"><strong>Password:</strong> #Password</p>
+              </div>
+
+              <!-- CTA -->
+              <div style="margin:20px 0;text-align:center;">
+                <a href="#app_link" class="btn" 
+                   style="display:inline-block;background:#3A6C8E;color:#ffffff !important;
+                          text-decoration:none;padding:12px 28px;border-radius:8px;
+                          font-weight:600;font-size:15px;">
+                  Login to Carezy App
+                </a>
+              </div>
+
+              <p style="font-size:14px;line-height:1.7;margin:18px 0;">
+                📲 <strong>Download the Carezy App today</strong> to:
+              </p>
+              <ul style="font-size:14px;line-height:1.7;margin:10px 0 20px 20px;padding:0;">
+                <li>Book doctor appointments and lab tests instantly</li>
+                <li>Access exclusive healthcare discounts and offers</li>
+                <li>Track your services and membership easily</li>
+                <li>Get support anytime, anywhere</li>
+              </ul>
+
+              <div style="text-align:center;margin-top:10px;">
+                <a href="#app_link" target="_blank">
+                  <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                       alt="Get it on Google Play"
+                       style="height:60px;border:none;">
+                </a>
+              </div>
+
+              <hr style="border:none;border-top:1px solid #e3e8ef;margin:28px 0;">
+
+              <p style="font-size:13px;color:#475569;margin:0;text-align:center;">
+                Thank you for trusting <strong>Medical Boons</strong>.  
+                Together, let’s make your healthcare journey smoother and stress-free.
+              </p>
+
+              <p style="font-size:13px;color:#475569;margin:10px 0;text-align:center;">
+                If you need help, contact us at 
+                <a href="mailto:info@medicalboons.com"
+                   style="color:#3A6C8E;text-decoration:none;">info@medicalboons.com</a>.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f9fafb;padding:16px;text-align:center;
+                       font-size:12px;color:#94a3b8;border-top:1px solid #e3e8ef;">
+              &copy; <?= date('Y'); ?> Medical Boons. All rights reserved.
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
