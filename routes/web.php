@@ -95,7 +95,6 @@ Route::post('paysuccess', [RazorpayController::class, 'razorPaySuccess'])->name(
 Route::get('payment/success/{id?}', [RazorpayController::class, 'RazorThankYou'])->name('razorpay.thankyou');
 Route::get('payment/fail/{orderid?}', [RazorpayController::class, 'RazorFail'])->name('razorpay.RazorFail');
 
-
 // Corporate User routes
 Route::get('/admin/login', [LoginController::class, 'login'])->name('admin.login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
@@ -326,7 +325,6 @@ Route::prefix('admin')->name('blog.')->middleware('auth')->group(function () {
     Route::post('/blog/update/{id?}', [BlogController::class, 'update'])->name('update');
     Route::delete('/blog/delete', [BlogController::class, 'delete'])->name('delete');
 });
-
 
 Route::prefix('admin')->name('Corporate_User.')->middleware('auth')->group(function () {
     Route::any('/Corporate_User/index', [CorporateUserController::class, 'index'])->name('index');

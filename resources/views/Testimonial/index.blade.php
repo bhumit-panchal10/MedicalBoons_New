@@ -45,7 +45,6 @@
                                                 enctype="multipart/form-data">
                                                 @csrf
 
-
                                                 <div class="mb-3">
                                                     <label for="email-field" class="">Name<span
                                                             class="text-red-500">*</span></label>
@@ -59,6 +58,27 @@
                                                     <input type="file" id="image" name="image"
                                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                         autocomplete="off" autofocus>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="rating-field" class="">
+                                                        Rating <span class="text-red-500">*</span>
+                                                    </label>
+
+                                                    <select id="rating-field" name="rating"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 
+                                                            disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 
+                                                            dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 
+                                                            dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 
+                                                            placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+
+                                                        <option value="">Select Rating</option>
+                                                        <option value="1">1 Star</option>
+                                                        <option value="2">2 Stars</option>
+                                                        <option value="3">3 Stars</option>
+                                                        <option value="4">4 Stars</option>
+                                                        <option value="5">5 Stars</option>
+                                                    </select>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email-field"
@@ -129,6 +149,9 @@
                                                         data-sort="state_name">Image</th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                        data-sort="state_name">Rating</th>
+
+                                                    <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
                                                         data-sort="action">Action</th>
                                                 </tr>
                                             </thead>
@@ -168,7 +191,9 @@
                                                                     alt="" height="50" width="50">
                                                             @endif
                                                         </td>
-
+                                                        <td
+                                                            class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
+                                                            {{ $testimonial->rating ?? '' }}</td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
@@ -251,6 +276,22 @@
                             </div>
 
                             <div class="mb-3">
+                                <label class="inline-block mb-2 text-base font-medium">
+                                    Rating <span class="text-red-500">*</span>
+                                </label>
+
+                                <select id="editrating" name="rating" required
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                    <option value="">Select Rating</option>
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Star</option>
+                                    <option value="3">3 Star</option>
+                                    <option value="4">4 Star</option>
+                                    <option value="5">5 Star</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="email-field"
                                     class="inline-block mb-2 text-base font-medium">Description</label>
                                 <textarea id="editdescription" name="editdescription" maxlength="300"
@@ -297,6 +338,7 @@
                         $("#hiddenPhoto").val(obj.photo ? obj.photo : '');
                         $("#editname").val(obj.name);
                         $("#editdescription").val(obj.comment);
+                        $("#editrating").val(obj.rating);
                         $('#Testimonial_id').val(obj.Testimonial_id);
                     },
                     error: function(xhr) {

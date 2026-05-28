@@ -15,6 +15,7 @@ class Testimonial extends Model
         'name',
         'photo',
         'comment',
+        'rating',
         'created_at',
         'updated_at'
 

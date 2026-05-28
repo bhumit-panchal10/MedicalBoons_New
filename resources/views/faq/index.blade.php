@@ -53,6 +53,18 @@
                                                 </div>
 
                                                 <div class="mb-3">
+                                                    <label for="email-field" class="">Type <span
+                                                            class="text-red-500">*</span></label>
+                                                    <select name="type" id="type"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required autocomplete="off">
+                                                        <option value="">Please Select</option>
+                                                        <option value="1">Plans</option>
+                                                        <option value="2">Contact Us</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
                                                     <label for="email-field" class="">Answer <span
                                                             class="text-red-500">*</span></label>
                                                     <textarea id="answer" name="answer"
@@ -117,8 +129,6 @@
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
                                                         data-sort="state_name">Status</th>
 
-
-
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
                                                         data-sort="action">Action</th>
                                                 </tr>
@@ -175,20 +185,20 @@
                                                             <div class=" gap-2">
                                                                 <div class="edit">
 
-                                                                    <a class="mx-1" title="Info" href="#"
+                                                                    {{-- <a class="mx-1" title="Info" href="#"
                                                                         data-modal-target="ViewModal"
-                                                                        onclick="showInfo({{ $faq->id }})">
+                                                                        onclick="showInfo({{ $faq->faqid }})">
                                                                         <i class="ri-information-fill"></i>
-                                                                    </a>
+                                                                    </a> --}}
 
                                                                     <a class="mx-1" title="Edit" href="#"
                                                                         data-modal-target="EditModal"
-                                                                        onclick="getEditData(<?= $faq->id ?>)">
+                                                                        onclick="getEditData(<?= $faq->faqid ?>)">
                                                                         <i class="ri-edit-2-fill"></i>
                                                                     </a>
 
                                                                     <a class="mx-1" title="Delete" href="#"
-                                                                        onclick="confirmSingleDelete({{ $faq->id }})">
+                                                                        onclick="confirmSingleDelete({{ $faq->faqid }})">
                                                                         <i class="ri-delete-bin-5-fill"></i>
                                                                     </a>
 
@@ -240,6 +250,17 @@
                                 <input type="text" name="question" id="Editquestion" maxlength="255"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter Question" required autocomplete="off" autofocus>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email-field" class="">Type <span class="text-red-500">*</span></label>
+                                <select name="type" id="edittype"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    required autocomplete="off">
+                                    <option value="">Please Select</option>
+                                    <option value="1">Plans</option>
+                                    <option value="2">Contact Us</option>
+                                </select>
                             </div>
 
                             <div class="mb-3">
@@ -321,9 +342,12 @@
                         id
                     },
                     success: function(data) {
+                        console.log(data);
                         var obj = JSON.parse(data);
                         $("#Editquestion").val(obj.question);
                         $("#Editanswer").val(obj.answer);
+                        // selected type set
+                        $("#edittype").val(obj.type);
                         $('#faqid').val(id);
                     },
                     error: function(xhr) {

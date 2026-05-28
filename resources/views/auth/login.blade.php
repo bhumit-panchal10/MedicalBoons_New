@@ -4,7 +4,7 @@
     <div class="mb-0 w-screen lg:mx-auto lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
         <div class="!px-10 !py-12 card-body">
             <a href="#!">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="" class="block mx-auto">
+                <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="block mx-auto">
                 {{-- <img src="{{ asset('assets/images/logo.png') }}" alt="" class="block mx-auto "> --}}
                 {{-- <p>PriceCut</p> --}}
             </a>

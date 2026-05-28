@@ -28,8 +28,6 @@ class TestimonialController extends Controller
         }
     }
 
-
-
     public function store(Request $request)
     {
         DB::beginTransaction();
@@ -54,6 +52,7 @@ class TestimonialController extends Controller
 
             Testimonial::create([
                 'name' => $request->name,
+                'rating' => $request->rating,
                 'comment' => $request->description,
                 'photo' => $img,
 
@@ -134,7 +133,7 @@ class TestimonialController extends Controller
                 'name' => $request->name,
                 'comment' => $request->editdescription,
                 'photo' => $img,
-
+                'rating' => $request->rating,
             ];
 
             Testimonial::where("Testimonial_id", "=", $request->Testimonial_id)->update($data);

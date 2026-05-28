@@ -16,7 +16,7 @@ class FaqController extends Controller
     public function index()
     {
         try {
-            $faqs = FaqMaster::orderBy('id', 'desc')->paginate(config('app.per_page'));
+            $faqs = FaqMaster::orderBy('faqid', 'desc')->paginate(config('app.per_page'));
 
             return view('faq.index', compact('faqs'));
         } catch (\Throwable $th) {
@@ -28,7 +28,6 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-
         try {
             $request->validate([
                 'question' => 'required',
@@ -38,6 +37,7 @@ class FaqController extends Controller
             FaqMaster::create([
                 'question' => $request->question,
                 'answer' => $request->answer,
+                'type' => $request->type,
                 'created_at' => now(),
                 'strIP' => $request->ip(),
             ]);
@@ -72,14 +72,14 @@ class FaqController extends Controller
 
     public function edit(Request $request)
     {
-        $faq = FaqMaster::where('id', $request->id)->first();
+        $faq = FaqMaster::where('faqid', $request->id)->first();
 
         return json_encode($faq);
     }
 
     public function view($id)
     {
-        $faq = FaqMaster::find($id); // Replace with your actual model and query logic
+        $faq = FaqMaster::find($id);
         if ($faq) {
             return response()->json([
                 'question' => $faq->question,
@@ -105,11 +105,12 @@ class FaqController extends Controller
             $data = [
                 'question' => $request->question,
                 'answer' => $request->answer,
+                'type' => $request->type,
                 'updated_at' => now(),
                 'strIP' => $request->ip(),
             ];
 
-            FaqMaster::where("id", "=", $request->faqid)->update($data);
+            FaqMaster::where("faqid", "=", $request->faqid)->update($data);
 
             DB::commit();
 
@@ -145,7 +146,7 @@ class FaqController extends Controller
 
         try {
             FaqMaster::where([
-                'id' => $request->id
+                'faqid' => $request->id
             ])->delete();
 
             DB::commit();
@@ -169,7 +170,7 @@ class FaqController extends Controller
         // dd($request->all());
         try {
             $ids = $request->input('faq_ids', []);
-            FaqMaster::whereIn('id', $ids)->delete();
+            FaqMaster::whereIn('faqid', $ids)->delete();
 
             Toastr::success('Faq deleted successfully :)', 'Success');
             return back();
@@ -189,10 +190,10 @@ class FaqController extends Controller
         // dd($request);
         try {
             if ($request->status == 1) {
-                FaqMaster::where(['id' => $request->faqId])->update(['iStatus' => 0]);
+                FaqMaster::where(['faqid' => $request->faqId])->update(['iStatus' => 0]);
                 Toastr::success('Faq inactive successfully :)', 'Success');
             } else {
-                FaqMaster::where(['id' => $request->faqId])->update(['iStatus' => 1]);
+                FaqMaster::where(['faqid' => $request->faqId])->update(['iStatus' => 1]);
                 Toastr::success('Faq active successfully :)', 'Success');
             }
             echo 1;

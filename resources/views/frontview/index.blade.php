@@ -263,80 +263,80 @@
     </section>
     <!-- Services Section - Exact from PDF -->
     <!--<section class="services-section" id="services">
-                                    <div class="container">
-                                        <div class="section-header animate">
-                                            <p class="section-subtitle">OUR HEALTHCARE SERVICES</p>
-                                            <h2 class="section-title">Complete Healthcare Solutions Under One Roof</h2>
-                                        </div>
-                                        <div class="services-grid">
-                                            <div class="service-card animate" data-delay="0">
-                                                <div class="service-icon">
-                                                    <i class="fas fa-user-md"></i>
-                                                </div>
-                                                <h3>1. Doctor Consultation</h3>
-                                                <p>Consult with experienced doctors across specialties - online, in-clinic or at home. All consultation options.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                            <div class="service-card animate" data-delay="100">
-                                                <div class="service-icon">
-                                                    <i class="fas fa-flask"></i>
-                                                </div>
-                                                <h3>2. Lab Testing</h3>
-                                                <p>Accurate lab tests with home sample collection and trusted lab partners.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                            <div class="service-card animate" data-delay="200">
-                                                <div class="service-icon">
-                                                    <i class="fas fa-x-ray"></i>
-                                                </div>
-                                                <h3>3. Radiology / Scan</h3>
-                                                <p>X-Ray, USG, MRI, CT Scan &amp; more at affordable rates with easy booking.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                            <div class="service-card animate" data-delay="300">
-                                                <span class="popular-badge">POPULAR</span>
-                                                <div class="service-icon">
-                                                    <i class="fas fa-box"></i>
-                                                </div>
-                                                <h3>4. Popular Packages</h3>
-                                                <p>Health checkups &amp; diagnostic packages designed for individuals and families.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                            <div class="service-card animate" data-delay="400">
-                                                <div class="service-icon">
-                                                    <i class="fas fa-spa"></i>
-                                                </div>
-                                                <h3>5. Wellness &amp; Support</h3>
-                                                <p>Healing, ergonomic &amp; audiometry services for your overall well-being.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                            <div class="service-card animate" data-delay="500">
-                                                <div class="service-icon">
-                                                    <i class="fas fa-hospital-alt"></i>
-                                                </div>
-                                                <h3>6. IPD Support</h3>
-                                                <p>Admission assistance, hospital coordination and complete support during hospitalization.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                            <div class="service-card animate" data-delay="600">
-                                                <div class="service-icon">
-                                                    <i class="fas fa-home"></i>
-                                                </div>
-                                                <h3>7. Homecare</h3>
-                                                <p>Nursing care, physiotherapy, doctor visits and more services in the comfort of your home.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                            <div class="service-card animate" data-delay="700">
-                                                <div class="service-icon">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                </div>
-                                                <h3>8. Insurance Support</h3>
-                                                <p>From claim guidance to settlement, we are with you at every step.</p>
-                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>-->
+                                                                                    <div class="container">
+                                                                                        <div class="section-header animate">
+                                                                                            <p class="section-subtitle">OUR HEALTHCARE SERVICES</p>
+                                                                                            <h2 class="section-title">Complete Healthcare Solutions Under One Roof</h2>
+                                                                                        </div>
+                                                                                        <div class="services-grid">
+                                                                                            <div class="service-card animate" data-delay="0">
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-user-md"></i>
+                                                                                                </div>
+                                                                                                <h3>1. Doctor Consultation</h3>
+                                                                                                <p>Consult with experienced doctors across specialties - online, in-clinic or at home. All consultation options.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                            <div class="service-card animate" data-delay="100">
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-flask"></i>
+                                                                                                </div>
+                                                                                                <h3>2. Lab Testing</h3>
+                                                                                                <p>Accurate lab tests with home sample collection and trusted lab partners.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                            <div class="service-card animate" data-delay="200">
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-x-ray"></i>
+                                                                                                </div>
+                                                                                                <h3>3. Radiology / Scan</h3>
+                                                                                                <p>X-Ray, USG, MRI, CT Scan &amp; more at affordable rates with easy booking.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                            <div class="service-card animate" data-delay="300">
+                                                                                                <span class="popular-badge">POPULAR</span>
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-box"></i>
+                                                                                                </div>
+                                                                                                <h3>4. Popular Packages</h3>
+                                                                                                <p>Health checkups &amp; diagnostic packages designed for individuals and families.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                            <div class="service-card animate" data-delay="400">
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-spa"></i>
+                                                                                                </div>
+                                                                                                <h3>5. Wellness &amp; Support</h3>
+                                                                                                <p>Healing, ergonomic &amp; audiometry services for your overall well-being.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                            <div class="service-card animate" data-delay="500">
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-hospital-alt"></i>
+                                                                                                </div>
+                                                                                                <h3>6. IPD Support</h3>
+                                                                                                <p>Admission assistance, hospital coordination and complete support during hospitalization.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                            <div class="service-card animate" data-delay="600">
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-home"></i>
+                                                                                                </div>
+                                                                                                <h3>7. Homecare</h3>
+                                                                                                <p>Nursing care, physiotherapy, doctor visits and more services in the comfort of your home.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                            <div class="service-card animate" data-delay="700">
+                                                                                                <div class="service-icon">
+                                                                                                    <i class="fas fa-shield-alt"></i>
+                                                                                                </div>
+                                                                                                <h3>8. Insurance Support</h3>
+                                                                                                <p>From claim guidance to settlement, we are with you at every step.</p>
+                                                                                                <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </section>-->
     <!-- How It Works Section - Exact from PDF -->
     <!-- How It Works Section -->
     <section class="how-it-works">
@@ -412,45 +412,45 @@
         </div>
     </section>
     <!--<section class="how-it-works">
-                                    <div class="container">
-                                        <div class="section-header animate">
-                                            <p class="section-subtitle">HOW MEDICAL BOONS WORKS</p>
-                                            <h2 class="section-title">Simple Steps. Complete Support.</h2>
-                                        </div>
-                                        <div class="steps-grid">
-                                            <div class="step-box animate" data-delay="0">
-                                               
-                                                <i class="fas fa-phone-volume"></i>
-                                                <h3>Connect With Us</h3>
-                                                <p>Reach out to us via call or WhatsApp.</p>
-                                            </div>
-                                            <div class="step-box animate" data-delay="100">
-                                                
-                                                <i class="fas fa-clipboard-list"></i>
-                                                <h3>Share Your Concern</h3>
-                                                <p>Tell us your health concern or requirement.</p>
-                                            </div>
-                                            <div class="step-box animate" data-delay="200">
-                                                
-                                                <i class="fas fa-user-check"></i>
-                                                <h3>Get Guided</h3>
-                                                <p>Our experts guide you to the right service &amp; partner.</p>
-                                            </div>
-                                            <div class="step-box animate" data-delay="300">
-                                                
-                                                <i class="fas fa-hands-helping"></i>
-                                                <h3>Receive Support</h3>
-                                                <p>We coordinate and help you access the best care.</p>
-                                            </div>
-                                            <div class="step-box animate" data-delay="400">
-                                                
-                                                <i class="fas fa-check-circle"></i>
-                                                <h3>Ongoing Guidance</h3>
-                                                <p>We stay with you from start to complete recovery.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>-->
+                                                                                    <div class="container">
+                                                                                        <div class="section-header animate">
+                                                                                            <p class="section-subtitle">HOW MEDICAL BOONS WORKS</p>
+                                                                                            <h2 class="section-title">Simple Steps. Complete Support.</h2>
+                                                                                        </div>
+                                                                                        <div class="steps-grid">
+                                                                                            <div class="step-box animate" data-delay="0">
+                                                                                               
+                                                                                                <i class="fas fa-phone-volume"></i>
+                                                                                                <h3>Connect With Us</h3>
+                                                                                                <p>Reach out to us via call or WhatsApp.</p>
+                                                                                            </div>
+                                                                                            <div class="step-box animate" data-delay="100">
+                                                                                                
+                                                                                                <i class="fas fa-clipboard-list"></i>
+                                                                                                <h3>Share Your Concern</h3>
+                                                                                                <p>Tell us your health concern or requirement.</p>
+                                                                                            </div>
+                                                                                            <div class="step-box animate" data-delay="200">
+                                                                                                
+                                                                                                <i class="fas fa-user-check"></i>
+                                                                                                <h3>Get Guided</h3>
+                                                                                                <p>Our experts guide you to the right service &amp; partner.</p>
+                                                                                            </div>
+                                                                                            <div class="step-box animate" data-delay="300">
+                                                                                                
+                                                                                                <i class="fas fa-hands-helping"></i>
+                                                                                                <h3>Receive Support</h3>
+                                                                                                <p>We coordinate and help you access the best care.</p>
+                                                                                            </div>
+                                                                                            <div class="step-box animate" data-delay="400">
+                                                                                                
+                                                                                                <i class="fas fa-check-circle"></i>
+                                                                                                <h3>Ongoing Guidance</h3>
+                                                                                                <p>We stay with you from start to complete recovery.</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </section>-->
     <!-- CAREEZ App Section - Exact from PDF -->
     <!-- CAREEZ App Section -->
     <section class="app-section">
@@ -482,17 +482,17 @@
                                 <span>Insurance claim assistance and documentation support</span>
                             </li>
                             <!-- <li>
-                                                        <i class="fas fa-check-circle"></i>
-                                                        <span>24/7 support for you and your family</span>
-                                                    </li> -->
+                                                                                                        <i class="fas fa-check-circle"></i>
+                                                                                                        <span>24/7 support for you and your family</span>
+                                                                                                    </li> -->
                         </ul>
                     </div>
                 </div>
 
                 <!-- Center - Doctor Image -->
                 <!-- <div class="col-lg-3 text-center animate" data-animation="fadeInUp">
-                                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=600&fit=crop" alt="Doctor" class="doctor-image">
-                                        </div> -->
+                                                                                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=600&fit=crop" alt="Doctor" class="doctor-image">
+                                                                                        </div> -->
 
                 <!-- Center Right - CAREEZ Content -->
                 <div class="col-lg-6 animate" data-animation="fadeInUp">
@@ -546,6 +546,7 @@
         </div>
     </section>
     <!-- Membership Plans Section - Exact from PDF -->
+
     <!-- Membership Plans Section -->
     <section class="membership-section" id="plans">
         <div class="container">
@@ -638,180 +639,131 @@
         </div>
     </section>
     <!--<section class="plans-section" id="plans">
-                                    <div class="container">
-                                        <div class="section-header">
-                                            <p class="section-subtitle">MEMBERSHIP PLANS</p>
-                                            <h2 class="section-title">Healthcare Support Plans For You &amp; Your Family</h2>
-                                        </div>
-                                        <div class="plans-grid">
-                                            <div class="plan-card animate">
-                                                <div class="plan-icon">
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                                <h3>Silver Plan</h3>
-                                                <p>Essential healthcare support for individuals.</p>
-                                                <a class="btn" href="#">View Benefits</a>
-                                            </div>
-                                            <div class="plan-card featured animate">
-                                                <span class="best-choice">BEST CHOICE</span>
-                                                <div class="plan-icon">
-                                                    <i class="fas fa-crown"></i>
-                                                </div>
-                                                <h3>Gold Plan</h3>
-                                                <p>Complete care for you and your family.</p>
-                                                <a class="btn" href="#">View Benefits</a>
-                                            </div>
-                                            <div class="plan-card animate">
-                                                <div class="plan-icon">
-                                                    <i class="fas fa-gem"></i>
-                                                </div>
-                                                <h3>Platinum Plan</h3>
-                                                <p>Advanced benefits with priority support.</p>
-                                                <a class="btn" href="#">View Benefits</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>-->
+                                                                                    <div class="container">
+                                                                                        <div class="section-header">
+                                                                                            <p class="section-subtitle">MEMBERSHIP PLANS</p>
+                                                                                            <h2 class="section-title">Healthcare Support Plans For You &amp; Your Family</h2>
+                                                                                        </div>
+                                                                                        <div class="plans-grid">
+                                                                                            <div class="plan-card animate">
+                                                                                                <div class="plan-icon">
+                                                                                                    <i class="fas fa-star"></i>
+                                                                                                </div>
+                                                                                                <h3>Silver Plan</h3>
+                                                                                                <p>Essential healthcare support for individuals.</p>
+                                                                                                <a class="btn" href="#">View Benefits</a>
+                                                                                            </div>
+                                                                                            <div class="plan-card featured animate">
+                                                                                                <span class="best-choice">BEST CHOICE</span>
+                                                                                                <div class="plan-icon">
+                                                                                                    <i class="fas fa-crown"></i>
+                                                                                                </div>
+                                                                                                <h3>Gold Plan</h3>
+                                                                                                <p>Complete care for you and your family.</p>
+                                                                                                <a class="btn" href="#">View Benefits</a>
+                                                                                            </div>
+                                                                                            <div class="plan-card animate">
+                                                                                                <div class="plan-icon">
+                                                                                                    <i class="fas fa-gem"></i>
+                                                                                                </div>
+                                                                                                <h3>Platinum Plan</h3>
+                                                                                                <p>Advanced benefits with priority support.</p>
+                                                                                                <a class="btn" href="#">View Benefits</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </section>-->
     <!-- Testimonials Section - Exact from PDF -->
+
     <!-- Testimonials Section -->
     <section class="testimonials-section">
         <div class="container">
+
             <div class="section-header animate">
-                <p class="section-subtitle">THE TRUST OF THOUSANDS OF FAMILIES</p>
-                <h2 class="section-title">We're Rated 4.9/5</h2>
-                <p style="color: #666; margin-bottom: 20px;">By Our Members</p>
+                <p class="section-subtitle">
+                    THE TRUST OF THOUSANDS OF FAMILIES
+                </p>
+
+                <h2 class="section-title">
+                    We're Rated 4.9/5
+                </h2>
+
+                <p style="color: #666; margin-bottom: 20px;">
+                    By Our Members
+                </p>
             </div>
 
             <!-- Testimonials Slider -->
             <div class="testimonials-slider">
                 <div class="testimonial-track">
-                    <!-- Testimonial 1 -->
-                    <div class="testimonial-card animate" data-delay="0">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Medical Boons has been a lifesaving for our family. Their team guided us at every step.
-                            Highly reliable and trustworthy service."
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=1" alt="Ravi Sharma" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Ravi Sharma</p>
-                                <p class="author-title">Family Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Testimonial 2 -->
-                    <div class="testimonial-card animate" data-delay="100">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Excellent support during my father's hospitalization. The care coordinator was with us
-                            throughout. Very professional service."
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=5" alt="Priya Mehta" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Priya Mehta</p>
-                                <p class="author-title">Gold Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
+                    @foreach ($testimonials as $key => $testimonial)
+                        <div class="testimonial-card animate" data-delay="{{ $key * 100 }}">
 
-                    <!-- Testimonial 3 -->
-                    <div class="testimonial-card animate" data-delay="200">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Their insurance claim support saved us so much hassle. The team handled everything
-                            professionally. Highly recommended!"
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=8" alt="Amit Patel" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Amit Patel</p>
-                                <p class="author-title">Platinum Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
+                            <!-- Dynamic Rating -->
+                            <div class="stars">
 
-                    <!-- Testimonial 4 -->
-                    <div class="testimonial-card animate" data-delay="0">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Best healthcare support service! Their 24/7 helpline is very responsive. My entire family
-                            is covered under their plan."
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=12" alt="Sunita Kapoor" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Sunita Kapoor</p>
-                                <p class="author-title">Silver Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $testimonial->rating)
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
 
-                    <!-- Testimonial 5 -->
-                    <div class="testimonial-card animate" data-delay="100">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Medical Boons made finding the right doctors so easy. Their network is excellent and staff
-                            is very helpful. Great experience!"
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=15" alt="Rajesh Kumar" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Rajesh Kumar</p>
-                                <p class="author-title">Gold Plan Member</p>
                             </div>
+
+                            <!-- Description -->
+                            <p class="testimonial-text">
+                                "{{ $testimonial->comment ?? '' }}"
+                            </p>
+
+                            <!-- Author -->
+                            <div class="testimonial-author">
+                                @if (!empty($testimonial->photo))
+                                    <img src="{{ asset('upload/testimonial/' . $testimonial->photo) }}"
+                                        alt="{{ $testimonial->name }}" class="author-image">
+                                @else
+                                    <img src="{{ asset('assets/images/noimage.png') }}" alt="{{ $testimonial->name }}"
+                                        class="author-image">
+                                @endif
+
+                                <div class="author-info">
+                                    <p class="author-name">
+                                        — {{ $testimonial->name ?? '' }}
+                                    </p>
+
+                                    <p class="author-title">
+                                        Member
+                                    </p>
+                                </div>
+
+                            </div>
+
                         </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
 
             <!-- Slider Navigation -->
             <div class="slider-navigation">
+
                 <button class="slider-btn prev-btn">
                     <i class="fas fa-chevron-left"></i>
                 </button>
+
                 <div class="slider-dots"></div>
+
                 <button class="slider-btn next-btn">
                     <i class="fas fa-chevron-right"></i>
                 </button>
-            </div>
 
-            <!-- Overall Rating -->
+            </div>
 
         </div>
     </section>
+
     <!-- Footer CTA Section - Exact from PDF -->
     <section class="footer-cta">
         <div class="container">

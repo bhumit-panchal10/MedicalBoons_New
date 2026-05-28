@@ -10,19 +10,19 @@
                     class=" items-center justify-center hidden px-5 text-center h-header group-data-[layout=horizontal]:md:flex group-data-[layout=horizontal]:ltr::pl-0 group-data-[layout=horizontal]:rtl:pr-0">
                     <a href="{{ route('home') }}">
                         <span class="hidden">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                            <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                         </span>
                         <span class="group-data-[topbar=dark]:hidden group-data-[topbar=brand]:hidden">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                            <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                         </span>
                     </a>
                     <a href="{{ route('home') }}"
                         class="hidden group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
                         <span class="group-data-[topbar=dark]:hidden group-data-[topbar=brand]:hidden">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                            <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                         </span>
                         <span class="group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                            <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                         </span>
                     </a>
                 </div>

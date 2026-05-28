@@ -5,7 +5,7 @@
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="{{ env('APP_NAME') }}" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
+    <link rel="shortcut icon" href="{{ asset('Front/images/logo.jpeg') }}">
     <!-- Layout config Js -->
     <script src="{{ asset('assets/js/layout.js') }}"></script>
     <!-- StarCode CSS -->

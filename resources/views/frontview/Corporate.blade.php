@@ -9,8 +9,8 @@
         }
 
         /* ============================================
-                                       CORPORATE - WHY PARTNER SECTION
-                                       ============================================ */
+                                           CORPORATE - WHY PARTNER SECTION
+                                           ============================================ */
 
         .corporate-why-partner-wrapper {
             display: grid;
@@ -343,11 +343,11 @@
                         </div>
 
                         <!-- <div class="corporate-benefit-item">
-                                                            <div class="corporate-check-icon">
-                                                                <i class="fas fa-check"></i>
-                                                            </div>
-                                                            <span>Trusted by 50,000+ families across India</span>
-                                                        </div> -->
+                                                                <div class="corporate-check-icon">
+                                                                    <i class="fas fa-check"></i>
+                                                                </div>
+                                                                <span>Trusted by 50,000+ families across India</span>
+                                                            </div> -->
                     </div>
                 </div>
 
@@ -444,13 +444,9 @@
                 <h2 class="section-title">Trusted By Leading Organizations</h2>
             </div>
             <div class="partners-logos" style="margin-bottom: 30px;">
-                <img alt="DLF" src="{{ asset('Front/images/logo-dlf.jpg') }}" />
-                <img alt="HDFC Bank" src="{{ asset('Front/images/logo-hdfc.jpg') }}" />
-                <img alt="Tata" src="{{ asset('Front/images/logo-tata.jpg') }}" />
-                <img alt="Wipro" src="{{ asset('Front/images/logo-wipro.jpg') }}" />
-                <img alt="Bajaj Finserv" src="{{ asset('Front/images/logo-bajaj.jpg') }}" />
-                <img alt="Cipla" src="{{ asset('Front/images/logo-cipla.jpg') }}" />
-                <img alt="Indiamart" src="{{ asset('Front/images/logo-indiamart.jpg') }}" />
+                @foreach ($Ourclients as $Ourclient)
+                    <img alt="Client" src="{{ asset('/upload/OurClient-images/' . $Ourclient->image) }}" />
+                @endforeach
             </div>
             <p style="text-align: center; color: #666; font-style: italic;">And many more growing teams across
                 industries</p>
@@ -458,31 +454,31 @@
     </section>
     <!-- Stats -->
     <!-- <section style="background: linear-gradient(135deg, #1e3a5f, var(--primary-teal)); padding: 60px 0;">
-                                            <div class="container">
-                                                <div class="stats-grid">
-                                                    <div class="stat-box animate">
-                                                        <i class="fas fa-users" style="color: white;"></i>
-                                                        <div class="stat-number" style="color: white;">50000</div>
-                                                        <div class="stat-label" style="color: rgba(255,255,255,0.9);">Families Trust Us</div>
-                                                    </div>
-                                                    <div class="stat-box animate">
-                                                        <i class="fas fa-building" style="color: white;"></i>
-                                                        <div class="stat-number" style="color: white;">500</div>
-                                                        <div class="stat-label" style="color: rgba(255,255,255,0.9);">Corporate Partners</div>
-                                                    </div>
-                                                    <div class="stat-box animate">
-                                                        <i class="fas fa-headset" style="color: white;"></i>
-                                                        <div class="stat-number" style="color: white;">24</div>
-                                                        <div class="stat-label" style="color: rgba(255,255,255,0.9);">Dedicated Support 24/7</div>
-                                                    </div>
-                                                    <div class="stat-box animate">
-                                                        <i class="fas fa-calendar" style="color: white;"></i>
-                                                        <div class="stat-number" style="color: white;">10</div>
-                                                        <div class="stat-label" style="color: rgba(255,255,255,0.9);">Years of Healthcare Trust</div>
+                                                <div class="container">
+                                                    <div class="stats-grid">
+                                                        <div class="stat-box animate">
+                                                            <i class="fas fa-users" style="color: white;"></i>
+                                                            <div class="stat-number" style="color: white;">50000</div>
+                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Families Trust Us</div>
+                                                        </div>
+                                                        <div class="stat-box animate">
+                                                            <i class="fas fa-building" style="color: white;"></i>
+                                                            <div class="stat-number" style="color: white;">500</div>
+                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Corporate Partners</div>
+                                                        </div>
+                                                        <div class="stat-box animate">
+                                                            <i class="fas fa-headset" style="color: white;"></i>
+                                                            <div class="stat-number" style="color: white;">24</div>
+                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Dedicated Support 24/7</div>
+                                                        </div>
+                                                        <div class="stat-box animate">
+                                                            <i class="fas fa-calendar" style="color: white;"></i>
+                                                            <div class="stat-number" style="color: white;">10</div>
+                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Years of Healthcare Trust</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section> -->
+                                            </section> -->
     <!-- Get Started -->
     <section style="background: white; padding: 80px 0;">
         <div class="container">

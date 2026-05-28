@@ -81,8 +81,8 @@
 
     <style>
         /* ============================================
-                   NEW PLAN CARDS DESIGN
-                   ============================================ */
+                                   NEW PLAN CARDS DESIGN
+                                   ============================================ */
 
         .plans-grid {
             display: grid;
@@ -457,8 +457,8 @@
 
 
         /* ============================================
-                   FAQs SECTION - NEW DESIGN
-                   ============================================ */
+                                   FAQs SECTION - NEW DESIGN
+                                   ============================================ */
 
         /* FAQs Header */
         .faqs-header {
@@ -949,83 +949,29 @@
             <!-- Header with View All Link -->
             <div class="faqs-header">
                 <h2 class="faqs-title">Frequently Asked Questions</h2>
-                <!-- <a href="#" class="view-all-faqs">
-                                    View all FAQs <i class="fas fa-arrow-right"></i>
-                                </a> -->
+
             </div>
 
             <!-- FAQs Grid (2 columns) -->
             <div class="faqs-grid">
                 <!-- FAQ Item 1 -->
-                <div class="faq-item-new">
-                    <div class="faq-question-new">
-                        <div class="faq-icon-box teal">
-                            <i class="fas fa-hand-holding-medical"></i>
+                @foreach ($faqs as $faq)
+                    <div class="faq-item-new">
+                        <div class="faq-question-new">
+                            <div class="faq-icon-box teal">
+                                <i class="fas fa-hand-holding-medical"></i>
+                            </div>
+                            <span class="faq-text">{{ $faq->question ?? '' }}</span>
+                            <button class="faq-toggle-btn">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
-                        <span class="faq-text">What is Healthcare Value Support?</span>
-                        <button class="faq-toggle-btn">
-                            <i class="fas fa-plus"></i>
-                        </button>
+                        <div class="faq-answer-new">
+                            <p>{{ $faq->answer ?? '' }}</p>
+                        </div>
                     </div>
-                    <div class="faq-answer-new">
-                        <p>Healthcare Value Support is the cumulative annual value of complementary healthcare benefits,
-                            wellness support services, and Lab Wallet benefits you receive as per your plan eligibility.
-                            This support can be utilized across eligible services throughout the year.</p>
-                    </div>
-                </div>
+                @endforeach
 
-                <!-- FAQ Item 2 -->
-                <div class="faq-item-new">
-                    <div class="faq-question-new">
-                        <div class="faq-icon-box teal">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <span class="faq-text">How many members are covered?</span>
-                        <button class="faq-toggle-btn">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="faq-answer-new">
-                        <p>All plans cover up to 4 family members by default. You can add additional members by paying
-                            the Add-On Member fee specified in your plan. Each plan has different pricing for add-on
-                            members.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="faq-item-new">
-                    <div class="faq-question-new">
-                        <div class="faq-icon-box teal">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <span class="faq-text">How are Lab Wallet benefits utilized?</span>
-                        <button class="faq-toggle-btn">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="faq-answer-new">
-                        <p>Lab Wallet benefits are part of your Healthcare Value Support and can be used for eligible
-                            diagnostic tests, lab tests, and health checkups at our partner facilities. The benefits are
-                            automatically applied when you book services through Medical Boons.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="faq-item-new">
-                    <div class="faq-question-new">
-                        <div class="faq-icon-box teal">
-                            <i class="fas fa-user-edit"></i>
-                        </div>
-                        <span class="faq-text">Can additional family members be added to the plan?</span>
-                        <button class="faq-toggle-btn">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="faq-answer-new">
-                        <p>Yes. All Medical Boons plans cover up to 4 family members. Additional family members can be added
-                            to the membership plan at applicable add-on charges based on the selected plan category.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1043,115 +989,53 @@
             <!-- Testimonials Slider -->
             <div class="testimonials-slider">
                 <div class="testimonial-track">
-                    <!-- Testimonial 1 -->
-                    <div class="testimonial-card animate" data-delay="0">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Medical Boons has been a lifesaving for our family. Their team guided us at every step.
-                            Highly reliable and trustworthy service."
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=1" alt="Ravi Sharma" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Ravi Sharma</p>
-                                <p class="author-title">Family Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Testimonial 2 -->
-                    <div class="testimonial-card animate" data-delay="100">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Excellent support during my father's hospitalization. The care coordinator was with us
-                            throughout. Very professional service."
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=5" alt="Priya Mehta" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Priya Mehta</p>
-                                <p class="author-title">Gold Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
+                    @foreach ($testimonials as $key => $testimonial)
+                        <div class="testimonial-card animate" data-delay="{{ $key * 100 }}">
 
-                    <!-- Testimonial 3 -->
-                    <div class="testimonial-card animate" data-delay="200">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Their insurance claim support saved us so much hassle. The team handled everything
-                            professionally. Highly recommended!"
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=8" alt="Amit Patel" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Amit Patel</p>
-                                <p class="author-title">Platinum Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
+                            <!-- Dynamic Rating -->
+                            <div class="stars">
 
-                    <!-- Testimonial 4 -->
-                    <div class="testimonial-card animate" data-delay="0">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Best healthcare support service! Their 24/7 helpline is very responsive. My entire family
-                            is covered under their plan."
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=12" alt="Sunita Kapoor" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Sunita Kapoor</p>
-                                <p class="author-title">Silver Plan Member</p>
-                            </div>
-                        </div>
-                    </div>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $testimonial->rating)
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
 
-                    <!-- Testimonial 5 -->
-                    <div class="testimonial-card animate" data-delay="100">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            "Medical Boons made finding the right doctors so easy. Their network is excellent and staff
-                            is very helpful. Great experience!"
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="https://i.pravatar.cc/60?img=15" alt="Rajesh Kumar" class="author-image">
-                            <div class="author-info">
-                                <p class="author-name">— Rajesh Kumar</p>
-                                <p class="author-title">Gold Plan Member</p>
                             </div>
+
+                            <!-- Description -->
+                            <p class="testimonial-text">
+                                "{{ $testimonial->comment ?? '' }}"
+                            </p>
+
+                            <!-- Author -->
+                            <div class="testimonial-author">
+                                @if (!empty($testimonial->photo))
+                                    <img src="{{ asset('upload/testimonial/' . $testimonial->photo) }}"
+                                        alt="{{ $testimonial->name }}" class="author-image">
+                                @else
+                                    <img src="{{ asset('assets/images/noimage.png') }}" alt="{{ $testimonial->name }}"
+                                        class="author-image">
+                                @endif
+
+                                <div class="author-info">
+                                    <p class="author-name">
+                                        — {{ $testimonial->name ?? '' }}
+                                    </p>
+
+                                    <p class="author-title">
+                                        Member
+                                    </p>
+                                </div>
+
+                            </div>
+
                         </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
 

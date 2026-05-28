@@ -366,8 +366,8 @@
         }
 
         /* ============================================
-                                                                           GET IN TOUCH SECTION - PDF EXACT MATCH
-                                                                           ============================================ */
+                                                                                       GET IN TOUCH SECTION - PDF EXACT MATCH
+                                                                                       ============================================ */
 
         /* Title Underline Center */
         .title-underline-center {
@@ -515,8 +515,8 @@
         }
 
         /* ============================================
-                                                                           SUPPORT BANNER SECTION - NEW UNIQUE CLASSES
-                                                                           ============================================ */
+                                                                                       SUPPORT BANNER SECTION - NEW UNIQUE CLASSES
+                                                                                       ============================================ */
 
         .support-banner-container {
             display: flex;
@@ -765,18 +765,18 @@
 
                         <!-- Call Card Overlay -->
                         <!-- <div class="contact-call-card">
-                                                                                                                    <p class="call-card-label">Need Immediate Help?</p>
-                                                                                                                    <div class="call-card-phone">
-                                                                                                                        <div class="call-card-icon">
-                                                                                                                            <i class="fas fa-phone-alt"></i>
-                                                                                                                        </div>
-                                                                                                                        <div>
-                                                                                                                            <p class="call-card-text">Call our support team</p>
-                                                                                                                            <a href="tel:+918655774949" class="call-card-number">+91 86557 74949</a>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                    <p class="call-card-hours">7:00 AM – 10:00 PM (All Days)</p>
-                                                                                                                </div> -->
+                                                                                                                                <p class="call-card-label">Need Immediate Help?</p>
+                                                                                                                                <div class="call-card-phone">
+                                                                                                                                    <div class="call-card-icon">
+                                                                                                                                        <i class="fas fa-phone-alt"></i>
+                                                                                                                                    </div>
+                                                                                                                                    <div>
+                                                                                                                                        <p class="call-card-text">Call our support team</p>
+                                                                                                                                        <a href="tel:+918655774949" class="call-card-number">+91 86557 74949</a>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                                <p class="call-card-hours">7:00 AM – 10:00 PM (All Days)</p>
+                                                                                                                            </div> -->
                     </div>
                 </div>
             </div>
@@ -968,8 +968,8 @@
 
                 <!-- Right - Doctor Image -->
                 <!-- <div class="support-banner-doctor">
-                                                                                                <img src="../images/doctor-support.png" alt="Doctor">
-                                                                                            </div> -->
+                                                                                                            <img src="../images/doctor-support.png" alt="Doctor">
+                                                                                                        </div> -->
             </div>
         </div>
     </section>
@@ -983,69 +983,30 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 ">
-                    <div class="faq-item animate" data-delay="0">
-                        <div class="faq-question">
-                            <span>How can I contact Medical Boons?</span>
-                            <i class="fas fa-plus"></i>
+                    @foreach ($faqs->take(3) as $faq)
+                        <div class="faq-item animate" data-delay="0">
+                            <div class="faq-question">
+                                <span>{{ $faq->question ?? '' }}</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="faq-answer">
+                                {{ $faq->answer ?? '' }}
+                            </div>
                         </div>
-                        <div class="faq-answer">
-                            You can reach us via phone at +91 86557 74949, WhatsApp, email at info@medicalboons.com, or
-                            visit our office in Chandigarh. Our support team is available 24/7.
-                        </div>
-                    </div>
-                    <div class="faq-item animate" data-delay="100">
-                        <div class="faq-question">
-                            <span>What are your support hours?</span>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            Our phone and WhatsApp support is available 24/7. Our office is open Monday to Saturday from
-                            9:00 AM to 6:00 PM.
-                        </div>
-                    </div>
-                    <div class="faq-item animate" data-delay="200">
-                        <div class="faq-question">
-                            <span>Do you provide support on public holidays?</span>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            Yes, our 24/7 phone and WhatsApp support is available even on public holidays to assist you
-                            with any healthcare needs.
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
                 <div class="col-lg-6">
-                    <div class="faq-item animate" data-delay="300">
-                        <div class="faq-question">
-                            <span>How quickly will I get a response?</span>
-                            <i class="fas fa-plus"></i>
+                    @foreach ($faqs->skip(3)->take(3) as $faq)
+                        <div class="faq-item animate" data-delay="300">
+                            <div class="faq-question">
+                                <span>{{ $faq->question ?? '' }}</span>
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="faq-answer">
+                                {{ $faq->answer ?? '' }}
+                            </div>
                         </div>
-                        <div class="faq-answer">
-                            For urgent matters via phone or WhatsApp, we respond immediately. For emails and contact
-                            forms, we typically respond within a few hours during business hours.
-                        </div>
-                    </div>
-                    <div class="faq-item animate" data-delay="400">
-                        <div class="faq-question">
-                            <span>Can I visit your office without an appointment?</span>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            Yes, you can visit our office during business hours. However, we recommend calling ahead to
-                            ensure someone is available to assist you properly.
-                        </div>
-                    </div>
-                    <div class="faq-item animate" data-delay="500">
-                        <div class="faq-question">
-                            <span>How can I give feedback or suggestions?</span>
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="faq-answer">
-                            We value your feedback! You can share your thoughts via our contact form, email, or by
-                            calling us directly. Select "Feedback" in the subject field of the contact form.
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="text-center mt-5">

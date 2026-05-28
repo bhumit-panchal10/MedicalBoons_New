@@ -10,13 +10,14 @@ class FaqMaster extends Model
     use HasFactory;
     public $table = 'faq-masters';
     protected $fillable = [
-        'id',
+        'faqid',
         'question',
         'answer',
-        'category',
-        'isActive',
-        'createdAt',
+        'iStatus',
+        'isDelete',
+        'created_at',
+        'updated_at',
         'strIP',
-        'updatedAt'
+        'type'
     ];
 }

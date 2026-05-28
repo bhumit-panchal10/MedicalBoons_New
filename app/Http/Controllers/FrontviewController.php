@@ -12,6 +12,7 @@ use App\Models\Ourclient;
 use App\Models\LabTestCategory;
 use App\Models\Testimonial;
 use App\Models\Member;
+use App\Models\FaqMaster;
 use Brian2694\Toastr\Facades\Toastr;
 use GPBMetadata\Google\Api\Service;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,6 @@ use Illuminate\Support\Facades\Cookie;
 class FrontviewController extends Controller
 
 {
-
     public function index(Request $request)
     {
         try {
@@ -54,9 +54,9 @@ class FrontviewController extends Controller
             }
             //dd($data);
             $Ourclients = Ourclient::take(12)->get();
-            $Testimonial = Testimonial::get();
+            $testimonials = Testimonial::get();
 
-            return view('frontview.index', compact('plans', 'LabTestMasters', 'Ourclients', 'data', 'Testimonial'));
+            return view('frontview.index', compact('plans', 'LabTestMasters', 'Ourclients', 'data', 'testimonials'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
@@ -68,7 +68,9 @@ class FrontviewController extends Controller
             //$plans = Plan::get();
             //Cookie::queue('GUid', $guid, 60 * 24 * 365 * 5);
             // $g_uid = request()->cookie('GUid');
-            return view('frontview.PackagesAll');
+            $faqs = FaqMaster::where('type', 1)->get();
+            $testimonials = Testimonial::get();
+            return view('frontview.PackagesAll', compact('faqs', 'testimonials'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
@@ -331,7 +333,8 @@ class FrontviewController extends Controller
     public function ContactUs(Request $request)
     {
         try {
-            return view('frontview.ContactUs');
+            $faqs = FaqMaster::where('type', 2)->get();
+            return view('frontview.ContactUs', compact('faqs'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
@@ -341,7 +344,8 @@ class FrontviewController extends Controller
     public function Corporate(Request $request)
     {
         try {
-            return view('frontview.Corporate');
+            $Ourclients = Ourclient::take(12)->get();
+            return view('frontview.Corporate', compact('Ourclients'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
