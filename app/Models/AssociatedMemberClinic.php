@@ -5,38 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AssociatedMember extends Model
+class AssociatedMemberClinic extends Model
 {
     use HasFactory;
-    public $table = 'associated_members';
+    public $table = 'associated_member_Clinic';
     protected $primaryKey = 'id';
     protected $fillable = [
         'id',
+        'associated_member_id',
+        'clinic_name',
+        'address',
+        'time',
+        'work_day',
+        'photo',
         'service_id',
         'sub_service_id',
-        'dr_name',
-        'degree',
-        'address_1',
-        'address_2',
-        'about_dr_or_clinic',
         'iStatus',
         'isDelete',
         'created_at',
         'updated_at',
-        'strIP',
-        'patients_consulted',
-        'rating',
-        'practice',
-        'opd_changes',
-        'crazy_member_charge',
-        'Experience',
-        'photo',
-        'logo',
-        'Expertise',
-        'When_to_Consult'
     ];
+    public function services()
+    {
+        return $this->belongsTo(Services::class, 'service_id', 'id');
+    }
     public function subservices()
     {
         return $this->belongsTo(SubService::class, 'sub_service_id', 'sub_service_id');
+    }
+
+    public function assocmember()
+    {
+        return $this->belongsTo(AssociatedMember::class, 'associated_member_id', 'id');
     }
 }

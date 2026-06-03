@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Associated List')
+@section('title', 'Associated Clinic List')
 @section('content')
 
     {!! Toastr::message() !!}
@@ -12,7 +12,7 @@
 
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Associated List</h5>
+                    <h5 class="text-16">Associated Clinic List</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li
@@ -20,7 +20,7 @@
                         <a href="#!" class="text-slate-400 dark:text-zink-200">Master Entry</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Associated List
+                        Associated Clinic List
                     </li>
                 </ul>
             </div>
@@ -35,23 +35,23 @@
                             <div class="grid grid-cols-1 gap-5 mb-5 xl:grid-cols-0">
 
                                 <div class="rtl:md:text-start">
-                                    @if (!$AssociatedMembers->isEmpty())
+                                    @if (!$AssociatedMembersClinic->isEmpty())
                                         <button type="button" onclick="confirmBulkDelete()"
                                             class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                                             Delete Selected
                                         </button>
                                     @endif
                                     <a class="mx-1 ltr:md:text-end" title="Add Associated Member"
-                                        href="{{ route('associated_member.add') }}" style="float: inline-end;">
+                                        href="{{ route('AssocitedMemberClinic.add') }}" style="float: inline-end;">
                                         <button type="submit"
                                             class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
-                                            <i class="ri-add-box-fill"></i> Add Associated Member
+                                            <i class="ri-add-box-fill"></i> Add Associated Clinic
                                         </button>
                                     </a>
                                 </div>
                             </div>
 
-                            <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
+                            {{-- <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
 
                                 <form onsubmit="return validateFile()" class="tablelist-form"
                                     action="{{ route('associated_member.index') }}" method="POST"
@@ -60,7 +60,7 @@
                                     @csrf
 
                                     <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
-                                        {{--  <div class="grid grid-cols-3 gap-4">  --}}
+                                         <div class="grid grid-cols-3 gap-4"> 
 
 
 
@@ -111,10 +111,10 @@
 
                                 </form>
 
-                            </div>
+                            </div> --}}
 
                             <div class="overflow-x-auto">
-                                @if (!$AssociatedMembers->isEmpty())
+                                @if (!$AssociatedMembersClinic->isEmpty())
                                     <form id="bulkDeleteForm" method="POST"
                                         action="{{ route('associated_member.deleteselected') }}">
                                         @csrf
@@ -142,13 +142,19 @@
                                                         data-sort="state_name">Doctor Name</th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                                        data-sort="state_name">Degree</th>
+                                                        data-sort="state_name">Clinic Name</th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                                        data-sort="state_name">Address 1 </th>
+                                                        data-sort="state_name">Address</th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                                        data-sort="state_name">Address 2 </th>
+                                                        data-sort="state_name">Time</th>
+
+                                                    <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                        data-sort="state_name">Work Day</th>
+
+                                                    <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                        data-sort="state_name">Photo</th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
                                                         data-sort="action">Action</th>
@@ -156,7 +162,7 @@
                                             </thead>
                                             <tbody class="list form-check-all">
                                                 <?php $i = 1; ?>
-                                                @foreach ($AssociatedMembers as $assocmem)
+                                                @foreach ($AssociatedMembersClinic as $assocmem)
                                                     <tr>
                                                         <th class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"
                                                             scope="row">
@@ -168,51 +174,64 @@
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id">
-                                                            {{ $i + $AssociatedMembers->perPage() * ($AssociatedMembers->currentPage() - 1) }}
+                                                            {{ $i + $AssociatedMembersClinic->perPage() * ($AssociatedMembersClinic->currentPage() - 1) }}
                                                         </td>
                                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id"
                                                             style="display:none;"><a href="javascript:void(0);"
                                                                 class="fw-medium link-primary id">#VZ2101</a></td>
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                            {{ $assocmem->name }}</td>
+                                                            {{ $assocmem->services->name ?? '' }}</td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                            {{ $assocmem->subservice_name }}</td>
+                                                            {{ $assocmem->subservices->subservice_name ?? '' }}</td>
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                            {{ $assocmem->dr_name }}</td>
+                                                            {{ $assocmem->assocmember->dr_name ?? '' }}</td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                            {{ $assocmem->degree }}</td>
+                                                            {{ $assocmem->clinic_name ?? '' }}</td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                            {{ $assocmem->address_1 }}</td>
+                                                            {{ $assocmem->address ?? '' }}</td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                            {{ $assocmem->address_2 }}</td>
+                                                            {{ $assocmem->time ?? '' }}</td>
+
+                                                        <td
+                                                            class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
+                                                            {{ $assocmem->work_day ?? '' }}</td>
+
+                                                        <td
+                                                            class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 Categories_img">
+                                                            @if ($assocmem->photo)
+                                                                <img class="img-fluid"
+                                                                    src="{{ asset('upload/Clinicphoto') . '/' . $assocmem->photo }}"
+                                                                    alt=""
+                                                                    style="width:50px; height:50px; object-fit:cover;">
+                                                            @else
+                                                                <img class="img-fluid"
+                                                                    src="{{ asset('assets/images/noimage.png') }}"
+                                                                    alt="" height="50px" width="50px">
+                                                            @endif
+                                                        </td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                             <div class="flex gap-2">
                                                                 <div class="edit">
                                                                     <a class="mx-1" title="Edit"
-                                                                        href="{{ route('associated_member.edit', $assocmem->id) }}">
+                                                                        href="{{ route('AssocitedMemberClinic.edit', $assocmem->id) }}">
                                                                         <i class="ri-edit-2-fill"></i>
                                                                     </a>
 
                                                                     <a class="mx-1" title="Delete" href="#"
                                                                         onclick="confirmSingleDelete({{ $assocmem->id }})">
                                                                         <i class="ri-delete-bin-5-fill"></i>
-                                                                    </a>
-
-                                                                    <a class="mx-1" title="Associated Clinic"
-                                                                        href="{{ route('AssocitedMemberClinic.index', $assocmem->id) }}">
-                                                                        <i class="fa fa-plus"></i>
                                                                     </a>
 
                                                                 </div>
@@ -225,7 +244,7 @@
                                         </table>
                                     </form>
                                     <div class="flex items-center justify-between mt-5">
-                                        {{ $AssociatedMembers->appends(request()->except('page'))->links() }}
+                                        {{ $AssociatedMembersClinic->appends(request()->except('page'))->links() }}
                                     </div>
                                 @else
                                     <div class="noresult">
@@ -320,7 +339,8 @@
                 showCloseButton: true
             }).then(function(result) {
                 if (result.value) {
-                    fetch('{{ route('associated_member.delete', ['id' => '__id__']) }}'.replace('__id__', id), {
+                    fetch('{{ route('AssocitedMemberClinic.delete', ['id' => '__id__']) }}'.replace('__id__',
+                            id), {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -340,7 +360,8 @@
                                     buttonsStyling: false
                                 }).then(() => {
                                     // Redirect to state.index after successful deletion
-                                    window.location.href = `{{ route('associated_member.index') }}`;
+                                    window.location.href =
+                                        `{{ route('AssocitedMemberClinic.index', $id) }}`;
                                 });
                             } else {
                                 Swal.fire({

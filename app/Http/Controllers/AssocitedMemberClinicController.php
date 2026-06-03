@@ -12,6 +12,7 @@ use App\Models\Services;
 
 use App\Models\SubService;
 
+use App\Models\AssociatedMemberClinic;
 use App\Models\AssociatedMember;
 
 // use App\Models\PriceMaster;
@@ -24,44 +25,18 @@ use Illuminate\Validation\ValidationException;
 
 
 
-class AssociatedMemberController extends Controller
+class AssocitedMemberClinicController extends Controller
 
 {
 
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
         try {
-            $serviceid = $request->serviceid;
-            $subservice_id = $request->subservice_id;
-            $doctor = $request->doctor;
-
             $Services = Services::orderBy('name', 'asc')->get();
             $SubService = SubService::orderBy('subservice_name', 'asc')->get();
-
-            $AssociatedMembers = AssociatedMember::select(
-                'associated_members.*',
-                'services.id as service_id',
-                'services.name',
-                'sub_service.sub_service_id',
-                'sub_service.subservice_name'
-            )
-                ->leftJoin('services', 'associated_members.service_id', '=', 'services.id')
-                ->leftJoin('sub_service', 'associated_members.sub_service_id', '=', 'sub_service.sub_service_id')
-                ->where('associated_members.iStatus', 1)
-                ->where('associated_members.isDelete', 0)
-                ->when($doctor, function ($query, $doctor) {
-                    $query->where('associated_members.dr_name', 'like', '%' . $doctor . '%');
-                })
-                ->when($serviceid, function ($query, $serviceid) {
-                    $query->where('associated_members.service_id', $serviceid);
-                })
-                ->when($subservice_id, function ($query, $subservice_id) {
-                    $query->where('associated_members.sub_service_id', $subservice_id);
-                })
-                ->orderBy('associated_members.dr_name', 'asc')
+            $AssociatedMembersClinic = AssociatedMemberClinic::with('services', 'subservices', 'assocmember')->where('associated_member_id', $id)
                 ->paginate(config('app.per_page'));
-
-            return view('associated_member.index', compact('Services', 'SubService', 'AssociatedMembers', 'serviceid', 'subservice_id', 'doctor'));
+            return view('associated_clinic_member.index', compact('id', 'AssociatedMembersClinic', 'Services', 'SubService'));
         } catch (\Throwable $th) {
             \Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
@@ -100,9 +75,10 @@ class AssociatedMemberController extends Controller
         try {
             $Services = Services::orderBy('name', 'asc')->get();
             $SubService = SubService::orderBy('subservice_name', 'asc')->get();
+            $AssociatedMember = AssociatedMember::get();
             // $prices = PriceMaster::orderBy('priceId', 'asc')->get();
 
-            return view('associated_member.add', compact('Services', 'SubService'));
+            return view('associated_clinic_member.add', compact('Services', 'SubService', 'AssociatedMember'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
@@ -111,7 +87,6 @@ class AssociatedMemberController extends Controller
 
 
     public function store(Request $request)
-
     {
         DB::beginTransaction();
         try {
@@ -119,11 +94,11 @@ class AssociatedMemberController extends Controller
 
                 'service_id' => 'required',
                 'sub_service_id' => 'required',
-                'doctor_name' => 'required',
-                'degree' => 'required',
-                'address_1' => 'required',
-                'address_2' => 'required',
-                'about_dr_or_clinic' => 'required',
+                'assoc_member_id' => 'required',
+                'clinic_name' => 'required',
+                'address' => 'required',
+                'time' => 'required',
+                'work_day' => 'required',
             ]);
 
             $img = "";
@@ -131,7 +106,7 @@ class AssociatedMemberController extends Controller
                 $root = $_SERVER['DOCUMENT_ROOT'];
                 $image = $request->file('photo');
                 $img = time() . '_' . date('dmYHis') . '.' . $image->getClientOriginalExtension();
-                $destinationpath = $root . '/upload/photo/';
+                $destinationpath = $root . '/upload/Clinicphoto/';
 
                 if (!file_exists($destinationpath)) {
                     mkdir($destinationpath, 0755, true);
@@ -140,48 +115,24 @@ class AssociatedMemberController extends Controller
                 $image->move($destinationpath, $img);
             }
 
-            $logo = "";
-            if ($request->hasFile('Logo')) {
-                $root = $_SERVER['DOCUMENT_ROOT'];
-                $image = $request->file('Logo');
-                $logo = time() . '_' . date('dmYHis') . '.' . $image->getClientOriginalExtension();
-                $destinationpath = $root . '/upload/logo/';
-
-                if (!file_exists($destinationpath)) {
-                    mkdir($destinationpath, 0755, true);
-                }
-
-                $image->move($destinationpath, $logo);
-            }
-
-            $AssociatedMember = AssociatedMember::create([
+            $AssociatedMember = AssociatedMemberClinic::create([
 
                 'service_id' => $request->service_id ?? 0,
-
                 'sub_service_id' => $request->sub_service_id ?? 0,
-                'dr_name' => $request->doctor_name,
-                'degree' => $request->degree,
-                'address_1' => $request->address_1,
-                'address_2' => $request->address_2,
-                'about_dr_or_clinic' => $request->about_dr_or_clinic,
-                'patients_consulted' => $request->patients_consulted,
-                'rating' => $request->rating,
-                'practice' => $request->practice,
-                'opd_changes' => $request->opd_changes,
-                'crazy_member_charge' => $request->Crazy_Member,
-                'Experience' => $request->experience,
-                'Expertise' => $request->expertise,
+                'associated_member_id' => $request->assoc_member_id,
+                'clinic_name' => $request->clinic_name,
+                'address' => $request->address,
+                'time' => $request->time,
+                'work_day' => $request->work_day,
                 'photo' => $img,
-                'logo' => $logo,
-                'When_to_Consult' => $request->when_to_consult,
                 'created_at' => date('Y-m-d H:i:s'),
                 'strIP' => $request->ip(),
 
             ]);
             DB::commit();
-            Toastr::success('Associated Member created successfully :)', 'Success');
+            Toastr::success('Associated Clinic created successfully :)', 'Success');
 
-            return redirect()->route('associated_member.index');
+            return redirect()->route('AssocitedMemberClinic.index', $request->assoc_member_id);
         } catch (ValidationException $e) {
 
             DB::rollBack();
@@ -219,8 +170,6 @@ class AssociatedMemberController extends Controller
         }
     }
 
-
-
     public function edit(Request $request, $id)
 
     {
@@ -228,8 +177,9 @@ class AssociatedMemberController extends Controller
         try {
             $Services = Services::orderBy('name', 'asc')->get();
             $SubServices = SubService::orderBy('subservice_name', 'asc')->get();
-            $data = AssociatedMember::where('id', $id)->first();
-            return view('associated_member.edit', compact('Services', 'SubServices', 'data'));
+            $data = AssociatedMemberClinic::where('id', $id)->first();
+            $AssociatedMember = AssociatedMember::get();
+            return view('associated_clinic_member.edit', compact('Services', 'SubServices', 'data', 'AssociatedMember'));
         } catch (\Throwable $th) {
 
             // Rollback and return with Error
@@ -240,28 +190,26 @@ class AssociatedMemberController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
-
+    public function update(Request $request)
     {
         DB::beginTransaction();
-
         try {
+            // dd($request);
             $request->validate([
 
                 'editserviceid' => 'required',
                 'editsubserviceid' => 'required',
-                'edit_doctor_name' => 'required',
-                'edit_degree' => 'required',
-                'edit_address_1' => 'required',
-                'edit_address_2' => 'required',
-                'about_dr_or_clinic' => 'required',
+                'clinic_name' => 'required',
+                'address' => 'required',
+                'time' => 'required',
+                'work_day' => 'required',
             ]);
             if ($request->hasFile('photo')) {
                 $root = $_SERVER['DOCUMENT_ROOT'];
                 $image = $request->file('photo');
 
                 $img = time() . '_' . date('dmYHis') . '.' . $image->getClientOriginalExtension();
-                $destinationpath = $root . '/upload/photo/';
+                $destinationpath = $root . '/upload/Clinicphoto/';
 
                 if (!file_exists($destinationpath)) {
                     mkdir($destinationpath, 0755, true);
@@ -274,59 +222,25 @@ class AssociatedMemberController extends Controller
             } else {
                 $img = $request->input('hiddenPhoto');
             }
-            if ($request->hasFile('Logo')) {
-                $root = $_SERVER['DOCUMENT_ROOT'];
-                $image = $request->file('Logo');
 
-                $logo = time() . '_' . date('dmYHis') . '.' . $image->getClientOriginalExtension();
-                $destinationpath = $root . '/upload/logo/';
-
-                if (!file_exists($destinationpath)) {
-                    mkdir($destinationpath, 0755, true);
-                }
-                $image->move($destinationpath, $logo);
-                $oldImg = $request->input('hiddenlogo');
-                if ($oldImg && file_exists($destinationpath . '/' . $oldImg)) {
-                    unlink($destinationpath . '/' . $oldImg);
-                }
-            } else {
-                $logo = $request->input('hiddenlogo');
-            }
-            AssociatedMember::where(['id' => $id])->update([
+            AssociatedMemberClinic::where(['id' => $request->edit_id])->update([
 
                 'service_id' => $request->editserviceid,
                 'sub_service_id' => $request->editsubserviceid ?? 0,
-                'dr_name' => $request->edit_doctor_name,
-                'degree' => $request->edit_degree,
-                'address_1' => $request->edit_address_1,
-                'address_2' => $request->edit_address_2,
-                'about_dr_or_clinic' => $request->about_dr_or_clinic,
-                'patients_consulted' => $request->patients_consulted,
-                'rating' => $request->rating,
-                'practice' => $request->practice,
+                'clinic_name' => $request->clinic_name,
+                'address' => $request->address,
+                'time' => $request->time,
+                'work_day' => $request->work_day,
                 'photo' => $img,
-                'logo' => $logo,
-                'crazy_member_charge' => $request->Crazy_Member,
-                'Experience' => $request->experience,
-                'opd_changes' => $request->opd_changes,
-                'Expertise' => $request->expertise,
-                'When_to_Consult' => $request->when_to_consult,
                 'updated_at' => date('Y-m-d H:i:s'),
-
-                'strIP' => $request->ip(),
-
             ]);
-
-
 
             DB::commit();
 
-
-
-            Toastr::success('Associated Member updated successfully :)', 'Success');
+            Toastr::success('Associated Clinic updated successfully :)', 'Success');
 
             // return back();
-            return redirect()->route('associated_member.index');
+            return redirect()->route('AssocitedMemberClinic.index', $request->assoc_member_id);
         } catch (ValidationException $e) {
 
             DB::rollBack();
@@ -346,9 +260,6 @@ class AssociatedMemberController extends Controller
                     $errorMessages[] = $message;
                 }
             }
-
-
-
             // Join all error messages into a single string
 
             $errorMessageString = implode(', ', $errorMessages);
@@ -368,8 +279,6 @@ class AssociatedMemberController extends Controller
         }
     }
 
-
-
     public function delete(Request $request)
 
     {
@@ -377,9 +286,9 @@ class AssociatedMemberController extends Controller
         DB::beginTransaction();
         try {
 
-            AssociatedMember::where(['iStatus' => 1, 'isDelete' => 0, 'id' => $request->id])->delete();
+            AssociatedMemberClinic::where(['id' => $request->id])->delete();
             DB::commit();
-            Toastr::success('Associated Member deleted successfully :)', 'Success');
+            Toastr::success('Associated Clinic deleted successfully :)', 'Success');
             return response()->json(['success' => true]);
         } catch (ValidationException $e) {
 

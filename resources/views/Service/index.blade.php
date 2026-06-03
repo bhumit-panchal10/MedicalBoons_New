@@ -56,6 +56,18 @@
 
                                                 <div class="mb-3">
                                                     <label for="email-field"
+                                                        class="inline-block mb-2 text-base font-medium">Type<span
+                                                            class="text-red-500"> *</span> </label>
+                                                    <select type="text" id="email-field" name="is_primary" required
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                                        <option value="">--Please Select--</option>
+                                                        <option value="1">Primary</option>
+                                                        <option value="2">Secondary</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="email-field"
                                                         class="inline-block mb-2 text-base font-medium">Description<span
                                                             class="text-red-500"> *</span> </label>
                                                     <textarea id="email-field" name="description" maxlength="50"
@@ -117,6 +129,9 @@
                                                         data-sort="state_name">Service Name </th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
+                                                        data-sort="state_name"> Primary </th>
+
+                                                    <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
                                                         data-sort="state_name"> Status </th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
@@ -146,6 +161,10 @@
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
                                                             {{ $Service->name }}
                                                         </td>
+
+                                                        <td
+                                                            class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
+                                                            {{ $Service->is_primary == 1 ? 'Yes' : 'No' }} </td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 job_location">
@@ -237,6 +256,16 @@
                                     placeholder="Enter Service Name" required autocomplete="off" autofocus>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="email-field" class="inline-block mb-2 text-base font-medium">Type<span
+                                        class="text-red-500"> *</span> </label>
+                                <select type="text" id="EditIsPrimary" name="is_primary" required
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                    <option value="">--Please Select--</option>
+                                    <option value="1">Primary</option>
+                                    <option value="2">Secondary</option>
+                                </select>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="email-field" class="inline-block mb-2 text-base font-medium">Description<span
@@ -280,6 +309,7 @@
                         var obj = JSON.parse(data);
                         $("#EditserviceName").val(obj.name);
                         $("#EditDescription").val(obj.description);
+                        $("#EditIsPrimary").val(obj.is_primary);
                         $('#serviceid').val(id);
                     },
                     error: function(xhr) {

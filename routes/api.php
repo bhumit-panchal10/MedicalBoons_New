@@ -35,6 +35,8 @@ Route::get('/LabTestCategory', [FrontApiController::class, 'LabTestCategory'])->
 Route::post('/AssociatedMember', [FrontApiController::class, 'AssociatedMember'])->name('AssociatedMember');
 Route::get('/Bannerlist', [FrontApiController::class, 'Bannerlist'])->name('Bannerlist');
 
+Route::post('/servicewise-subservice-doctor', [FrontApiController::class, 'Servicewsie_SubService_Doctor']);
+Route::post('/doctor-clinic-list', [FrontApiController::class, 'DoctorClinicList']);
 
 //Route::get('/LabTestMaster', [FrontApiController::class, 'LabTestMaster'])->name('LabTestMaster');
 Route::post('/searchLabTests', [FrontApiController::class, 'searchLabTests'])->name('searchLabTests');
@@ -62,18 +64,7 @@ Route::post('/ExtraMember', [FrontApiController::class, 'ExtraMemberamountcalcul
 Route::post('/RenewPlan', [FrontApiController::class, 'RenewPlan'])->name('RenewPlan');
 Route::post('/paymentstatus', [FrontApiController::class, 'paymentstatus'])->name('paymentstatus');
 
-
-//vendor api
-Route::post('/new-registration', [TechnicialApiController::class, 'vendor_new_registration'])->name('vendor_new_registration');
-Route::post('/Technicial/forgot/password', [TechnicialApiController::class, 'forgot_password'])->name('forgot_password');
-Route::post('/Technicial/forgot/password/verifyOTP', [TechnicialApiController::class, 'forgot_password_verifyOTP'])->name('forgot_password_verifyOTP');
-Route::post('/logout', [TechnicialApiController::class, 'logout']);
-Route::post('/Technicial/profile', [TechnicialApiController::class, 'profiledetails'])->name('profiledetails');
-Route::post('/Technicial/profile/update', [TechnicialApiController::class, 'profileUpdate'])->name('profileUpdate');
-Route::post('/Technicial/Dashboard', [TechnicialApiController::class, 'technicialdashboard'])->name('technicialdashboard');
-Route::post('/Technicial/paymentstatus', [TechnicialApiController::class, 'paymentstatus'])->name('paymentstatus');
-Route::post('/Technicial/claimOrder', [TechnicialApiController::class, 'claimOrder'])->name('claimOrder');
-
+Route::post('/Time/slot', [FrontApiController::class, 'getTimeSlots'])->name('getTimeSlots');
 
 Route::get('/testroute', function () {
     $name = "Funny Coder";

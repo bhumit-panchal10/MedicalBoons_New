@@ -37,6 +37,140 @@ use Carbon\Carbon;
 class FrontApiController extends Controller
 {
 
+    public function DoctorClinicList(Request $request)
+    {
+        try {
+            $request->validate([
+                'service_id' => 'required|exists:services,id',
+                'sub_service_id' => 'nullable',
+                'doctor_id' => 'nullable'
+            ]);
+
+            $query = AssociatedMemberClinic::with([
+                'services',
+                'subservices',
+                'assocmember'
+            ])
+                ->where('isDelete', 0)
+                ->where('iStatus', 1);
+
+            if (!empty($request->service_id)) {
+                $query->where('service_id', $request->service_id);
+            }
+
+            if (!empty($request->sub_service_id)) {
+                $query->where('sub_service_id', $request->sub_service_id);
+            }
+
+            if (!empty($request->doctor_id)) {
+                $query->where('associated_member_id', $request->doctor_id);
+            }
+
+            $clinics = $query->get();
+
+            $clinics->map(function ($clinic) {
+
+                $clinic->photo = !empty($clinic->photo)
+                    ? 'https://medicalboons.com/upload/Clinicphoto/' . $clinic->photo
+                    : '';
+
+                return $clinic;
+            });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Clinic List Found',
+                'data' => $clinics
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    public function Servicewsie_SubService_Doctor(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'service_id' => 'required|exists:services,id'
+            ]);
+
+            $subServices = SubService::where([
+                'service_id' => $request->service_id,
+                'isDelete' => 0,
+                'iStatus' => 1
+            ])
+                ->select(
+                    'sub_service_id',
+                    'subservice_name'
+                )
+                ->orderBy('subservice_name', 'ASC')
+                ->get();
+
+            $doctors = AssociatedMember::where([
+                'service_id' => $request->service_id,
+                'isDelete' => 0,
+                'iStatus' => 1
+            ])->orderBy('dr_name', 'ASC')
+                ->get()
+                ->map(function ($doctor) {
+
+                    $doctor->photo = !empty($doctor->photo)
+                        ? url('upload/photo/' . $doctor->photo)
+                        : url('assets/images/noimage.png');
+
+                    return $doctor;
+                });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Found',
+                'data' => [
+                    'sub_services' => $subServices,
+                    'doctors' => $doctors
+                ]
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function getTimeSlots()
+    {
+        $slots = [];
+
+        // 07:00 AM to 10:00 AM => 30 min slot
+        $time = strtotime('07:00 AM');
+
+        while ($time < strtotime('10:00 AM')) {
+            $next = strtotime('+30 minutes', $time);
+
+            $slots[] = date('h:i A', $time) . ' to ' . date('h:i A', $next);
+
+            $time = $next;
+        }
+
+        // 10:00 AM to 07:00 PM => 1 hour slot
+        $time = strtotime('10:00 AM');
+
+        while ($time < strtotime('07:00 PM')) {
+            $next = strtotime('+1 hour', $time);
+
+            $slots[] = date('h:i A', $time) . ' to ' . date('h:i A', $next);
+
+            $time = $next;
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $slots
+        ]);
+    }
 
     public function servicelist(Request $request)
     {
@@ -110,11 +244,11 @@ class FrontApiController extends Controller
 
             $orderId  = $member->Order_id;
             $order = CorporateOrder::with('plan')->where('Corporate_Order_id', $orderId)->get();
-            
+
             $LabReportRequestMasters = LabReportRequestMaster::where('member_id', $request->member_id)->get();  // Use get() for multiple records
             $usedwalletbalance = $LabReportRequestMasters->sum('discount_amount');  // Sum all discount_amount values
 
-            
+
             $formatted = $order->map(function ($item) use ($usedwalletbalance) {
                 $expiryDate = $item->end_date;
                 $planFlag = ($expiryDate && $expiryDate >= now()->toDateString()) ? 1 : 0;
@@ -202,11 +336,11 @@ class FrontApiController extends Controller
     public function AssociatedMember(Request $request)
     {
         try {
-            
+
             $request->validate([
                 'subservice_id' => 'nullable',
             ]);
-    
+
             $listOfAssociatedMember = AssociatedMember::with('subservices')
                 ->where('sub_service_id', $request->subservice_id)
                 ->get();
@@ -230,20 +364,18 @@ class FrontApiController extends Controller
                     "about_dr_or_clinic" => $member->about_dr_or_clinic,
                 ];
             }
-    
-    
+
+
             return response()->json([
                 'success' => true,
                 'message' => "Successfully fetched associated members.",
                 'data' => $data,
             ], 200);
-    
         } catch (\Throwable $th) {
-            
+
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
-
 
     public function ExtraMemberamountcalculate(Request $request)
     {
@@ -266,7 +398,6 @@ class FrontApiController extends Controller
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
-
 
     public function Lablist(Request $request)
     {
@@ -319,37 +450,37 @@ class FrontApiController extends Controller
             }
 
             // Prepare single item array as list
-           $data = $Plan->map(function ($p) use ($CorporateOrder) {
-            return [
-                'id' => $p->id,
-                'sequence_no' => $p->sequence_no,
-                'name' => $p->name,
-                'amount' => $p->amount,
-                'duration_in_days' => $p->duration_in_days,
-                'plan_image' => 'https://medicalboons.com/upload/plan-images/'.$p->plan_image ?? '',
-                'plan_detail_pdf' => $p->plan_detail_pdf ? 'https://medicalboons.com/upload/plan-detail-pdf/'.$p->plan_detail_pdf : '',
+            $data = $Plan->map(function ($p) use ($CorporateOrder) {
+                return [
+                    'id' => $p->id,
+                    'sequence_no' => $p->sequence_no,
+                    'name' => $p->name,
+                    'amount' => $p->amount,
+                    'duration_in_days' => $p->duration_in_days,
+                    'plan_image' => 'https://medicalboons.com/upload/plan-images/' . $p->plan_image ?? '',
+                    'plan_detail_pdf' => $p->plan_detail_pdf ? 'https://medicalboons.com/upload/plan-detail-pdf/' . $p->plan_detail_pdf : '',
 
-                'no_of_members' => $p->no_of_members,
-                'terms_and_condition' => $p->terms_and_condition,
-                'wallet_balance' => $p->wallet_balance,
-                'extra_amount_per_person' => $p->extra_amount_per_person,
-                'extra_amount_per_person_in_wallet' => $p->extra_amount_per_person_in_wallet,
-                'lab_max_applicable_amount_each_time' => $p->lab_max_applicable_amount_each_time,
-                'lab_minimum_order_value' => $p->lab_minimum_order_value,
-                'lab_special_terms_and_condition' => $p->lab_special_terms_and_condition,
-                'iStatus' => $p->iStatus,
-                'isDelete' => $p->isDelete,
-                'created_at' => $p->created_at,
-                'updated_at' => $p->updated_at,
-                'strIP' => $p->strIP,
-                'slugname' => $p->slugname,
-        
-                // same order fields for each item
-                'start_date'  => $CorporateOrder->start_date,
-                'end_date'    => $CorporateOrder->end_date,
-                'iExtraMember'=> $CorporateOrder->iExtraMember ?? 0,
-            ];
-        })->values();
+                    'no_of_members' => $p->no_of_members,
+                    'terms_and_condition' => $p->terms_and_condition,
+                    'wallet_balance' => $p->wallet_balance,
+                    'extra_amount_per_person' => $p->extra_amount_per_person,
+                    'extra_amount_per_person_in_wallet' => $p->extra_amount_per_person_in_wallet,
+                    'lab_max_applicable_amount_each_time' => $p->lab_max_applicable_amount_each_time,
+                    'lab_minimum_order_value' => $p->lab_minimum_order_value,
+                    'lab_special_terms_and_condition' => $p->lab_special_terms_and_condition,
+                    'iStatus' => $p->iStatus,
+                    'isDelete' => $p->isDelete,
+                    'created_at' => $p->created_at,
+                    'updated_at' => $p->updated_at,
+                    'strIP' => $p->strIP,
+                    'slugname' => $p->slugname,
+
+                    // same order fields for each item
+                    'start_date'  => $CorporateOrder->start_date,
+                    'end_date'    => $CorporateOrder->end_date,
+                    'iExtraMember' => $CorporateOrder->iExtraMember ?? 0,
+                ];
+            })->values();
 
             return response()->json([
                 'success' => true,
@@ -360,7 +491,6 @@ class FrontApiController extends Controller
             return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
         }
     }
-
 
     public function LabTestCategory(Request $request)
     {
@@ -390,7 +520,7 @@ class FrontApiController extends Controller
             $request->validate([
                 'member_id' => 'required'
             ]);
-            $listOffamilymemb = FamilyMember::where(['member_id' => $request->member_id,'active_inactive' => 0])->get();
+            $listOffamilymemb = FamilyMember::where(['member_id' => $request->member_id, 'active_inactive' => 0])->get();
 
             return response()->json([
                 'success' => true,
@@ -509,7 +639,7 @@ class FrontApiController extends Controller
     //         }
 
     //         $orderId  = $member->Order_id;
-            
+
     //         $corporateOrder = CorporateOrder::where('Corporate_Order_id', $orderId)->first();
     //         $plan = Plan::where('id', $corporateOrder->iPlanId)->first();
     //         $walletbal = $plan->wallet_balance ?? 0;
@@ -517,7 +647,7 @@ class FrontApiController extends Controller
     //         $LabReportRequestTemps = LabReportRequestTemp::where('member_id', $request->member_id)->get();
     //         $usedWalletBalance = $LabReportRequestTemps->sum('discount_amount'); // Sum all discount_amount values
 
-            
+
     //         $latestLedger = Ledger::where('order_id', $orderId)->orderByDesc('id')->first();
     //         $listOffamilymemb = LabReportRequestTemp::with('labtestmaster', 'familymembername')->where('member_id', $request->member_id)->get();
 
@@ -543,74 +673,73 @@ class FrontApiController extends Controller
     //         return response()->json(['error' => $th->getMessage()], 500);
     //     }
     // }
-    
+
     public function LabTestList(Request $request)
     {
-    try {
-        // Validate input
-        $request->validate([
-            'member_id' => 'required'
-        ]);
+        try {
+            // Validate input
+            $request->validate([
+                'member_id' => 'required'
+            ]);
 
-        // Fetch the member
-        $member = Member::where('id', $request->member_id)->first();
-        if (!$member) {
-            return response()->json(['success' => false, 'message' => 'Member not found'], 404);
+            // Fetch the member
+            $member = Member::where('id', $request->member_id)->first();
+            if (!$member) {
+                return response()->json(['success' => false, 'message' => 'Member not found'], 404);
+            }
+
+            // Get the Corporate Order associated with the member
+            $orderId = $member->Order_id;
+            $corporateOrder = CorporateOrder::with('plan')->where('Corporate_Order_id', $orderId)->first();
+
+            // If no corporate order is found, return error
+            if (!$corporateOrder) {
+                return response()->json(['success' => false, 'message' => 'Corporate Order not found'], 404);
+            }
+
+            // Get the plan details
+            $plan = $corporateOrder->plan;
+            $walletBalance = $plan->wallet_balance ?? 0;
+
+            // Get the extra member wallet balance (if any)
+            $extraMember = $corporateOrder->iExtraMember ?? 0;
+            $extraMemberWalletBal = $plan->extra_amount_per_person_in_wallet ?? 0;
+            $extraMemberAmount = $extraMember * $extraMemberWalletBal;
+
+            // Calculate the total wallet balance (plan balance + extra member amount)
+            $totalWalletBalance = $walletBalance + $extraMemberAmount;
+
+            // Fetch LabReportRequestMasters (use get() to fetch all)
+            $LabReportRequestMasters = LabReportRequestMaster::where('member_id', $request->member_id)->get();
+
+            // Calculate the used wallet balance (sum of all discount_amount values)
+            $usedWalletBalance = $LabReportRequestMasters->sum('discount_amount');
+            $listOffamilymemb = LabReportRequestTemp::with('labtestmaster', 'familymembername')->where('member_id', $request->member_id)->get();
+
+            // Format the LabReportRequestMasters data
+            $formattedLabTests = $listOffamilymemb->map(function ($item) {
+                return [
+                    'Lab_Test_Master_id' => $item->labtestmaster->Lab_Test_Master_id ?? null,
+                    'lab_test_name' => $item->labtestmaster->Test_Name ?? null,
+                    'family_member_name' => $item->familymembername->member_name ?? null,
+                    'family_member_id' => $item->familymembername->family_member_id ?? null,
+                    'lab_report_temp_id' => $item->LabReport_Request_temp_id,
+                    // Add any other fields from LabReportRequestMaster if needed
+                ];
+            });
+
+            // Return the response with formatted lab test data, wallet balance, and used wallet balance
+            return response()->json([
+                'success' => true,
+                'message' => "Successfully fetched lab test list...",
+                'data' => $formattedLabTests,
+                'wallet_balance' => $totalWalletBalance,  // Total wallet balance
+                'used_wallet_balance' => $usedWalletBalance // Used wallet balance
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
         }
-
-        // Get the Corporate Order associated with the member
-        $orderId = $member->Order_id;
-        $corporateOrder = CorporateOrder::with('plan')->where('Corporate_Order_id', $orderId)->first();
-        
-        // If no corporate order is found, return error
-        if (!$corporateOrder) {
-            return response()->json(['success' => false, 'message' => 'Corporate Order not found'], 404);
-        }
-
-        // Get the plan details
-        $plan = $corporateOrder->plan;
-        $walletBalance = $plan->wallet_balance ?? 0;
-
-        // Get the extra member wallet balance (if any)
-        $extraMember = $corporateOrder->iExtraMember ?? 0;
-        $extraMemberWalletBal = $plan->extra_amount_per_person_in_wallet ?? 0;
-        $extraMemberAmount = $extraMember * $extraMemberWalletBal;
-
-        // Calculate the total wallet balance (plan balance + extra member amount)
-        $totalWalletBalance = $walletBalance + $extraMemberAmount;
-
-        // Fetch LabReportRequestMasters (use get() to fetch all)
-        $LabReportRequestMasters = LabReportRequestMaster::where('member_id', $request->member_id)->get();
-
-        // Calculate the used wallet balance (sum of all discount_amount values)
-        $usedWalletBalance = $LabReportRequestMasters->sum('discount_amount');
-        $listOffamilymemb = LabReportRequestTemp::with('labtestmaster', 'familymembername')->where('member_id', $request->member_id)->get();
-       
-        // Format the LabReportRequestMasters data
-        $formattedLabTests = $listOffamilymemb->map(function ($item) {
-            return [
-                'Lab_Test_Master_id' => $item->labtestmaster->Lab_Test_Master_id ?? null,
-                'lab_test_name' => $item->labtestmaster->Test_Name ?? null,
-                'family_member_name' => $item->familymembername->member_name ?? null,
-                'family_member_id' => $item->familymembername->family_member_id ?? null,
-                'lab_report_temp_id' => $item->LabReport_Request_temp_id,
-                // Add any other fields from LabReportRequestMaster if needed
-            ];
-        });
-
-        // Return the response with formatted lab test data, wallet balance, and used wallet balance
-        return response()->json([
-            'success' => true,
-            'message' => "Successfully fetched lab test list...",
-            'data' => $formattedLabTests,
-            'wallet_balance' => $totalWalletBalance,  // Total wallet balance
-            'used_wallet_balance' => $usedWalletBalance // Used wallet balance
-        ], 200);
-        
-    } catch (\Throwable $th) {
-        return response()->json(['error' => $th->getMessage()], 500);
     }
-}
 
 
     public function LabTestDelete(Request $request)
@@ -719,7 +848,6 @@ class FrontApiController extends Controller
                 'message' => "Successfully fetched list of lab tests.",
                 'data' => $results,
             ], 200);
-
         } catch (\Throwable $th) {
             // Handle errors gracefully
             return response()->json(['error' => $th->getMessage()], 500);
@@ -815,7 +943,7 @@ class FrontApiController extends Controller
             $finalPayable = $netAfterDiscounts < $MIN_PAYABLE_FLOOR
                 ? $netAfterDiscounts + $VISIT_CHARGE
                 : $netAfterDiscounts;
-                
+
             $familymember = FamilyMember::where('family_member_id', $request->family_member_id)
                 ->first();
             if (!$familymember) {
@@ -874,7 +1002,7 @@ class FrontApiController extends Controller
             }
 
             $corporateOrder = CorporateOrder::where('Corporate_Order_id', $orderId)->first();
-          
+
             if (!$corporateOrder) {
                 return response()->json(['success' => false, 'message' => 'Corporate Order not found'], 404);
             }
@@ -901,10 +1029,10 @@ class FrontApiController extends Controller
             }
 
             $discountLimit = (float) $plan->lab_max_applicable_amount_each_time;
-            
+
             $extramemberamount = $plan->extra_amount_per_person;
             $netAmount = $totalNetAmount - $extramemberamount;
-        
+
             return response()->json([
                 'success' => true,
                 'message' => 'Discount applied successfully',
@@ -1023,7 +1151,7 @@ class FrontApiController extends Controller
     //         ], 500);
     //     }
     // }
-    
+
     public function LabTestSubmit(Request $request)
     {
         try {
@@ -1080,7 +1208,7 @@ class FrontApiController extends Controller
             DB::table('LabReport_Request_temp')
                 ->where('member_id', $request->member_id)
                 ->delete();
-                
+
             FamilyMember::where('family_member_id', $request->family_member_id)
                 ->update([
                     'discount_apply' => 1,
@@ -1183,7 +1311,7 @@ class FrontApiController extends Controller
             ]);
             // dd($RenewPlan);
             FamilyMember::where('member_id', $request->member_id)
-                    ->update(['active_inactive' => 1]);
+                ->update(['active_inactive' => 1]);
 
             $order_id = $RenewPlan ?? '0';
             $CorporateOrder = CorporateOrder::where("Corporate_Order_id", $order_id)->first();
@@ -1225,7 +1353,7 @@ class FrontApiController extends Controller
     public function paymentstatus(Request $request)
     {
 
-         if ($request->status == "Success") {
+        if ($request->status == "Success") {
             $request->validate([
                 'razorpay_payment_id' => 'required',
                 'order_id' => 'required',
@@ -1254,8 +1382,8 @@ class FrontApiController extends Controller
             ]);
         }
 
-             
-         
+
+
         if ($request->status == "Success") {
 
             $data = array(
@@ -1278,12 +1406,11 @@ class FrontApiController extends Controller
                 'isPayment' => 1
             );
             CorporateOrder::where("Corporate_Order_id", $request->order_id)->update($updateProfileData);
-             // Update Member table
+            // Update Member table
             $member = Member::where('id', $request->member_id)->first();
             $member->update(['Order_id' => $request->order_id]);
-         
         } elseif ($request->status == "Fail") {
-            
+
             $data = array(
                 'order_id' => $request->razorpay_payment_id,
                 'oid' => $request->order_id,
@@ -1305,10 +1432,10 @@ class FrontApiController extends Controller
                 'isPayment' => 2
             );
             CorporateOrder::where("Corporate_Order_id", $request->order_id)->update($updateProfileData);
-           return [
-            'success' => false,
-            'message' => "payment failed successfully."
-        ];
+            return [
+                'success' => false,
+                'message' => "payment failed successfully."
+            ];
         }
         return [
             'success' => true,
@@ -1363,7 +1490,7 @@ class FrontApiController extends Controller
                 ];
             }
 
-            
+
             foreach ($labWiseAppointments as $lab) {
                 // $memberNames = [];
 

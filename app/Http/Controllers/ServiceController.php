@@ -45,6 +45,7 @@ class ServiceController extends Controller
             $Services = Services::create([
                 'name' => $request->servicename,
                 'description' => $request->description,
+                'is_primary' => $request->is_primary,
                 'slug_name' => $slugname,
                 'created_at' => now(),
                 'strIP' => $request->ip(),
@@ -80,7 +81,6 @@ class ServiceController extends Controller
     {
 
         DB::beginTransaction();
-
         try {
             $request->validate([
                 'service_name' => 'required|unique:services,name,' . $request->serviceid,
@@ -91,6 +91,7 @@ class ServiceController extends Controller
             // Update the category record
             $data = [
                 'name' => $request->service_name,
+                'is_primary' => $request->is_primary,
                 'description' => $request->EditDescription,
                 'slug_name' => $slugname,
                 'updated_at' => now(),
