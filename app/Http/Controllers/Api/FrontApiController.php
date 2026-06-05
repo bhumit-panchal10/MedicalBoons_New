@@ -21,6 +21,7 @@ use App\Models\LabReportRequestMaster;
 use App\Models\LabReportRequestdetail;
 use Razorpay\Api\Api;
 use App\Models\FamilyMember;
+use App\Models\AssociatedMemberClinic;
 
 use App\Models\Payment;
 use App\Models\LabMaster;

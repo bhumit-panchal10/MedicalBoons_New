@@ -75,6 +75,29 @@
                                                         placeholder="Enter Description" required autocomplete="off" autofocus></textarea>
                                                 </div>
 
+                                                <div class="mb-3">
+                                                    <label for="icon"
+                                                        class="inline-block mb-2 text-base font-medium">Icon<span
+                                                            class="text-red-500"> *</span> </label>
+                                                    <input type="text" id="icon" name="icon" maxlength="50"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        placeholder="Enter Icon" required autocomplete="off" autofocus>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="color"
+                                                        class="inline-block mb-2 text-base font-medium">Color<span
+                                                            class="text-red-500"> *</span> </label>
+                                                    <input type="text" id="color" name="color" maxlength="50"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        placeholder="Enter Color" required autocomplete="off" autofocus>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    Detail<span style="color:red;">*</span>
+                                                    <textarea id="strDescription" name="detail" class="ckeditor text-slate-800" style="height: 300px !important;"></textarea>
+                                                </div>
+
                                                 <div class="mt-10">
                                                     <button type="submit"
                                                         class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Submit</button>
@@ -108,7 +131,8 @@
 
                             <div class="overflow-x-auto">
                                 @if (!$Services->isEmpty())
-                                    <form id="bulkDeleteForm" method="POST" action="{{ route('service.deleteselected') }}">
+                                    <form id="bulkDeleteForm" method="POST"
+                                        action="{{ route('service.deleteselected') }}">
                                         @csrf
                                         @method('DELETE')
 
@@ -275,6 +299,31 @@
                                     placeholder="Enter Description" required autocomplete="off" autofocus></textarea>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="Countryname-field" class="inline-block mb-2 text-base font-medium">Service
+                                    Icon
+                                    <span class="text-red-500"> *</span>
+                                </label>
+                                <input type="text" name="icon" id="Editicon" maxlength="50"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    placeholder="Enter icon Name" required autocomplete="off" autofocus>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Countryname-field" class="inline-block mb-2 text-base font-medium">
+                                    Color
+                                    <span class="text-red-500"> *</span>
+                                </label>
+                                <input type="text" name="color" id="Editcolor" maxlength="50"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    placeholder="Enter color Name" required autocomplete="off" autofocus>
+                            </div>
+
+                            <div class="mb-3">
+                                Detail<span style="color:red;">*</span>
+                                <textarea id="editstrDescription" name="detail" class="ckeditor text-slate-800" style="height: 300px !important;"></textarea>
+                            </div>
+
                             <div class="flex justify-end gap-2">
                                 <button type="submit"
                                     class="text-white bg-custom-500 border-custom-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10"
@@ -293,7 +342,11 @@
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('strDescription');
+        CKEDITOR.replace('editstrDescription');
+    </script>
     <script>
         function getEditData(id) {
             var url = "{{ route('service.edit', ':id') }}";
@@ -310,7 +363,13 @@
                         $("#EditserviceName").val(obj.name);
                         $("#EditDescription").val(obj.description);
                         $("#EditIsPrimary").val(obj.is_primary);
+                        $("#Editicon").val(obj.icon);
+                        $("#Editcolor").val(obj.color);
                         $('#serviceid').val(id);
+                        CKEDITOR.instances.editstrDescription.setData(obj.detail || '');
+                        editEditor.setData(obj.detail || '');
+
+
                     },
                     error: function(xhr) {
                         alert('Failed to load data');

@@ -44,8 +44,11 @@ class ServiceController extends Controller
             // Create a new Categories record
             $Services = Services::create([
                 'name' => $request->servicename,
+                'color' => $request->color,
+                'icon' => $request->icon,
                 'description' => $request->description,
                 'is_primary' => $request->is_primary,
+                'detail' => $request->detail,
                 'slug_name' => $slugname,
                 'created_at' => now(),
                 'strIP' => $request->ip(),
@@ -68,8 +71,6 @@ class ServiceController extends Controller
             return redirect()->back()->withInput()->with('error', $th->getMessage());
         }
     }
-
-
 
     public function edit(Request $request)
     {
@@ -94,14 +95,15 @@ class ServiceController extends Controller
                 'is_primary' => $request->is_primary,
                 'description' => $request->EditDescription,
                 'slug_name' => $slugname,
+                'icon' => $request->icon,
+                'color' => $request->color,
+                'detail' => $request->detail,
                 'updated_at' => now(),
                 'strIP' => $request->ip(),
             ];
 
             Services::where("id", $request->serviceid)->update($data);
-
             DB::commit();
-
             Toastr::success('Service updated successfully :)', 'Success');
             return back();
         } catch (ValidationException $e) {

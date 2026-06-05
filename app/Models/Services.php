@@ -21,6 +21,9 @@ class Services extends Model
         'isDelete',
         'strIP',
         'is_primary',
+        'icon',
+        'color',
+        'detail',
         'created_at',
         'updated_at'
 

@@ -12,6 +12,7 @@ use App\Models\Ourclient;
 use App\Models\LabTestCategory;
 use App\Models\Testimonial;
 use App\Models\Member;
+use App\Models\Services;
 use App\Models\FaqMaster;
 use Brian2694\Toastr\Facades\Toastr;
 use GPBMetadata\Google\Api\Service;
@@ -55,8 +56,8 @@ class FrontviewController extends Controller
             //dd($data);
             $Ourclients = Ourclient::take(12)->get();
             $testimonials = Testimonial::get();
-
-            return view('frontview.index', compact('plans', 'LabTestMasters', 'Ourclients', 'data', 'testimonials'));
+            $Services = Services::orderBy('sequence_no')->get();
+            return view('frontview.index', compact('Services', 'plans', 'LabTestMasters', 'Ourclients', 'data', 'testimonials'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
@@ -323,7 +324,8 @@ class FrontviewController extends Controller
     public function Service(Request $request)
     {
         try {
-            return view('frontview.Service');
+            $Services = Services::orderBy('sequence_no')->paginate(config('app.per_page'));
+            return view('frontview.Service', compact('Services'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();

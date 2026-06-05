@@ -80,7 +80,6 @@ Route::get('/Partner-With-Us', [FrontviewController::class, 'PartnerWithUs'])->n
 Route::post('/Partner_sendmail', [FrontviewController::class, 'Partner_sendmail'])->name('Front.Partner_sendmail');
 Route::get('/ThankYou', [FrontviewController::class, 'ThankYou'])->name('Front.ThankYou');
 
-
 Route::get('/B2BLogin', [FrontviewController::class, 'B2BLogin'])->name('Front.B2BLogin');
 //Route::get('/CorporateLogin', [FrontviewController::class, 'CorporateLogin'])->name('Front.CorporateLogin');
 Route::get('/AccessibleServices', [FrontviewController::class, 'AccessibleServices'])->name('Front.AccessibleServices');
