@@ -16,6 +16,7 @@ use App\Http\Controllers\B2BUserAuth\B2BUserLoginController;
 
 use App\Http\Controllers\CUserController;
 use App\Http\Controllers\BUserController;
+use App\Http\Controllers\AssocitedMemberClinicController;
 
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\ServiceController;
@@ -78,7 +79,6 @@ Route::get('/Plan/Detail/{planid?}/{guid?}', [FrontviewController::class, 'PlanD
 Route::get('/Partner-With-Us', [FrontviewController::class, 'PartnerWithUs'])->name('Front.PartnerWithUs');
 Route::post('/Partner_sendmail', [FrontviewController::class, 'Partner_sendmail'])->name('Front.Partner_sendmail');
 Route::get('/ThankYou', [FrontviewController::class, 'ThankYou'])->name('Front.ThankYou');
-
 
 Route::get('/B2BLogin', [FrontviewController::class, 'B2BLogin'])->name('Front.B2BLogin');
 //Route::get('/CorporateLogin', [FrontviewController::class, 'CorporateLogin'])->name('Front.CorporateLogin');
@@ -220,6 +220,17 @@ Route::prefix('admin')->name('plan_detail.')->middleware('auth')->group(function
     Route::delete('/plan_detail/delete', [PlanDetailController::class, 'delete'])->name('delete');
     Route::delete('/plan_detail/deleteselected', [PlanDetailController::class, 'deleteselected'])->name('deleteselected');
     Route::any('/plan_detail/updateStatus', [PlanDetailController::class, 'updateStatus'])->name('updateStatus');
+});
+
+// Associted Member Clinic
+Route::prefix('admin')->name('AssocitedMemberClinic.')->middleware('auth')->group(function () {
+    Route::any('/AssocitedMemberClinic/index/{id?}', [AssocitedMemberClinicController::class, 'index'])->name('index');
+    Route::get('/AssocitedMemberClinic/add', [AssocitedMemberClinicController::class, 'add'])->name('add');
+    Route::post('/AssocitedMemberClinic/store', [AssocitedMemberClinicController::class, 'store'])->name('store');
+    Route::get('/AssocitedMemberClinic/edit/{id?}', [AssocitedMemberClinicController::class, 'edit'])->name('edit');
+    Route::post('/AssocitedMemberClinic/update', [AssocitedMemberClinicController::class, 'update'])->name('update');
+    Route::delete('/AssocitedMemberClinic/delete', [AssocitedMemberClinicController::class, 'delete'])->name('delete');
+    Route::delete('/AssocitedMemberClinic/deleteselected', [AssocitedMemberClinicController::class, 'deleteselected'])->name('deleteselected');
 });
 
 // plan Detail

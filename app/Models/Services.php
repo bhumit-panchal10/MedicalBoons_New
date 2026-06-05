@@ -20,6 +20,10 @@ class Services extends Model
         'iStatus',
         'isDelete',
         'strIP',
+        'is_primary',
+        'icon',
+        'color',
+        'detail',
         'created_at',
         'updated_at'
 

@@ -56,11 +56,46 @@
 
                                                 <div class="mb-3">
                                                     <label for="email-field"
+                                                        class="inline-block mb-2 text-base font-medium">Type<span
+                                                            class="text-red-500"> *</span> </label>
+                                                    <select type="text" id="email-field" name="is_primary" required
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                                        <option value="">--Please Select--</option>
+                                                        <option value="1">Primary</option>
+                                                        <option value="2">Secondary</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="email-field"
                                                         class="inline-block mb-2 text-base font-medium">Description<span
                                                             class="text-red-500"> *</span> </label>
                                                     <textarea id="email-field" name="description" maxlength="50"
                                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                         placeholder="Enter Description" required autocomplete="off" autofocus></textarea>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="icon"
+                                                        class="inline-block mb-2 text-base font-medium">Icon<span
+                                                            class="text-red-500"> *</span> </label>
+                                                    <input type="text" id="icon" name="icon" maxlength="50"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        placeholder="Enter Icon" required autocomplete="off" autofocus>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="color"
+                                                        class="inline-block mb-2 text-base font-medium">Color<span
+                                                            class="text-red-500"> *</span> </label>
+                                                    <input type="text" id="color" name="color" maxlength="50"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        placeholder="Enter Color" required autocomplete="off" autofocus>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    Detail<span style="color:red;">*</span>
+                                                    <textarea id="strDescription" name="detail" class="ckeditor text-slate-800" style="height: 300px !important;"></textarea>
                                                 </div>
 
                                                 <div class="mt-10">
@@ -96,7 +131,8 @@
 
                             <div class="overflow-x-auto">
                                 @if (!$Services->isEmpty())
-                                    <form id="bulkDeleteForm" method="POST" action="{{ route('service.deleteselected') }}">
+                                    <form id="bulkDeleteForm" method="POST"
+                                        action="{{ route('service.deleteselected') }}">
                                         @csrf
                                         @method('DELETE')
 
@@ -115,6 +151,9 @@
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
                                                         data-sort="state_name">Service Name </th>
+
+                                                    <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
+                                                        data-sort="state_name"> Primary </th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 "
                                                         data-sort="state_name"> Status </th>
@@ -146,6 +185,10 @@
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
                                                             {{ $Service->name }}
                                                         </td>
+
+                                                        <td
+                                                            class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
+                                                            {{ $Service->is_primary == 1 ? 'Yes' : 'No' }} </td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 job_location">
@@ -237,6 +280,16 @@
                                     placeholder="Enter Service Name" required autocomplete="off" autofocus>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="email-field" class="inline-block mb-2 text-base font-medium">Type<span
+                                        class="text-red-500"> *</span> </label>
+                                <select type="text" id="EditIsPrimary" name="is_primary" required
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                    <option value="">--Please Select--</option>
+                                    <option value="1">Primary</option>
+                                    <option value="2">Secondary</option>
+                                </select>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="email-field" class="inline-block mb-2 text-base font-medium">Description<span
@@ -244,6 +297,31 @@
                                 <textarea id="EditDescription" name="EditDescription" maxlength="50"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter Description" required autocomplete="off" autofocus></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Countryname-field" class="inline-block mb-2 text-base font-medium">Service
+                                    Icon
+                                    <span class="text-red-500"> *</span>
+                                </label>
+                                <input type="text" name="icon" id="Editicon" maxlength="50"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    placeholder="Enter icon Name" required autocomplete="off" autofocus>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Countryname-field" class="inline-block mb-2 text-base font-medium">
+                                    Color
+                                    <span class="text-red-500"> *</span>
+                                </label>
+                                <input type="text" name="color" id="Editcolor" maxlength="50"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    placeholder="Enter color Name" required autocomplete="off" autofocus>
+                            </div>
+
+                            <div class="mb-3">
+                                Detail<span style="color:red;">*</span>
+                                <textarea id="editstrDescription" name="detail" class="ckeditor text-slate-800" style="height: 300px !important;"></textarea>
                             </div>
 
                             <div class="flex justify-end gap-2">
@@ -264,7 +342,11 @@
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('strDescription');
+        CKEDITOR.replace('editstrDescription');
+    </script>
     <script>
         function getEditData(id) {
             var url = "{{ route('service.edit', ':id') }}";
@@ -280,7 +362,14 @@
                         var obj = JSON.parse(data);
                         $("#EditserviceName").val(obj.name);
                         $("#EditDescription").val(obj.description);
+                        $("#EditIsPrimary").val(obj.is_primary);
+                        $("#Editicon").val(obj.icon);
+                        $("#Editcolor").val(obj.color);
                         $('#serviceid').val(id);
+                        CKEDITOR.instances.editstrDescription.setData(obj.detail || '');
+                        editEditor.setData(obj.detail || '');
+
+
                     },
                     error: function(xhr) {
                         alert('Failed to load data');

@@ -44,7 +44,11 @@ class ServiceController extends Controller
             // Create a new Categories record
             $Services = Services::create([
                 'name' => $request->servicename,
+                'color' => $request->color,
+                'icon' => $request->icon,
                 'description' => $request->description,
+                'is_primary' => $request->is_primary,
+                'detail' => $request->detail,
                 'slug_name' => $slugname,
                 'created_at' => now(),
                 'strIP' => $request->ip(),
@@ -68,8 +72,6 @@ class ServiceController extends Controller
         }
     }
 
-
-
     public function edit(Request $request)
     {
         $services = Services::where('id', $request->id)->first();
@@ -80,7 +82,6 @@ class ServiceController extends Controller
     {
 
         DB::beginTransaction();
-
         try {
             $request->validate([
                 'service_name' => 'required|unique:services,name,' . $request->serviceid,
@@ -91,16 +92,18 @@ class ServiceController extends Controller
             // Update the category record
             $data = [
                 'name' => $request->service_name,
+                'is_primary' => $request->is_primary,
                 'description' => $request->EditDescription,
                 'slug_name' => $slugname,
+                'icon' => $request->icon,
+                'color' => $request->color,
+                'detail' => $request->detail,
                 'updated_at' => now(),
                 'strIP' => $request->ip(),
             ];
 
             Services::where("id", $request->serviceid)->update($data);
-
             DB::commit();
-
             Toastr::success('Service updated successfully :)', 'Success');
             return back();
         } catch (ValidationException $e) {

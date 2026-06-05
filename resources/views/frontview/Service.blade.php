@@ -269,135 +269,23 @@
             </div>
             <div class="services-grid">
                 <!-- 1. Doctor Consultation -->
-                <div class="service-card animate" data-delay="0" id="doctor">
-                    <div class="service-icon">
-                        <i class="fas fa-user-md"></i>
+                @php
+                    $i = 1;
+                @endphp
+                @foreach ($Services as $service)
+                    <div class="service-card animate" data-delay="0" id="doctor">
+                        <div class="service-icon">
+                            {!! $service->icon !!}
+                        </div>
+                        <h3>{{ $i++ }}. {{ $service->name ?? '' }}</h3>
+                        <p>{{ $service->description ?? '' }}</p>
+                        <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
+                            {!! $service->detail ?? '' !!}
+                        </ul>
+                        <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Book Now <i
+                                                            class="fas fa-arrow-right"></i></a> -->
                     </div>
-                    <h3>1. Doctor Consultation</h3>
-                    <p>Consult with experienced doctors across specialties - online, in-clinic or at home. All
-                        consultation options.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>Online video consultations</li>
-                        <li>In-clinic appointments</li>
-                        <li>Home visit options</li>
-                        <li>Multi-specialty doctors</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Book Now <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
-                <!-- 2. Lab Testing -->
-                <div class="service-card animate" data-delay="100" id="lab">
-                    <div class="service-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h3>2. Lab Testing</h3>
-                    <p>Accurate lab tests with home sample collection and trusted lab partners.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>Home sample collection</li>
-                        <li>Accurate reports</li>
-                        <li>Trusted lab partners</li>
-                        <li>Digital reports access</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Book Now <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
-                <!-- 3. Radiology/Scan -->
-                <div class="service-card animate" data-delay="200" id="radiology">
-                    <div class="service-icon">
-                        <i class="fas fa-x-ray"></i>
-                    </div>
-                    <h3>3. Radiology / Scan</h3>
-                    <p>X-Ray, USG, MRI, CT Scan &amp; more at affordable rates with easy booking.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>X-Ray, CT Scan, MRI</li>
-                        <li>Ultrasound imaging</li>
-                        <li>Easy appointment booking</li>
-                        <li>Affordable pricing</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Book Now <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
-                <!-- 4. Popular Packages -->
-                <div class="service-card animate" data-delay="300" id="packages">
-                    <span class="popular-badge">POPULAR</span>
-                    <div class="service-icon">
-                        <i class="fas fa-box"></i>
-                    </div>
-                    <h3>4. Popular Packages</h3>
-                    <p>Health checkups &amp; diagnostic packages designed for individuals and families.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>Full body checkups</li>
-                        <li>Preventive health packages</li>
-                        <li>Family health plans</li>
-                        <li>Customized packages</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">View Packages <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
-                <!-- 5. Wellness & Support -->
-                <div class="service-card animate" data-delay="400" id="wellness">
-                    <div class="service-icon">
-                        <i class="fas fa-spa"></i>
-                    </div>
-                    <h3>5. Wellness &amp; Support</h3>
-                    <p>Healing, ergonomic &amp; audiometry services for your overall well-being.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>Physiotherapy sessions</li>
-                        <li>Ergonomic assessments</li>
-                        <li>Audiometry services</li>
-                        <li>Wellness programs</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Learn More <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
-                <!-- 6. IPD Support -->
-                <div class="service-card animate" data-delay="500" id="ipd">
-                    <div class="service-icon">
-                        <i class="fas fa-hospital-alt"></i>
-                    </div>
-                    <h3>6. IPD Support</h3>
-                    <p>Admission assistance, hospital coordination and complete support during hospitalization.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>Hospital admission help</li>
-                        <li>Room booking assistance</li>
-                        <li>Billing coordination</li>
-                        <li>Complete IPD support</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Get Support <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
-                <!-- 7. Homecare -->
-                <div class="service-card animate" data-delay="600" id="homecare">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3>7. Homecare</h3>
-                    <p>Nursing care, physiotherapy, doctor visits and more services in the comfort of your home.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>Nursing care at home</li>
-                        <li>Doctor home visits</li>
-                        <li>Post-surgery care</li>
-                        <li>Elderly care services</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Book Now <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
-                <!-- 8. Insurance Support -->
-                <div class="service-card animate" data-delay="700" id="insurance">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>8. Insurance Support</h3>
-                    <p>From claim guidance to settlement, we are with you at every step.</p>
-                    <ul style="text-align: left; padding-left: 16px; color: #666; font-size: 14px; line-height: 2;">
-                        <li>Claim filing assistance</li>
-                        <li>Document preparation</li>
-                        <li>Follow-up support</li>
-                        <li>Settlement guidance</li>
-                    </ul>
-                    <!-- <a class="btn-secondary" href="contact.html" style="margin-top: 15px;">Get Help <i
-                                    class="fas fa-arrow-right"></i></a> -->
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

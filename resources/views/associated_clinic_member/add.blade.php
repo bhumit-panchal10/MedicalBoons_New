@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Add Associated Member')
+@section('title', 'Add Associated Clinic')
 @section('content')
     {!! Toastr::message() !!}
 
@@ -19,7 +19,7 @@
                         <a href="#!" class="text-slate-400 dark:text-zink-200">Master Entry</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Add Associated Member
+                        Add Associated Clinic
                     </li>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
                                     <div class="bg-white shadow rounded-md dark:bg-zink-600">
                                         <div
                                             class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
-                                            <h5 class="text-16" id="exampleModalLabel">Add Associated Member</h5>
+                                            <h5 class="text-16" id="exampleModalLabel">Add Associated Clinic</h5>
                                             <a href="{{ route('associated_member.index') }}">
                                                 <button type="button"
                                                     class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
                                             <form onsubmit="return validateFile()" class="tablelist-form"
-                                                action="{{ route('associated_member.store') }}" method="POST"
+                                                action="{{ route('AssocitedMemberClinic.store') }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
 
@@ -84,138 +84,66 @@
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Doctor Name<span
-                                                                class="text-red-500">*</span></label>
-                                                        <input type="text" id="email-field" name="doctor_name"
-                                                            maxlength="150"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Doctor Name" required autocomplete="off"
-                                                            autofocus value="{{ old('doctor_name') }}">
+                                                        <label for="email-field" class="">Associated Member</label>
+                                                        <select name="assoc_member_id" id="assoc_member_id"
+                                                            class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                                            <option selected="" value="">Select Associated Member
+                                                            </option>
+                                                            @foreach ($AssociatedMember as $asscomember)
+                                                                <option value="{{ $asscomember->id }}">
+                                                                    {{ $asscomember->dr_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Degree<span
+                                                        <label for="email-field" class="">Clinic Name<span
                                                                 class="text-red-500">*</span></label>
-                                                        <input type="text" id="email-field" name="degree"
+                                                        <input type="text" id="email-field" name="clinic_name"
                                                             maxlength="150"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Degree" required autocomplete="off" autofocus
-                                                            value="{{ old('degree') }}">
+                                                            placeholder="Enter Clinic Name" required autocomplete="off"
+                                                            autofocus value="{{ old('clinic_name') }}">
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Patients Consulted</label>
-                                                        <input type="text" id="email-field" name="patients_consulted"
+                                                        <label for="email-field" class="">Address<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="text" id="email-field" name="address"
                                                             maxlength="150"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Patients Consulted" autocomplete="off"
-                                                            autofocus value="{{ old('patients_consulted') }}">
+                                                            placeholder="Enter Address" required autocomplete="off"
+                                                            autofocus value="{{ old('address') }}">
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Rating</label>
-                                                        <input type="text" id="Rating" name="rating" maxlength="150"
+                                                        <label for="email-field" class="">Time<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="time" id="time" name="time" maxlength="150"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Rating" autocomplete="off" autofocus
-                                                            value="{{ old('Rating') }}">
+                                                            placeholder="Enter Time" required autocomplete="off" autofocus
+                                                            value="{{ old('time') }}">
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Practice</label>
-                                                        <input type="text" id="practice" name="practice"
+                                                        <label for="email-field" class="">Work Day</label>
+                                                        <input type="text" id="email-field" name="work_day"
                                                             maxlength="150"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Practice" autocomplete="off" autofocus
-                                                            value="{{ old('practice') }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="email-field" class="">Address 1<span
-                                                                class="text-red-500">*</span></label>
-                                                        <input type="text" id="email-field" name="address_1"
-                                                            maxlength="150"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Address 1" required autocomplete="off"
-                                                            autofocus value="{{ old('address_1') }}">
+                                                            placeholder="Enter Work Day" autocomplete="off" autofocus
+                                                            value="{{ old('work_day') }}">
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Address 2<span
-                                                                class="text-red-500">*</span></label>
-                                                        <input type="text" id="email-field" name="address_2"
-                                                            maxlength="150"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Address 2" required autocomplete="off"
-                                                            autofocus value="{{ old('address_2') }}">
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="email-field" class="">About Dr or Clinic<span
-                                                                class="text-red-500">*</span></label>
-                                                        <textarea name="about_dr_or_clinic"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Address 2" required autocomplete="off" autofocus></textarea>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="opd_changes" class="">OPD Changes<span
-                                                                class="text-red-500">*</span></label>
-                                                        <input type="text" id="opd_changes" name="opd_changes"
-                                                            maxlength="150"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter OPD Changes" required autocomplete="off"
-                                                            autofocus value="{{ old('opd_changes') }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="Crazy_Member" class="">Crazy Member Charge<span
-                                                                class="text-red-500">*</span></label>
-                                                        <input type="text" id="Crazy_Member" name="Crazy_Member"
-                                                            maxlength="150"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Crazy Member" required autocomplete="off"
-                                                            autofocus value="{{ old('Crazy_Member') }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="experience" class="">Experience<span
-                                                                class="text-red-500">*</span></label>
-                                                        <input type="text" id="experience" name="experience"
-                                                            maxlength="150"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Experience" required autocomplete="off"
-                                                            autofocus value="{{ old('experience') }}">
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="photo" class="">photo<span
-                                                                class="text-red-500">*</span></label>
+                                                        <label for="email-field" class="">photo</label>
                                                         <input type="file" id="photo" name="photo"
                                                             maxlength="150"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter photo" required autocomplete="off"
-                                                            autofocus value="{{ old('photo') }}">
+                                                            placeholder="Enter photo" autocomplete="off" autofocus
+                                                            value="{{ old('photo') }}">
                                                     </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="Logo" class="">Logo<span
-                                                                class="text-red-500">*</span></label>
-                                                        <input type="file" id="Logo" name="Logo"
-                                                            maxlength="150"
-                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Logo" required autocomplete="off" autofocus
-                                                            value="{{ old('Logo') }}">
-                                                    </div>
-
                                                 </div>
-                                                <div class="mb-3">
-                                                    Expertise
-                                                    <textarea id="expertise" name="expertise" class="ckeditor text-slate-800" style="height: 300px !important;"></textarea>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    When to Consult
-                                                    <textarea id="when_to_consult" name="when_to_consult" class="ckeditor text-slate-800"
-                                                        style="height: 300px !important;"></textarea>
-                                                </div>
-
                                                 <div class="ltr:md:text-end  mt-10">
                                                     <button type="submit"
                                                         class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Submit</button>
