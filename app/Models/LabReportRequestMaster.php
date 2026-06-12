@@ -22,6 +22,18 @@ class LabReportRequestMaster extends Model
         'NetAmount',
         'degree',
         'associated_id',
+        'service_id',
+        'doctor_id',
+        'sub_service_id',
+        'type',
+        'hospital_name',
+        'concern_requirement',
+        'time',
+        'service_required',
+        'Address',
+        'member_name',
+        'service_Interested',
+        'prefered_contact_time',
         'created_at',
         'updated_at'
     ];
@@ -38,9 +50,6 @@ class LabReportRequestMaster extends Model
     {
         return $this->hasMany(LabReportRequestdetail::class, 'LabReport_Request_Master_id', 'LabReport_Request_id')->with('Test_Name');
     }
-
-
-
     public function family_membername()
     {
         return $this->belongsTo(FamilyMember::class, 'family_member_id', 'family_member_id');

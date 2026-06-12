@@ -34,6 +34,7 @@ Route::get('/service', [FrontApiController::class, 'servicelist'])->name('servic
 Route::get('/LabTestCategory', [FrontApiController::class, 'LabTestCategory'])->name('LabTestCategory');
 Route::post('/AssociatedMember', [FrontApiController::class, 'AssociatedMember'])->name('AssociatedMember');
 Route::get('/Bannerlist', [FrontApiController::class, 'Bannerlist'])->name('Bannerlist');
+Route::get('/Packagelist', [FrontApiController::class, 'Packagelist'])->name('Packagelist');
 
 Route::post('/servicewise-subservice-doctor', [FrontApiController::class, 'Servicewsie_SubService_Doctor']);
 Route::post('/doctor-clinic-list', [FrontApiController::class, 'DoctorClinicList']);
@@ -41,6 +42,8 @@ Route::post('/doctor-clinic-list', [FrontApiController::class, 'DoctorClinicList
 //Route::get('/LabTestMaster', [FrontApiController::class, 'LabTestMaster'])->name('LabTestMaster');
 Route::post('/searchLabTests', [FrontApiController::class, 'searchLabTests'])->name('searchLabTests');
 Route::post('/AddfamilyMember', [FrontApiController::class, 'AddfamilyMember'])->name('AddfamilyMember');
+Route::post('/AddDoctorConsultAppointment', [FrontApiController::class, 'AddDoctorConsultAppointment'])->name('AddDoctorConsultAppointment');
+
 Route::post('/deletefamilyMember', [FrontApiController::class, 'deletefamilyMember'])->name('deletefamilyMember');
 Route::post('/familyMemberlist', [FrontApiController::class, 'familyMemberlist'])->name('familyMemberlist');
 Route::post('/SubService', [FrontApiController::class, 'SubService'])->name('SubService');

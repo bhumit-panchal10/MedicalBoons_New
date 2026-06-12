@@ -25,6 +25,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\CMSController;
 use App\Http\Controllers\AssociatedMemberController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\PlanDetailController;
 use App\Http\Controllers\LabMasterController;
 use App\Http\Controllers\LabTestCategoryMasterController;
@@ -208,6 +209,18 @@ Route::prefix('admin')->name('plan.')->middleware('auth')->group(function () {
     Route::delete('/plan/delete', [PlanController::class, 'delete'])->name('delete');
     Route::delete('/plan/deleteselected', [PlanController::class, 'deleteselected'])->name('deleteselected');
     Route::any('/plan/updateStatus', [PlanController::class, 'updateStatus'])->name('updateStatus');
+});
+
+// packages
+Route::prefix('admin')->name('packages.')->middleware('auth')->group(function () {
+    Route::any('/packages/index', [PackagesController::class, 'index'])->name('index');
+    Route::get('/packages/add', [PackagesController::class, 'add'])->name('add');
+    Route::post('/packages/store', [PackagesController::class, 'store'])->name('store');
+    Route::get('/packages/edit/{id?}', [PackagesController::class, 'edit'])->name('edit');
+    Route::post('/packages/update/{id?}', [PackagesController::class, 'update'])->name('update');
+    Route::delete('/packages/delete', [PackagesController::class, 'delete'])->name('delete');
+    Route::delete('/packages/deleteselected', [PackagesController::class, 'deleteselected'])->name('deleteselected');
+    Route::any('/packages/updateStatus', [PackagesController::class, 'updateStatus'])->name('updateStatus');
 });
 
 // plan Detail
