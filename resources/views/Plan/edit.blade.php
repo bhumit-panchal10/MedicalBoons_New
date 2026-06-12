@@ -82,11 +82,15 @@
                                                                 class="text-red-500">*</span></label>
                                                         <select name="is_corporate" id="is_corporate" required
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                                                            <option value="0" @if($plan->is_corporate == 0) selected @endif>No</option>
-                                                            <option value="1" @if($plan->is_corporate == 1) selected @endif>Yes</option>
+                                                            <option value="0"
+                                                                @if ($plan->is_corporate == 0) selected @endif>No
+                                                            </option>
+                                                            <option value="1"
+                                                                @if ($plan->is_corporate == 1) selected @endif>Yes
+                                                            </option>
                                                         </select>
                                                     </div>
-                                                   <div class="mb-3">
+                                                    <div class="mb-3">
                                                         <label for="email-field" class="">Duration in Days<span
                                                                 class="text-red-500">*</span></label>
                                                         <input type="text" id="email-field" name="duration_in_days"
@@ -112,21 +116,23 @@
                                                         value="{{ old('editplan_img') ? old('editplan_img') : $plan->plan_image }}"
                                                         id="hiddenPhoto">
 
-                                                      <div class="mb-3 ">
+                                                    <div class="mb-3 ">
                                                         PDF
                                                         <input type="file" id="editplan_pdf" name="editplan_pdf"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                             autocomplete="off">
                                                         <div id="viewpdf">
-                                                            <a href="{{ asset('upload/plan-detail-pdf/') . '/' . $plan->plan_detail_pdf }}">View PDF</a>
-                                                           
+                                                            <a
+                                                                href="{{ asset('upload/plan-detail-pdf/') . '/' . $plan->plan_detail_pdf }}">View
+                                                                PDF</a>
+
 
                                                         </div>
                                                     </div>
 
                                                     <input type="hidden" name="hiddenPdf" class="form-control"
                                                         value="{{ old('editplan_pdf') ? old('editplan_pdf') : $plan->plan_detail_pdf }}"
-                                                        id="hiddenPdf">     
+                                                        id="hiddenPdf">
 
                                                     <div class="mb-3">
                                                         <label for="email-field" class="">Number of Members<span
@@ -207,7 +213,7 @@
                                                     <textarea id="lab_special" name="lab_special_terms_and_condition" class="ckeditor text-slate-800"
                                                         style="height: 100px !important;">{{ $plan->lab_special_terms_and_condition }}</textarea>
                                                 </div>
-                                                 <div class="mb-6">
+                                                <div class="mb-6">
                                                     Plan Detail Description<span style="color:red;">*</span>
                                                     <textarea id="plan_detail_description" name="plan_detail_description" class="ckeditor text-slate-800"
                                                         style="height: 100px !important;">{{ $plan->plan_detail_image }}</textarea>

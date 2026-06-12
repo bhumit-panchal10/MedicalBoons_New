@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssociatedMember;
 use App\Models\Services;
 use App\Models\Banner;
+use App\Models\Packages;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,7 @@ use App\Models\LabReportRequestdetail;
 use Razorpay\Api\Api;
 use App\Models\FamilyMember;
 use App\Models\AssociatedMemberClinic;
+use App\Models\DoctorConsultationAppointment;
 
 use App\Models\Payment;
 use App\Models\LabMaster;
@@ -229,6 +231,51 @@ class FrontApiController extends Controller
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    public function Packagelist(Request $request)
+    {
+        try {
+            $listOfPackages = Packages::select(
+                "id",
+                "name",
+                "Price",
+                "MRP_Price",
+                "Tests",
+                "fasting_required",
+                "logo",
+                "pdf",
+                "description"
+            )
+                ->orderBy('id', 'asc')
+                ->get()
+                ->map(function ($package) {
+                    $package->fasting_required = $package->fasting_required == 1 ? 'Yes' : 'No';
+
+
+                    $package->logo = $package->logo
+                        ? url('/upload/logo/' . $package->logo)
+                        : null;
+
+                    $package->pdf = $package->pdf
+                        ? url('/upload/package-detail-pdf/' . $package->pdf)
+                        : null;
+
+                    return $package;
+                });
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully fetched package list...',
+                'data' => $listOfPackages,
+            ], 200);
+        } catch (\Throwable $th) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage(),
+            ], 500);
         }
     }
 
@@ -588,6 +635,82 @@ class FrontApiController extends Controller
                 'success' => true,
                 'data' => $addfamilymember,
                 'message' => 'Family Member Added Successfully',
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'error' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function AddDoctorConsultAppointment(Request $request)
+    {
+        try {
+            $request->validate([
+                "member_id" => 'required',
+                "family_member_id" => 'required',
+                "service_id" => 'required',
+                "sub_service_id" => 'nullable',
+                "doctor_id" => 'nullable',
+                "Type" => 'nullable',
+                "hospital_name" => 'nullable',
+                "concern_requirement" => 'nullable',
+                "time" => 'nullable',
+                "service_required" => 'nullable',
+                "Address" => 'nullable',
+                "date" => 'nullable',
+                "member_name" => 'nullable',
+                "service_Interested" => 'nullable',
+                "prefered_contact_time" => 'nullable',
+                "insurance_audit_service" => 'nullable',
+                "service_value" => 'nullable',
+                "policy" => 'nullable',
+                "insurance_company_name" => 'nullable'
+
+            ]);
+            $policy = "";
+            if ($request->hasFile('policy')) {
+                $root = $_SERVER['DOCUMENT_ROOT'];
+                $image = $request->file('policy');
+                $policy = time() . '_' . date('dmYHis') . '.' . $image->getClientOriginalExtension();
+                $destinationpath = $root . '/upload/policy/';
+
+                if (!file_exists($destinationpath)) {
+                    mkdir($destinationpath, 0755, true);
+                }
+
+                $image->move($destinationpath, $policy);
+            }
+
+            $DoctorConsultationAppointment = LabReportRequestMaster::create([
+                'member_id' => $request->member_id ?? '',
+                'family_member_id' => $request->family_member_id ?? '',
+                'service_id' => $request->service_id ?? '',
+                'sub_service_id' => $request->sub_service_id ?? 0,
+                'doctor_id' => $request->doctor_id ?? 0,
+                'hospital_name' => $request->hospital_name ?? '',
+                'concern_requirement' => $request->concern_requirement ?? '',
+                'time' => $request->time ?? '',
+                'policy' => $policy ?? '',
+                'service_required' => $request->service_required ?? '',
+                'Address' => $request->Address ?? '',
+                'date' => $request->filled('date') ? $request->date : null,
+                'type' => $request->Type ?? '',
+                'member_name' => $request->member_name ?? '',
+                'service_Interested' => $request->service_Interested ?? '',
+                'prefered_contact_time' => $request->prefered_contact_time ?? '',
+                'insurance_audit_service' => $request->insurance_audit_service ?? '',
+                'service_value' => $request->service_value ?? '',
+                'insurance_company_name' => $request->insurance_company_name ?? '',
+                'appointments_flag' => 1,
+                'created_at' => now()
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $DoctorConsultationAppointment,
+                'message' => 'Doctor Consultation Appointment Added Successfully',
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
