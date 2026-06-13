@@ -97,15 +97,26 @@
                                                     </div>
 
                                                     <div class="mb-3">
+                                                        <label for="email-field" class="">Icon<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="text" id="email-field" name="icon"
+                                                            maxlength="150"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Icon" required autocomplete="off" autofocus
+                                                            value="{{ old('icon') }}">
+                                                    </div>
+
+                                                    <div class="mb-3">
                                                         <label for="email-field" class="">Image</label>
                                                         <input type="file" id="plan_image" name="plan_image"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                             autocomplete="off" autofocus>
                                                     </div>
 
-                                                     <div class="mb-3">
+                                                    <div class="mb-3">
                                                         <label for="email-field" class="">PDF</label>
-                                                        <input type="file" id="plan_detail_pdf" name="plan_detail_pdf" accept=".pdf"
+                                                        <input type="file" id="plan_detail_pdf" name="plan_detail_pdf"
+                                                            accept=".pdf"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                             autocomplete="off" autofocus>
                                                     </div>
@@ -117,7 +128,8 @@
                                                             maxlength="150"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                             placeholder="Enter Number of Members" required
-                                                            autocomplete="off" autofocus value="{{ old('no_of_members') }}">
+                                                            autocomplete="off" autofocus
+                                                            value="{{ old('no_of_members') }}">
                                                     </div>
 
 
@@ -172,21 +184,47 @@
                                                             value="{{ old('lab_minimum_order_value') }}">
                                                     </div>
 
+                                                    <div class="mb-3">
+                                                        <label for="email-field" class="">Health Value Support<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="text" name="health_value_support"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Enter Health Value Support" required
+                                                            autocomplete="off" autofocus
+                                                            value="{{ old('health_value_support') }}">
+                                                    </div>
 
-
+                                                    <div class="mb-3">
+                                                        <label for="title" class="">Title</label>
+                                                        <textarea id="title" name="title"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Title" autocomplete="off"></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="sub_title" class="">Sub Title</label>
+                                                        <textarea id="sub_title" name="sub_title"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Sub Title" autocomplete="off"></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="plan_page_title" class="">Plan Page
+                                                            Title</label>
+                                                        <textarea id="plan_page_title" name="plan_page_title"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Plan Page Title" autocomplete="off"></textarea>
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    Terms & Condition <span style="color:red;">*</span>
-                                                    <textarea id="strDescription" name="terms_and_condition" class="ckeditor text-slate-800"
+                                                    Best Suited For <span style="color:red;">*</span>
+                                                    <textarea id="strDescription" name="best_suited_for" class="ckeditor text-slate-800"
                                                         style="height: 300px !important;"></textarea>
                                                 </div>
                                                 <div class="mb-6">
-                                                    Lab Special Terms & Condition <span style="color:red;">*</span>
-                                                    <textarea id="lab_special" name="lab_special_terms_and_condition" class="ckeditor text-slate-800"
-                                                        style="height: 100px !important;"></textarea>
+                                                    Includes <span style="color:red;">*</span>
+                                                    <textarea id="includes" name="includes" class="ckeditor text-slate-800" style="height: 100px !important;"></textarea>
                                                 </div>
-                                                 <div class="mb-3">
-                                                    Plan Detail Description <span style="color:red;">*</span>
+                                                <div class="mb-3">
+                                                    Plan Detail Description
                                                     <textarea id="plan_detail_description" name="plan_detail_description" class="ckeditor text-slate-800"
                                                         style="height: 300px !important;"></textarea>
                                                 </div>

@@ -43,6 +43,7 @@ Route::post('/doctor-clinic-list', [FrontApiController::class, 'DoctorClinicList
 Route::post('/searchLabTests', [FrontApiController::class, 'searchLabTests'])->name('searchLabTests');
 Route::post('/AddfamilyMember', [FrontApiController::class, 'AddfamilyMember'])->name('AddfamilyMember');
 Route::post('/AddDoctorConsultAppointment', [FrontApiController::class, 'AddDoctorConsultAppointment'])->name('AddDoctorConsultAppointment');
+Route::post('/AddPackageSubmit', [FrontApiController::class, 'AddPackageSubmit'])->name('AddPackageSubmit');
 
 Route::post('/deletefamilyMember', [FrontApiController::class, 'deletefamilyMember'])->name('deletefamilyMember');
 Route::post('/familyMemberlist', [FrontApiController::class, 'familyMemberlist'])->name('familyMemberlist');

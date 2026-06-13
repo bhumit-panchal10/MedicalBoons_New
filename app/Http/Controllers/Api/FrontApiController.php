@@ -8,6 +8,7 @@ use App\Models\AssociatedMember;
 use App\Models\Services;
 use App\Models\Banner;
 use App\Models\Packages;
+use App\Models\Packagesubmit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
@@ -711,6 +712,44 @@ class FrontApiController extends Controller
                 'success' => true,
                 'data' => $DoctorConsultationAppointment,
                 'message' => 'Doctor Consultation Appointment Added Successfully',
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'error' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function AddPackageSubmit(Request $request)
+    {
+        try {
+            $request->validate([
+                "member_id" => 'required',
+                "family_member_id" => 'required',
+                "service_id" => 'required',
+                "package_id" => 'nullable',
+                "date" => 'nullable',
+                "time" => 'nullable',
+                "name_sample_collection" => 'nullable',
+                "note" => 'nullable',
+            ]);
+            $Packagesubmit = Packagesubmit::create([
+                'member_id' => $request->member_id ?? '',
+                'family_member_id' => $request->family_member_id ?? '',
+                'service_id' => $request->service_id ?? '',
+                'package_id' => $request->package_id ?? 0,
+                'date' => $request->filled('date') ? $request->date : null,
+                'time_slot' => $request->time ?? '',
+                'name_sample_collection' => $request->name_sample_collection ?? '',
+                'note' => $request->note ?? '',
+                'created_at' => now()
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $Packagesubmit,
+                'message' => 'Package Submit Successfully',
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
@@ -1590,14 +1629,22 @@ class FrontApiController extends Controller
                 'family_membername',
                 'AssociatedMember',
                 'lab',
+                'service',
+                'subservice',
                 'member',
                 'labreqmasterdetail.family_member'
             ])
                 ->where('member_id', $request->member_id)
                 ->get();
 
-            $associatedMemberAppointments = $allAppointments->where('appointments_flag', 1)->values(); // flag = 1
-            $labWiseAppointments = $allAppointments->where('appointments_flag', 2)->values(); // flag = 2
+            $associatedMemberAppointments = $allAppointments
+                ->where('appointments_flag', 1)
+                ->sortByDesc('LabReport_Request_id')
+                ->values(); // flag = 1
+            $labWiseAppointments = $allAppointments
+                ->where('appointments_flag', 2)
+                ->sortByDesc('LabReport_Request_id')
+                ->values(); // flag = 2
 
             $mergedData = [];
 
@@ -1610,6 +1657,9 @@ class FrontApiController extends Controller
                     'preference_date' => $appointment->preference_date,
                     'preference_time' => $appointment->preference_time,
                     'DoctorName' => optional($appointment->AssociatedMember)->dr_name,
+                    'service' => optional($appointment->service)->name,
+                    'Type' => $appointment->type ?? '',
+                    'subservice' => optional($appointment->subservice)->subservice_name,
                     'family_member_name' => optional($firstDetail?->family_member)->member_name,
                 ];
             }
@@ -1629,6 +1679,7 @@ class FrontApiController extends Controller
                     'lab_name' => $lab->lab->name ?? '',
                     'member_name' => $lab->member->name ?? '',
                     'date' => $lab->date ?? '',
+                    'Type' => $appointment->type ?? '',
                     'family_member_names' => optional($memberNames?->family_member)->member_name, // multiple names
                 ];
             }
