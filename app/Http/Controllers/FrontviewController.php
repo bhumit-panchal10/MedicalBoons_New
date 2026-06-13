@@ -31,7 +31,7 @@ class FrontviewController extends Controller
     public function index(Request $request)
     {
         try {
-            $plans = Plan::get();
+            $plans = Plan::where('iStatus', 1)->get();
             $LabTestCategorys = LabTestCategory::take(2)->get();
             $data = array();
             foreach ($LabTestCategorys as $labtestcat) {
@@ -66,12 +66,12 @@ class FrontviewController extends Controller
     public function Plan(Request $request, $guid = null)
     {
         try {
-            //$plans = Plan::get();
+            $plans = Plan::where('iStatus', 1)->get();
             //Cookie::queue('GUid', $guid, 60 * 24 * 365 * 5);
             // $g_uid = request()->cookie('GUid');
             $faqs = FaqMaster::where('type', 1)->get();
             $testimonials = Testimonial::get();
-            return view('frontview.PackagesAll', compact('faqs', 'testimonials'));
+            return view('frontview.PackagesAll', compact('faqs', 'testimonials', 'plans'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
@@ -126,19 +126,31 @@ class FrontviewController extends Controller
             return redirect()->back()->withInput();
         }
     }
-
-    public function Booking(Request $request, $planid)
+    public function Booking(Request $request, $planid = null)
     {
         try {
-            $plans = Plan::where('slugname', $planid)->first();
+            //$plans = Plan::where('slugname', $planid)->first();
             //dd($plans);
-            $guid = request()->cookie('GUid');
-            return view('frontview.Booking', compact('plans', 'guid'));
+            // $guid = request()->cookie('GUid');
+            return view('frontview.booking');
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
         }
     }
+
+    // public function Booking(Request $request, $planid)
+    // {
+    //     try {
+    //         $plans = Plan::where('slugname', $planid)->first();
+    //         //dd($plans);
+    //         $guid = request()->cookie('GUid');
+    //         return view('frontview.Booking', compact('plans', 'guid'));
+    //     } catch (\Throwable $th) {
+    //         Toastr::error('Error: ' . $th->getMessage());
+    //         return redirect()->back()->withInput();
+    //     }
+    // }
 
     public function checkoutstore(Request $request)
     {

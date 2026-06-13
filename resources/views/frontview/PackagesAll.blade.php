@@ -81,8 +81,8 @@
 
     <style>
         /* ============================================
-                                   NEW PLAN CARDS DESIGN
-                                   ============================================ */
+                                                                           NEW PLAN CARDS DESIGN
+                                                                           ============================================ */
 
         .plans-grid {
             display: grid;
@@ -457,8 +457,8 @@
 
 
         /* ============================================
-                                   FAQs SECTION - NEW DESIGN
-                                   ============================================ */
+                                                                           FAQs SECTION - NEW DESIGN
+                                                                           ============================================ */
 
         /* FAQs Header */
         .faqs-header {
@@ -710,8 +710,31 @@
             </div>
 
             <div class="plans-grid">
+                @foreach ($plans as $plan)
+                    @php
+                        $color = strtolower(str_replace(' Plan', '', $plan->name));
+                    @endphp
+
+                    <div class="plan-card animate" data-delay="0">
+                        <div class="plan-icon {{ $color }}">
+                            <i class="{{ $plan->icon ?? '' }}"></i>
+                        </div>
+
+                        <h3 class="plan-name">{{ $plan->name ?? '' }}</h3>
+
+                        <p class="plan-description">{{ $plan->title ?? '' }}</p>
+
+                        <p class="plan-description">
+                            <strong>Best for </strong>{{ $plan->sub_title ?? '' }}
+                        </p>
+
+                        <a href="{{ route('Front.Plan') }}" class="plan-btn">
+                            View Benefits <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                @endforeach
                 <!-- Silver Plan -->
-                <div class="plan-card-new animate" data-delay="0">
+                {{-- <div class="plan-card-new animate" data-delay="0">
                     <!-- Plan Header with Shield Icon -->
                     <div class="plan-header-new">
                         <div class="plan-shield-icon silver">
@@ -727,6 +750,13 @@
                         <span class="currency">₹</span>
                         <span class="amount">499</span>
                         <span class="period">/ year</span>
+                    </div>
+
+                    <!-- Coverage Info -->
+                    <div class="coverage-info mb-3">
+                        <span><i class="fas fa-users"></i> Covers up to 4 members</span>
+                        <span class="separator">|</span>
+                        <span><i class="fas fa-calendar-check"></i> 1 Year validity</span>
                     </div>
 
                     <!-- Best Suited For -->
@@ -775,16 +805,11 @@
                         </div>
                     </div>
 
-                    <!-- Coverage Info -->
-                    <div class="coverage-info">
-                        <span><i class="fas fa-users"></i> Covers up to 4 members</span>
-                        <span class="separator">|</span>
-                        <span><i class="fas fa-calendar-check"></i> 1 Year validity</span>
-                    </div>
-                </div>
+
+                </div> --}}
 
                 <!-- Gold Plan -->
-                <div class="plan-card-new featured-new animate" data-delay="100">
+                {{-- <div class="plan-card-new featured-new animate" data-delay="100">
                     <!-- Recommended Badge -->
                     <div class="recommended-badge">
                         <i class="fas fa-star"></i> RECOMMENDED
@@ -859,10 +884,10 @@
                         <span class="separator">|</span>
                         <span><i class="fas fa-calendar-check"></i> 1 Year validity</span>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Platinum Plan -->
-                <div class="plan-card-new animate" data-delay="200">
+                {{-- <div class="plan-card-new animate" data-delay="200">
                     <!-- Plan Header with Shield Icon -->
                     <div class="plan-header-new">
                         <div class="plan-shield-icon platinum">
@@ -931,7 +956,7 @@
                         <span class="separator">|</span>
                         <span><i class="fas fa-calendar-check"></i> 1 Year validity</span>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Info Note -->

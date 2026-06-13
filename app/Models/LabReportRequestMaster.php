@@ -37,6 +37,14 @@ class LabReportRequestMaster extends Model
         'created_at',
         'updated_at'
     ];
+    public function service()
+    {
+        return $this->belongsTo(Services::class, 'service_id', 'id');
+    }
+    public function subservice()
+    {
+        return $this->belongsTo(SubService::class, 'sub_service_id', 'sub_service_id');
+    }
     public function lab()
     {
         return $this->belongsTo(LabMaster::class, 'Lab_id', 'Lab_Master_id');

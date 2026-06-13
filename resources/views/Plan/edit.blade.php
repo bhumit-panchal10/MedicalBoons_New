@@ -100,16 +100,26 @@
                                                             autofocus value="{{ $plan->duration_in_days }}">
                                                     </div>
 
+                                                    <div class="mb-3">
+                                                        <label for="email-field" class="">Icon</label>
+                                                        <input type="text" id="email-field" name="icon"
+                                                            maxlength="150"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Icon" autocomplete="off" autofocus
+                                                            value="{{ $plan->icon }}">
+                                                    </div>
+
                                                     <div class="mb-3 ">
                                                         Image
                                                         <input type="file" id="editplan_img" name="editplan_img"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                             autocomplete="off">
-                                                        <div id="viewimg">
-                                                            <img src="{{ asset('upload/plan-images/') . '/' . $plan->plan_image }}"
-                                                                height="70" width="70" alt="">
-
-                                                        </div>
+                                                        @if ($plan->plan_image)
+                                                            <div id="viewimg">
+                                                                <img src="{{ asset('upload/plan-images/') . '/' . $plan->plan_image }}"
+                                                                    height="70" width="70" alt="">
+                                                            </div>
+                                                        @endif
                                                     </div>
 
                                                     <input type="hidden" name="hiddenPhoto" class="form-control"
@@ -196,22 +206,46 @@
                                                             value="{{ $plan->lab_minimum_order_value }}">
                                                     </div>
 
+                                                    <div class="mb-3">
+                                                        <label for="email-field" class="">Health Value Support<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="text" name="health_value_support"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Enter Health Value Support" required
+                                                            autocomplete="off" autofocus
+                                                            value="{{ $plan->health_value_support }}">
+                                                    </div>
 
-
-
-
+                                                    <div class="mb-3">
+                                                        <label for="title" class="">Title</label>
+                                                        <textarea id="title" name="title"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Title" autocomplete="off">{{ $plan->title }}</textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="sub_title" class="">Sub Title</label>
+                                                        <textarea id="sub_title" name="sub_title"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Sub Title" autocomplete="off">{{ $plan->sub_title }}</textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="plan_page_title" class="">Plan Page
+                                                            Title</label>
+                                                        <textarea id="plan_page_title" name="plan_page_title"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Plan Page Title" autocomplete="off">{{ $plan->plan_page_title }}</textarea>
+                                                    </div>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    Terms & Condition <span style="color:red;">*</span>
-                                                    <textarea id="strDescription" name="terms_and_condition" class="ckeditor text-slate-800"
-                                                        style="height: 300px !important;">{{ $plan->terms_and_condition }}</textarea>
+                                                    Best Suited For <span style="color:red;">*</span>
+                                                    <textarea id="strDescription" name="best_suited_for" class="ckeditor text-slate-800"
+                                                        style="height: 300px !important;">{{ $plan->best_suited_for }}</textarea>
                                                 </div>
 
                                                 <div class="mb-6">
-                                                    Lab Special Terms & Condition <span style="color:red;">*</span>
-                                                    <textarea id="lab_special" name="lab_special_terms_and_condition" class="ckeditor text-slate-800"
-                                                        style="height: 100px !important;">{{ $plan->lab_special_terms_and_condition }}</textarea>
+                                                    Includes <span style="color:red;">*</span>
+                                                    <textarea id="lab_special" name="includes" class="ckeditor text-slate-800" style="height: 100px !important;">{{ $plan->includes }}</textarea>
                                                 </div>
                                                 <div class="mb-6">
                                                     Plan Detail Description<span style="color:red;">*</span>
