@@ -9,8 +9,8 @@
         }
 
         /* ============================================
-                                           CORPORATE - WHY PARTNER SECTION
-                                           ============================================ */
+                                                                   CORPORATE - WHY PARTNER SECTION
+                                                                   ============================================ */
 
         .corporate-why-partner-wrapper {
             display: grid;
@@ -251,6 +251,23 @@
             </div>
         </div>
     </section>
+
+    <section class="footer-cta">
+        <div class="container">
+            <h2>Ready to Transform Employee Healthcare?</h2>
+            <p>Let's discuss how we can support your organization.</p>
+            <div class="footer-cta-buttons">
+                <a class="btn-primary" href="{{ route('B2B.login') }}" style="background: white; color: #1e3a5f;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Associate Login
+                </a>
+                <a class="btn-secondary" href="{{ route('corporate.login') }}">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Corporate Login
+                </a>
+            </div>
+        </div>
+    </section>
     <!-- Corporate Solutions -->
     <section style="background: white; padding: 60px 0;">
         <div class="container">
@@ -343,11 +360,11 @@
                         </div>
 
                         <!-- <div class="corporate-benefit-item">
-                                                                <div class="corporate-check-icon">
-                                                                    <i class="fas fa-check"></i>
-                                                                </div>
-                                                                <span>Trusted by 50,000+ families across India</span>
-                                                            </div> -->
+                                                                                        <div class="corporate-check-icon">
+                                                                                            <i class="fas fa-check"></i>
+                                                                                        </div>
+                                                                                        <span>Trusted by 50,000+ families across India</span>
+                                                                                    </div> -->
                     </div>
                 </div>
 
@@ -454,31 +471,31 @@
     </section>
     <!-- Stats -->
     <!-- <section style="background: linear-gradient(135deg, #1e3a5f, var(--primary-teal)); padding: 60px 0;">
-                                                <div class="container">
-                                                    <div class="stats-grid">
-                                                        <div class="stat-box animate">
-                                                            <i class="fas fa-users" style="color: white;"></i>
-                                                            <div class="stat-number" style="color: white;">50000</div>
-                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Families Trust Us</div>
-                                                        </div>
-                                                        <div class="stat-box animate">
-                                                            <i class="fas fa-building" style="color: white;"></i>
-                                                            <div class="stat-number" style="color: white;">500</div>
-                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Corporate Partners</div>
-                                                        </div>
-                                                        <div class="stat-box animate">
-                                                            <i class="fas fa-headset" style="color: white;"></i>
-                                                            <div class="stat-number" style="color: white;">24</div>
-                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Dedicated Support 24/7</div>
-                                                        </div>
-                                                        <div class="stat-box animate">
-                                                            <i class="fas fa-calendar" style="color: white;"></i>
-                                                            <div class="stat-number" style="color: white;">10</div>
-                                                            <div class="stat-label" style="color: rgba(255,255,255,0.9);">Years of Healthcare Trust</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section> -->
+                                                                        <div class="container">
+                                                                            <div class="stats-grid">
+                                                                                <div class="stat-box animate">
+                                                                                    <i class="fas fa-users" style="color: white;"></i>
+                                                                                    <div class="stat-number" style="color: white;">50000</div>
+                                                                                    <div class="stat-label" style="color: rgba(255,255,255,0.9);">Families Trust Us</div>
+                                                                                </div>
+                                                                                <div class="stat-box animate">
+                                                                                    <i class="fas fa-building" style="color: white;"></i>
+                                                                                    <div class="stat-number" style="color: white;">500</div>
+                                                                                    <div class="stat-label" style="color: rgba(255,255,255,0.9);">Corporate Partners</div>
+                                                                                </div>
+                                                                                <div class="stat-box animate">
+                                                                                    <i class="fas fa-headset" style="color: white;"></i>
+                                                                                    <div class="stat-number" style="color: white;">24</div>
+                                                                                    <div class="stat-label" style="color: rgba(255,255,255,0.9);">Dedicated Support 24/7</div>
+                                                                                </div>
+                                                                                <div class="stat-box animate">
+                                                                                    <i class="fas fa-calendar" style="color: white;"></i>
+                                                                                    <div class="stat-number" style="color: white;">10</div>
+                                                                                    <div class="stat-label" style="color: rgba(255,255,255,0.9);">Years of Healthcare Trust</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </section> -->
     <!-- Get Started -->
     <section style="background: white; padding: 80px 0;">
         <div class="container">

@@ -14,19 +14,19 @@
                 <a href="{{ route('home') }}"
                     class="group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden group-data-[sidebar=modern]:hidden">
                     <span class="hidden group-data-[sidebar-size=sm]:block">
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                        <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                     </span>
                     <span class="group-data-[sidebar-size=sm]:hidden">
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                        <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                     </span>
                 </a>
                 <a href="{{ route('home') }}"
                     class="hidden group-data-[sidebar=dark]:block group-data-[sidebar=brand]:block group-data-[sidebar=modern]:block">
                     <span class="hidden group-data-[sidebar-size=sm]:block">
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                        <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                     </span>
                     <span class="group-data-[sidebar-size=sm]:hidden">
-                        <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto">
+                        <img src="{{ asset('Front/images/logo.jpeg') }}" alt="" class="mx-auto">
                     </span>
                 </a>
                 <button type="button" class="hidden p-0 float-end" id="vertical-hover">

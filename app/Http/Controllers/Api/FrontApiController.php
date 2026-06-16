@@ -521,7 +521,16 @@ class FrontApiController extends Controller
                     'plan_image' => 'https://medicalboons.com/upload/plan-images/' . $p->plan_image ?? '',
                     'plan_detail_pdf' => $p->plan_detail_pdf ? 'https://medicalboons.com/upload/plan-detail-pdf/' . $p->plan_detail_pdf : '',
 
-                    'no_of_members' => $p->no_of_members,
+                    'no_of_members' => $p->no_of_members ?? '',
+                    'best_suited_for' => $p->best_suited_for ?? '',
+
+                    'health_value_support' => $p->health_value_support ?? '',
+                    'includes' => $p->includes ?? '',
+                    'title' => $p->title ?? '',
+                    'sub_title' => $p->sub_title ?? '',
+                    'plan_page_title' => $p->plan_page_title ?? '',
+                    'icon' => $p->icon ?? '',
+
                     'terms_and_condition' => $p->terms_and_condition,
                     'wallet_balance' => $p->wallet_balance,
                     'extra_amount_per_person' => $p->extra_amount_per_person,
