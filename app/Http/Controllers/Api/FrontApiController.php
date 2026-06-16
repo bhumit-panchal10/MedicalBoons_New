@@ -304,17 +304,29 @@ class FrontApiController extends Controller
                 $extraMember = $item->iExtraMember ?? 0;
                 $extraMemberwalletbal = $item->plan->extra_amount_per_person_in_wallet ?? 0;
                 $extramemamount = $extraMember * $extraMemberwalletbal;
+                $plan = $item->plan;
+                if ($plan) {
+                    $plan->wallet_balance =
+                        ($plan->wallet_balance ?? 0) + $extramemamount;
 
+                    $plan->plan_detail_pdf = $plan->plan_detail_pdf
+                        ? url('upload/plan-detail-pdf/' . $plan->plan_detail_pdf)
+                        : null;
+
+                    $plan->plan_image = $plan->plan_image
+                        ? url('upload/plan-image/' . $plan->plan_image)
+                        : null;
+
+                    $plan->plan_detail_image = $plan->plan_detail_image
+                        ? url('upload/plan-detail-image/' . $plan->plan_detail_image)
+                        : null;
+                }
                 return [
-                    'name' => $item->plan->name ?? null,
-                    'wallet_balance' => $item->plan->wallet_balance + $extramemamount ?? null,
                     'Order_id' => $item->Corporate_Order_id,
-                    'expiry_date' => $item->end_date ?? null,
+                    'expiry_date' => $item->end_date,
                     'plan_flag' => $planFlag,
-                    'plan_detail_pdf' => $item->plan && $item->plan->plan_detail_pdf
-                        ? 'https://medicalboons.com/upload/plan-detail-pdf/' . $item->plan->plan_detail_pdf
-                        : null,
-                    'used_wallet_balance' => $usedwalletbalance,  // Include the total wallet balance
+                    'used_wallet_balance' => $usedwalletbalance,
+                    'plan' => $plan
                 ];
             })->first();
             return response()->json([

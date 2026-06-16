@@ -43,6 +43,7 @@ use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\AppoitmentController;
 use App\Http\Controllers\LabTestReportinquiryController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\RetailCustomerController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -360,6 +361,17 @@ Route::prefix('admin')->name('Corporate_User.')->middleware('auth')->group(funct
     Route::delete('/Corporate_User/deleteselected', [CorporateUserController::class, 'deleteselected'])->name('deleteselected');
     Route::post('/password-update/{Id?}', [CorporateUserController::class, 'passwordupdate'])->name('passwordupdate');
     Route::get('/Resentmail/{Id?}', [CorporateUserController::class, 'Resentmail'])->name('Resentmail');
+});
+
+Route::prefix('admin')->name('Retail_Customer.')->middleware('auth')->group(function () {
+    Route::any('/Retail_Customer/index', [RetailCustomerController::class, 'index'])->name('index');
+    Route::any('/Retail_Customer/add', [RetailCustomerController::class, 'add'])->name('add');
+    Route::post('/Retail_Customer/store', [RetailCustomerController::class, 'store'])->name('store');
+    Route::get('/Retail_Customer/edit/{id?}', [RetailCustomerController::class, 'edit'])->name('edit');
+    Route::post('/Retail_Customer/update', [RetailCustomerController::class, 'update'])->name('update');
+    Route::get('/Retail_Customer/planDetails/{id?}', [RetailCustomerController::class, 'planDetails'])->name('planDetails');
+    Route::delete('/Retail_Customer/delete/{id}', [RetailCustomerController::class, 'delete'])->name('delete');
+    Route::delete('/Retail_Customer/deleteselected', [RetailCustomerController::class, 'deleteselected'])->name('deleteselected');
 });
 
 Route::prefix('admin')->name('B2B_User.')->middleware('auth')->group(function () {

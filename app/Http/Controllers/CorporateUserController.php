@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
 use Illuminate\Validation\ValidationException;
-
-
 
 class CorporateUserController extends Controller
 

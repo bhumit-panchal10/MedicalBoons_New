@@ -14,6 +14,7 @@ class CorporateOrder extends Model
         'Corporate_Order_id',
         'iUserId',
         'Guid',
+        'admin_member_add',
         'iOrderType',
         'no_of_member',
         'iPlanId',
