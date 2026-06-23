@@ -93,52 +93,86 @@
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Valuation<span
-                                                                class="text-red-500">*</span></label>
+                                                        <label for="email-field" class="">Valuation</label>
                                                         <input type="number" name="valuation"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Valuation" required autocomplete="off"
+                                                            placeholder="Enter Valuation" autocomplete="off"
                                                             value="{{ $plandetail->valuation }}" autofocus>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Amount<span
-                                                                class="text-red-500">*</span></label>
+                                                        <label for="email-field" class="">Amount</label>
                                                         <input type="number" name="amount"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Valuation" required autocomplete="off"
+                                                            placeholder="Enter Valuation" autocomplete="off"
                                                             value="{{ $plandetail->amount }}" autofocus>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Discount<span
-                                                                class="text-red-500">*</span></label>
+                                                        <label for="email-field" class="">Discount</label>
                                                         <input type="text" name="editdiscount" maxlength="3"
                                                             oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Discount" required autocomplete="off"
+                                                            placeholder="Enter Discount" autocomplete="off"
                                                             value="{{ $plandetail->discount }}" autofocus>
                                                     </div>
 
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Extra Amount<span
-                                                                class="text-red-500">*</span></label>
+                                                        <label for="email-field" class="">Extra Amount</label>
                                                         <input type="number" name="extra_amount"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Extra Amount" required autocomplete="off"
+                                                            placeholder="Enter Extra Amount" autocomplete="off"
                                                             value="{{ $plandetail->extra_amount }}" autofocus>
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="email-field" class="">Session<span
-                                                                class="text-red-500">*</span></label>
+                                                        <label for="email-field" class="">Session</label>
                                                         <input type="number" name="session_count"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                            placeholder="Enter Session" required autocomplete="off"
+                                                            placeholder="Enter Session"autocomplete="off"
                                                             value="{{ $plandetail->session_count }}" autofocus>
                                                     </div>
 
+                                                    <div class="mb-3">
+                                                        <label for="email-field" class="">OPD Support<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="number" name="opd_support"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Enter OPD Support" required autocomplete="off"
+                                                            value="{{ $plandetail->opd_support }}" autofocus>
+                                                    </div>
 
+                                                    <div class="mb-3">
+                                                        <label for="email-field" class="">Wellness Support<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="number" name="wellness_support"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Enter Wellness Support" required
+                                                            autocomplete="off"
+                                                            value="{{ $plandetail->wellness_support }}" autofocus>
+                                                    </div>
 
+                                                    <div class="mb-3">
+                                                        <label for="email-field" class="">Lab Support Credit<span
+                                                                class="text-red-500">*</span></label>
+                                                        <input type="number" name="lab_support"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Enter Lab Support Credit" required
+                                                            autocomplete="off" value="{{ $plandetail->lab_support }}"
+                                                            autofocus>
+
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="email-field" class="">Health Insurance
+                                                            Guidance<span class="text-red-500">*</span></label>
+                                                        <input type="number" name="health_insurance_guidance"
+                                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                            placeholder="Enter Health Insurance Guidance" required
+                                                            autocomplete="off"
+                                                            value="{{ $plandetail->health_insurance_guidance }}"
+                                                            autofocus>
+
+                                                    </div>
 
                                                 </div>
                                                 <div class="mb-3">

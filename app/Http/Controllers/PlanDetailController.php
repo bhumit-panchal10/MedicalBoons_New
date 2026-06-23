@@ -62,16 +62,19 @@ class PlanDetailController extends Controller
     {
         DB::beginTransaction();
         try {
-
             $request->validate([
 
                 'service_id' => 'required',
-                'valuation' => 'required',
-                'amount' => 'required',
-                'extra_amount' => 'required',
-                'session_count' => 'required',
-                'service_description' => 'required',
-                'discount' => 'required',
+                //'valuation' => 'required',
+                'lab_support' => 'required',
+                'health_insurance_guidance' => 'required',
+                'opd_support' => 'required',
+                'wellness_support' => 'required',
+                //'amount' => 'required',
+                // 'extra_amount' => 'required',
+                // 'session_count' => 'required',
+                // 'service_description' => 'required',
+                // 'discount' => 'required',
 
 
             ]);
@@ -82,6 +85,10 @@ class PlanDetailController extends Controller
                 'service_id' => $request->service_id ?? '0',
                 'sub_service_id' => $request->sub_service_id ?? '0',
                 'valuation' => $request->valuation,
+                'lab_support' => $request->lab_support,
+                'health_insurance_guidance' => $request->health_insurance_guidance,
+                'opd_support' => $request->opd_support,
+                'wellness_support' => $request->wellness_support,
                 'amount' => $request->amount,
                 'discount' => $request->discount,
                 'extra_amount' => $request->extra_amount,
@@ -169,13 +176,13 @@ class PlanDetailController extends Controller
             $request->validate([
 
                 'editserviceid' => 'required',
-                'editsubserviceid' => 'required',
-                'valuation' => 'required',
-                'amount' => 'required',
-                'editdiscount' => 'required',
-                'extra_amount' => 'required',
-                'session_count' => 'required',
-                'service_description' => 'required',
+                //'editsubserviceid' => 'required',
+                //'valuation' => 'required',
+                //'amount' => 'required',
+                //'editdiscount' => 'required',
+                //'extra_amount' => 'required',
+                //'session_count' => 'required',
+                // 'service_description' => 'required',
             ]);
             PlanDetail::where(['id' => $request->plan_detail_id])->update([
 
