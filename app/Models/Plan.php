@@ -43,4 +43,8 @@ class Plan extends Model
         'updated_at'
 
     ];
+    public function planDetails()
+    {
+        return $this->hasMany(PlanDetail::class, 'plan_id', 'id');
+    }
 }

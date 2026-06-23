@@ -292,20 +292,44 @@ class FrontApiController extends Controller
             }
 
             $orderId  = $member->Order_id;
-            $order = CorporateOrder::with('plan')->where('Corporate_Order_id', $orderId)->get();
+            $order = CorporateOrder::with('plan', 'plan.planDetails')->where('Corporate_Order_id', $orderId)->get();
 
             $LabReportRequestMasters = LabReportRequestMaster::where('member_id', $request->member_id)->get();  // Use get() for multiple records
             $usedwalletbalance = $LabReportRequestMasters->sum('discount_amount');  // Sum all discount_amount values
 
 
             $formatted = $order->map(function ($item) use ($usedwalletbalance) {
+
                 $expiryDate = $item->end_date;
                 $planFlag = ($expiryDate && $expiryDate >= now()->toDateString()) ? 1 : 0;
                 $extraMember = $item->iExtraMember ?? 0;
                 $extraMemberwalletbal = $item->plan->extra_amount_per_person_in_wallet ?? 0;
                 $extramemamount = $extraMember * $extraMemberwalletbal;
                 $plan = $item->plan;
+
                 if ($plan) {
+                    // Map plan details to include the requested columns
+                    $planDetails = $plan->planDetails->map(function ($pd) {
+                        return [
+                            'id' => $pd->id,
+                            'service_id' => $pd->service_id,
+                            'sub_service_id' => $pd->sub_service_id,
+                            'service_description' => $pd->service_description,
+                            'amount' => $pd->amount,
+                            'discount' => $pd->discount,
+                            'valuation' => $pd->valuation,
+                            'lab_support' => $pd->lab_support,
+                            'health_insurance_guidance' => $pd->health_insurance_guidance,
+                            'opd_support' => $pd->opd_support,
+                            'wellness_support' => $pd->wellness_support,
+                            'extra_amount' => $pd->extra_amount,
+                            'session_count' => $pd->session_count,
+                        ];
+                    });
+
+                    // attach mapped details separately to avoid altering the relation
+                    $plan->plan_details = $planDetails;
+
                     $plan->wallet_balance =
                         ($plan->wallet_balance ?? 0) + $extramemamount;
 
@@ -678,6 +702,7 @@ class FrontApiController extends Controller
                 "Type" => 'nullable',
                 "hospital_name" => 'nullable',
                 "concern_requirement" => 'nullable',
+                "preference_time" => 'nullable',
                 "time" => 'nullable',
                 "service_required" => 'nullable',
                 "Address" => 'nullable',
@@ -713,11 +738,12 @@ class FrontApiController extends Controller
                 'doctor_id' => $request->doctor_id ?? 0,
                 'hospital_name' => $request->hospital_name ?? '',
                 'concern_requirement' => $request->concern_requirement ?? '',
+                'preference_time' => $request->preference_time ?? '',
                 'time' => $request->time ?? '',
                 'policy' => $policy ?? '',
                 'service_required' => $request->service_required ?? '',
                 'Address' => $request->Address ?? '',
-                'date' => $request->filled('date') ? $request->date : null,
+                'preference_date' => $request->filled('date') ? $request->date : null,
                 'type' => $request->Type ?? '',
                 'member_name' => $request->member_name ?? '',
                 'service_Interested' => $request->service_Interested ?? '',
@@ -1634,6 +1660,87 @@ class FrontApiController extends Controller
     }
 
 
+    // public function AppointmentDisplay_DocorLabwise(Request $request)
+    // {
+    //     try {
+    //         $request->validate([
+    //             'member_id' => 'required'
+    //         ]);
+
+    //         $member = Member::find($request->member_id);
+    //         if (!$member) {
+    //             return response()->json(['success' => false, 'message' => 'Member not found'], 404);
+    //         }
+
+    //         $allAppointments = LabReportRequestMaster::with([
+    //             'family_membername',
+    //             'AssociatedMember',
+    //             'lab',
+    //             'service',
+    //             'subservice',
+    //             'member',
+    //             'labreqmasterdetail.family_member'
+    //         ])
+    //             ->where('member_id', $request->member_id)
+    //             ->get();
+
+    //         $associatedMemberAppointments = $allAppointments
+    //             ->where('appointments_flag', 1)
+    //             ->sortByDesc('LabReport_Request_id')
+    //             ->values(); // flag = 1
+    //         $labWiseAppointments = $allAppointments
+    //             ->where('appointments_flag', 2)
+    //             ->sortByDesc('LabReport_Request_id')
+    //             ->values(); // flag = 2
+
+    //         $mergedData = [];
+
+    //         // ➤ Associated Member Appointments: One family member
+    //         foreach ($associatedMemberAppointments as $appointment) {
+    //             $firstDetail = $appointment->labreqmasterdetail->first();
+
+    //             $mergedData[] = [
+    //                 'type' => 'associated',
+    //                 'preference_date' => $appointment->preference_date,
+    //                 'preference_time' => $appointment->preference_time,
+    //                 'DoctorName' => optional($appointment->AssociatedMember)->dr_name,
+    //                 'service' => optional($appointment->service)->name,
+    //                 'Type' => $appointment->type ?? '',
+    //                 'subservice' => optional($appointment->subservice)->subservice_name,
+    //                 'family_member_name' => optional($firstDetail?->family_member)->member_name,
+    //             ];
+    //         }
+
+
+    //         foreach ($labWiseAppointments as $lab) {
+    //             // $memberNames = [];
+
+    //             // foreach ($lab->labreqmasterdetail as $detail) {
+    //             //     $memberNames[] = optional($detail->family_member)->member_name;
+    //             // }
+    //             $memberNames = $lab->labreqmasterdetail->first();
+
+
+    //             $mergedData[] = [
+    //                 'type' => 'lab',
+    //                 'lab_name' => $lab->lab->name ?? '',
+    //                 'member_name' => $lab->member->name ?? '',
+    //                 'date' => $lab->date ?? '',
+    //                 'Type' => $appointment->type ?? '',
+    //                 'family_member_names' => optional($memberNames?->family_member)->member_name, // multiple names
+    //             ];
+    //         }
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => "Successfully fetched appointments.",
+    //             'data' => $mergedData
+    //         ], 200);
+    //     } catch (\Throwable $th) {
+    //         return response()->json(['error' => $th->getMessage()], 500);
+    //     }
+    // }
+
     public function AppointmentDisplay_DocorLabwise(Request $request)
     {
         try {
@@ -1642,8 +1749,12 @@ class FrontApiController extends Controller
             ]);
 
             $member = Member::find($request->member_id);
+
             if (!$member) {
-                return response()->json(['success' => false, 'message' => 'Member not found'], 404);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Member not found'
+                ], 404);
             }
 
             $allAppointments = LabReportRequestMaster::with([
@@ -1656,62 +1767,141 @@ class FrontApiController extends Controller
                 'labreqmasterdetail.family_member'
             ])
                 ->where('member_id', $request->member_id)
+                ->orderByDesc('LabReport_Request_id')
                 ->get();
 
-            $associatedMemberAppointments = $allAppointments
-                ->where('appointments_flag', 1)
-                ->sortByDesc('LabReport_Request_id')
-                ->values(); // flag = 1
-            $labWiseAppointments = $allAppointments
-                ->where('appointments_flag', 2)
-                ->sortByDesc('LabReport_Request_id')
-                ->values(); // flag = 2
+            $data = [
+                'DoctorConsultation' => [],
+                'Lab' => [],
+                'HomeCare' => [],
+                'Insurance_Support' => [],
+                'Radiology_Scan' => [],
+                'IPD_Support' => [],
+                'Wellness_Support' => [],
+                'Other' => [],
+                'Packages' => []
+            ];
 
-            $mergedData = [];
+            $packageBookings = Packagesubmit::with([
+                'package',
+                'service',
+                'family_member'
+            ])
+                ->where('member_id', $request->member_id)
+                ->orderByDesc('id')
+                ->get();
 
-            // ➤ Associated Member Appointments: One family member
-            foreach ($associatedMemberAppointments as $appointment) {
-                $firstDetail = $appointment->labreqmasterdetail->first();
-
-                $mergedData[] = [
-                    'type' => 'associated',
-                    'preference_date' => $appointment->preference_date,
-                    'preference_time' => $appointment->preference_time,
-                    'DoctorName' => optional($appointment->AssociatedMember)->dr_name,
-                    'service' => optional($appointment->service)->name,
-                    'Type' => $appointment->type ?? '',
-                    'subservice' => optional($appointment->subservice)->subservice_name,
-                    'family_member_name' => optional($firstDetail?->family_member)->member_name,
+            foreach ($packageBookings as $packageBooking) {
+                $data['Packages'][] = [
+                    'package_submit_id' => $packageBooking->id,
+                    'package_id' => $packageBooking->package_id,
+                    'package_name' => optional($packageBooking->package)->name,
+                    'package_price' => optional($packageBooking->package)->Price,
+                    'package_mrp' => optional($packageBooking->package)->MRP_Price,
+                    'package_tests' => optional($packageBooking->package)->Tests,
+                    'fasting_required' => optional($packageBooking->package)->fasting_required == 1 ? 'Yes' : 'No',
+                    'logo' => optional($packageBooking->package)->logo ? url('/upload/logo/' . $packageBooking->package->logo) : '',
+                    'pdf' => optional($packageBooking->package)->pdf ? url('/upload/package-detail-pdf/' . $packageBooking->package->pdf) : '',
+                    'service_id' => $packageBooking->service_id,
+                    'service' => optional($packageBooking->service)->name,
+                    'date' => $packageBooking->date,
+                    'time_slot' => $packageBooking->time_slot,
+                    'name_sample_collection' => $packageBooking->name_sample_collection,
+                    'note' => $packageBooking->note,
+                    'family_member_name' => optional($packageBooking->family_member)->member_name,
+                    'created_at' => $packageBooking->created_at,
                 ];
             }
 
+            foreach ($allAppointments as $appointment) {
 
-            foreach ($labWiseAppointments as $lab) {
-                // $memberNames = [];
+                $firstDetail = $appointment->labreqmasterdetail->first();
 
-                // foreach ($lab->labreqmasterdetail as $detail) {
-                //     $memberNames[] = optional($detail->family_member)->member_name;
-                // }
-                $memberNames = $lab->labreqmasterdetail->first();
+                $familyMemberName = optional($firstDetail?->family_member)->member_name;
 
+                /*
+            |--------------------------------------------------------------------------
+            | Lab Wise Appointments
+            |--------------------------------------------------------------------------
+            | appointments_flag = 2 means lab appointment
+            */
+                if ($appointment->appointments_flag == 2) {
 
-                $mergedData[] = [
-                    'type' => 'lab',
-                    'lab_name' => $lab->lab->name ?? '',
-                    'member_name' => $lab->member->name ?? '',
-                    'date' => $lab->date ?? '',
-                    'Type' => $appointment->type ?? '',
-                    'family_member_names' => optional($memberNames?->family_member)->member_name, // multiple names
+                    $data['Lab'][] = [
+                        'type' => 'lab',
+                        'LabReport_Request_id' => $appointment->LabReport_Request_id,
+                        'lab_name' => optional($appointment->lab)->name,
+                        'member_name' => optional($appointment->member)->name,
+                        'family_member_name' => $familyMemberName,
+                        'date' => $appointment->date,
+                        'time' => $appointment->time,
+                        'service_id' => $appointment->service_id,
+                        'service' => optional($appointment->service)->name,
+                        'sub_service_id' => $appointment->sub_service_id,
+                        'subservice' => optional($appointment->subservice)->subservice_name,
+                        'appointment_type' => $appointment->type,
+                        'hospital_name' => $appointment->hospital_name,
+                        'concern_requirement' => $appointment->concern_requirement,
+                        'service_required' => $appointment->service_required,
+                        'address' => $appointment->Address,
+                    ];
+
+                    continue;
+                }
+
+                /*
+            |--------------------------------------------------------------------------
+            | Type Wise Other Services
+            |--------------------------------------------------------------------------
+            */
+                $type = $appointment->type;
+
+                $appointmentData = [
+                    'type' => $type,
+                    'LabReport_Request_id' => $appointment->LabReport_Request_id,
+                    'preference_date' => $appointment->preference_date,
+                    'preference_time' => $appointment->preference_time,
+                    'DoctorName' => optional($appointment->AssociatedMember)->dr_name,
+                    'service_id' => $appointment->service_id,
+                    'service' => optional($appointment->service)->name,
+                    'sub_service_id' => $appointment->sub_service_id,
+                    'subservice' => optional($appointment->subservice)->subservice_name,
+                    'family_member_name' => $familyMemberName,
+                    'hospital_name' => $appointment->hospital_name,
+                    'concern_requirement' => $appointment->concern_requirement,
+                    'time' => $appointment->time,
+                    'service_required' => $appointment->service_required,
+                    'address' => $appointment->Address,
                 ];
+
+                if ($type == 'DoctorConsultation') {
+                    $data['DoctorConsultation'][] = $appointmentData;
+                } elseif ($type == 'HomeCare') {
+                    $data['HomeCare'][] = $appointmentData;
+                } elseif ($type == 'Insurance_Support') {
+                    $data['Insurance_Support'][] = $appointmentData;
+                } elseif ($type == 'Radiology_Scan' || $type == 'Radiology/Scan') {
+                    $data['Radiology_Scan'][] = $appointmentData;
+                } elseif ($type == 'IPD_Support') {
+                    $data['IPD_Support'][] = $appointmentData;
+                } elseif ($type == 'Wellness_Support') {
+                    $data['Wellness_Support'][] = $appointmentData;
+                } else {
+                    $data['Other'][] = $appointmentData;
+                }
             }
 
             return response()->json([
                 'success' => true,
-                'message' => "Successfully fetched appointments.",
-                'data' => $mergedData
+                'message' => 'Successfully fetched appointments.',
+                'data' => $data
             ], 200);
         } catch (\Throwable $th) {
-            return response()->json(['error' => $th->getMessage()], 500);
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong.',
+                'error' => $th->getMessage()
+            ], 500);
         }
     }
 }

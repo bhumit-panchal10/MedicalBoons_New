@@ -355,6 +355,16 @@ class FrontviewController extends Controller
         }
     }
 
+    public function ThankYou(Request $request)
+    {
+        try {
+            return view('frontview.ThankYou');
+        } catch (\Throwable $th) {
+            Toastr::error('Error: ' . $th->getMessage());
+            return redirect()->back()->withInput();
+        }
+    }
+
     public function Corporate(Request $request)
     {
         try {

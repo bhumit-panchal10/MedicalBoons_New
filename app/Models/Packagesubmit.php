@@ -23,4 +23,24 @@ class Packagesubmit extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function package()
+    {
+        return $this->belongsTo(Packages::class, 'package_id', 'id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Services::class, 'service_id', 'id');
+    }
+
+    public function family_member()
+    {
+        return $this->belongsTo(FamilyMember::class, 'family_member_id', 'family_member_id');
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id', 'id');
+    }
 }
