@@ -24,7 +24,6 @@
                 </ul>
             </div>
 
-
             <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
                 <div class="xl:col-span-12">
                     <div class="card" id="customerList">
@@ -36,7 +35,7 @@
                                         <div
                                             class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
                                             <h5 class="text-16" id="exampleModalLabel">Add Associated Clinic</h5>
-                                            <a href="{{ route('associated_member.index') }}">
+                                            <a href="{{ route('associated_member.index', $id) }}">
                                                 <button type="button"
                                                     class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
                                                     data-modal-target="AddModal">
@@ -120,7 +119,7 @@
                                                     <div class="mb-3">
                                                         <label for="email-field" class="">Time<span
                                                                 class="text-red-500">*</span></label>
-                                                        <input type="time" id="time" name="time" maxlength="150"
+                                                        <input type="text" id="time" name="time" maxlength="150"
                                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                             placeholder="Enter Time" required autocomplete="off" autofocus
                                                             value="{{ old('time') }}">
