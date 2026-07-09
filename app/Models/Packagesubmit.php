@@ -20,6 +20,8 @@ class Packagesubmit extends Model
         'time_slot',
         'name_sample_collection',
         'note',
+        'Price',
+        'MRP_Price',
         'created_at',
         'updated_at'
     ];

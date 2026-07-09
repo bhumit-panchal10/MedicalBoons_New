@@ -45,6 +45,7 @@ use App\Http\Controllers\LabTestReportinquiryController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\RetailCustomerController;
 
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -72,7 +73,7 @@ Route::get('/phpinfo', function () {
     phpinfo();
 });
 // Front
-Route::get('/index', [FrontviewController::class, 'index'])->name('Front.index');
+//Route::get('/index', [FrontviewController::class, 'index'])->name('Front.index');
 Route::get('/', [FrontviewController::class, 'index'])->name('Front.index');
 
 Route::get('/Plan/{guid?}', [FrontviewController::class, 'Plan'])->name('Front.Plan');
@@ -81,6 +82,7 @@ Route::get('/Plan/Detail/{planid?}/{guid?}', [FrontviewController::class, 'PlanD
 Route::get('/Partner-With-Us', [FrontviewController::class, 'PartnerWithUs'])->name('Front.PartnerWithUs');
 Route::post('/Partner_sendmail', [FrontviewController::class, 'Partner_sendmail'])->name('Front.Partner_sendmail');
 Route::get('/ThankYou', [FrontviewController::class, 'ThankYou'])->name('Front.ThankYou');
+
 
 Route::get('/B2BLogin', [FrontviewController::class, 'B2BLogin'])->name('Front.B2BLogin');
 //Route::get('/CorporateLogin', [FrontviewController::class, 'CorporateLogin'])->name('Front.CorporateLogin');
@@ -145,6 +147,8 @@ Route::prefix('admin')->name('Appoitment.')->middleware('auth')->group(function 
     Route::get('/Appoitment/edit/{id?}', [AppoitmentController::class, 'edit'])->name('edit');
     Route::post('/Appoitment/update/{id?}', [AppoitmentController::class, 'update'])->name('update');
     Route::delete('/Appoitment/delete', [AppoitmentController::class, 'delete'])->name('delete');
+    Route::get('/appointment/completed/{id}', [AppoitmentController::class, 'completed'])
+        ->name('completed');
 });
 
 Route::prefix('admin')->name('LabTestinquiryReport.')->middleware('auth')->group(function () {
@@ -239,7 +243,7 @@ Route::prefix('admin')->name('plan_detail.')->middleware('auth')->group(function
 // Associted Member Clinic
 Route::prefix('admin')->name('AssocitedMemberClinic.')->middleware('auth')->group(function () {
     Route::any('/AssocitedMemberClinic/index/{id?}', [AssocitedMemberClinicController::class, 'index'])->name('index');
-    Route::get('/AssocitedMemberClinic/add', [AssocitedMemberClinicController::class, 'add'])->name('add');
+    Route::get('/AssocitedMemberClinic/add/{id?}', [AssocitedMemberClinicController::class, 'add'])->name('add');
     Route::post('/AssocitedMemberClinic/store', [AssocitedMemberClinicController::class, 'store'])->name('store');
     Route::get('/AssocitedMemberClinic/edit/{id?}', [AssocitedMemberClinicController::class, 'edit'])->name('edit');
     Route::post('/AssocitedMemberClinic/update', [AssocitedMemberClinicController::class, 'update'])->name('update');

@@ -427,6 +427,12 @@ ul{
     color: #1e3a5f;
 }
 
+.stat-number-new {
+    font-size: 40px;
+    font-weight: 700;
+    color: #1e3a5f;
+}
+
 .stat-label {
     font-size: 16px;
     color: var(--text-light);
