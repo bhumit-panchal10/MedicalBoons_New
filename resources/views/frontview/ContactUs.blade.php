@@ -104,21 +104,21 @@
         }
 
         .contact-hero-section {
-            background: #ffffff;
-            padding: 0;
+            background: linear-gradient(135deg, #e8f5f3 0%, #ffffff 100%);
+            padding: 60px 0;
             overflow: hidden;
         }
 
         /* Left Content Padding */
         .contact-hero-content {
-            padding: 80px 45px 80px 53px;
+            padding: 50px 15px 50px 10px;
         }
 
         /* Contact Hero Subtitle */
         .contact-hero-subtitle {
             font-size: 13px;
             font-weight: 700;
-            color: #2d9d91;
+            color: #999;
             letter-spacing: 1px;
             margin-bottom: 15px;
             text-transform: uppercase;
@@ -157,6 +157,7 @@
             flex-direction: row;
             align-items: center;
             text-align: center;
+            gap: 10px;
         }
 
         .contact-feature-icon {
@@ -209,6 +210,7 @@
             font-size: 12px;
             color: #666;
             line-height: 1;
+            text-align: start;
         }
 
         .contact-feature-text strong {
@@ -217,20 +219,19 @@
             display: block;
         }
 
-        /* Contact Hero Image - Full Width, No Crop */
         .contact-hero-image-wrapper {
             position: relative;
             width: 100%;
-            height: 100%;
-            min-height: 525px;
         }
 
         .contact-hero-img {
             width: 100%;
-            height: 450px;
+            height: 390px;
             object-fit: cover;
             object-position: center;
             display: block;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
 
         /* Call Card Overlay - Bottom Right */
@@ -322,21 +323,26 @@
         }
 
         @media (max-width: 992px) {
+            .contact-hero-section {
+                padding: 50px 0;
+            }
+
             .contact-hero-content {
-                padding: 50px 30px;
+                padding: 0 0 35px 0;
             }
 
             .contact-hero-title {
                 font-size: 36px;
             }
 
-            .contact-hero-image-wrapper {
-                min-height: 500px;
+            .contact-hero-img {
+                height: auto;
+                max-height: none;
             }
 
             .contact-call-card {
                 position: static;
-                margin: 30px;
+                margin: 30px 0 0;
                 min-width: auto;
             }
         }
@@ -348,10 +354,12 @@
 
             .contact-features-row {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
             }
 
-            .contact-hero-image-wrapper {
-                min-height: 400px;
+            .contact-hero-img {
+                height: auto;
+                border-radius: 16px;
             }
 
             .call-card-number {
@@ -366,8 +374,8 @@
         }
 
         /* ============================================
-                                                                                       GET IN TOUCH SECTION - PDF EXACT MATCH
-                                                                                       ============================================ */
+                                                                               GET IN TOUCH SECTION - PDF EXACT MATCH
+                                                                               ============================================ */
 
         /* Title Underline Center */
         .title-underline-center {
@@ -515,8 +523,8 @@
         }
 
         /* ============================================
-                                                                                       SUPPORT BANNER SECTION - NEW UNIQUE CLASSES
-                                                                                       ============================================ */
+                                                                               SUPPORT BANNER SECTION - NEW UNIQUE CLASSES
+                                                                               ============================================ */
 
         .support-banner-container {
             display: flex;
@@ -700,8 +708,8 @@
     </style>
     <!-- Contact Hero Section -->
     <section class="contact-hero-section">
-        <div class="container-fluid px-0">
-            <div class="row g-0 align-items-top">
+        <div class="container">
+            <div class="row align-items-center">
                 <!-- Left Content -->
                 <div class="col-lg-6">
                     <div class="contact-hero-content">
@@ -765,18 +773,18 @@
 
                         <!-- Call Card Overlay -->
                         <!-- <div class="contact-call-card">
-                                                                                                                                <p class="call-card-label">Need Immediate Help?</p>
-                                                                                                                                <div class="call-card-phone">
-                                                                                                                                    <div class="call-card-icon">
-                                                                                                                                        <i class="fas fa-phone-alt"></i>
-                                                                                                                                    </div>
-                                                                                                                                    <div>
-                                                                                                                                        <p class="call-card-text">Call our support team</p>
-                                                                                                                                        <a href="tel:+918655774949" class="call-card-number">+91 86557 74949</a>
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                                <p class="call-card-hours">7:00 AM – 10:00 PM (All Days)</p>
-                                                                                                                            </div> -->
+                                                                                                                        <p class="call-card-label">Need Immediate Help?</p>
+                                                                                                                        <div class="call-card-phone">
+                                                                                                                            <div class="call-card-icon">
+                                                                                                                                <i class="fas fa-phone-alt"></i>
+                                                                                                                            </div>
+                                                                                                                            <div>
+                                                                                                                                <p class="call-card-text">Call our support team</p>
+                                                                                                                                <a href="tel:+918655774949" class="call-card-number">+91 86557 74949</a>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <p class="call-card-hours">7:00 AM – 10:00 PM (All Days)</p>
+                                                                                                                    </div> -->
                     </div>
                 </div>
             </div>
@@ -798,7 +806,7 @@
                             <i class="fas fa-phone-alt"></i>
                         </div>
                         <h3 class="contact-method-title">Call Us</h3>
-                        <p class="contact-method-number">+91 86557 74949</p>
+                        <p class="contact-method-number">+91 99746 60451</p>
                         <p class="contact-method-time">7:00 AM - 10:00 PM (All Days)</p>
                     </div>
                 </div>
@@ -812,7 +820,7 @@
                         <h3 class="contact-method-title">WhatsApp</h3>
                         <p class="contact-method-desc">Chat with our care team on WhatsApp</p>
                         <!-- <p class="contact-method-time">We typically reply within a few hours</p> -->
-                        <a href="https://wa.me/918655774949" class="contact-method-btn whatsapp-btn" target="_blank">
+                        <a href="https://wa.me/919974660451" class="contact-method-btn whatsapp-btn" target="_blank">
                             Chat on WhatsApp
                         </a>
                     </div>
@@ -837,8 +845,8 @@
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <h3 class="contact-method-title">Visit Us</h3>
-                        <p class="contact-method-address">SCO 372, Sector 44D,<br>Chandigarh 160047</p>
-                        <p class="contact-method-time">Our office is open<br>Mon – Sat | 9 AM – 6 PM</p>
+                        <p class="contact-method-address">C/2, Rajkamal Plaza-A Income-tax, Ashram Road Ahmedaba</p>
+                        <p class="contact-method-time">Office Timing<br>Mon – Sat | 10 AM – 6 PM</p>
                     </div>
                 </div>
             </div>
@@ -911,7 +919,7 @@
                 <div class="col-lg-6 mt-5 mt-lg-0 animate">
                     <div class="contact-card">
                         <iframe allowfullscreen="" height="550" loading="lazy"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.4076584469586!2d76.7169!3d30.7046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDQyJzE2LjYiTiA3NsKwNDMnMDYuOCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.518320816532!2d72.56509017443237!3d23.041451615625107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848a8316f23d%3A0x4d5eac2c09d8a29c!2sRajkamal%20Plaza%20A!5e0!3m2!1sen!2sin!4v1783500206788!5m2!1sen!2sin"
                             style="border:0;" width="100%">
                         </iframe>
 
@@ -968,8 +976,8 @@
 
                 <!-- Right - Doctor Image -->
                 <!-- <div class="support-banner-doctor">
-                                                                                                            <img src="../images/doctor-support.png" alt="Doctor">
-                                                                                                        </div> -->
+                                                                                                    <img src="../images/doctor-support.png" alt="Doctor">
+                                                                                                </div> -->
             </div>
         </div>
     </section>

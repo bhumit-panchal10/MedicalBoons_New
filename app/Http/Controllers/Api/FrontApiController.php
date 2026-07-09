@@ -41,6 +41,58 @@ use Carbon\Carbon;
 class FrontApiController extends Controller
 {
 
+    public function Servicewsie_SubService_Doctor(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'service_id' => 'required|exists:services,id'
+            ]);
+
+            $subServices = SubService::where([
+                'service_id' => $request->service_id,
+                'isDelete' => 0,
+                'iStatus' => 1
+            ])
+                ->select(
+                    'sub_service_id',
+                    'subservice_name'
+                )
+                ->orderBy('subservice_name', 'ASC')
+                ->get();
+
+            $doctors = AssociatedMember::where([
+                'service_id' => $request->service_id,
+                'isDelete' => 0,
+                'iStatus' => 1
+            ])->orderBy('dr_name', 'ASC')
+                ->get()
+                ->map(function ($doctor) {
+
+                    $doctor->photo = !empty($doctor->photo)
+                        ? url('upload/photo/' . $doctor->photo)
+                        : url('assets/images/noimage.png');
+
+                    return $doctor;
+                });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Found',
+                'data' => [
+                    'sub_services' => $subServices,
+                    'doctors' => $doctors
+                ]
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function DoctorClinicList(Request $request)
     {
         try {
@@ -94,57 +146,7 @@ class FrontApiController extends Controller
             ]);
         }
     }
-    public function Servicewsie_SubService_Doctor(Request $request)
-    {
-        try {
 
-            $request->validate([
-                'service_id' => 'required|exists:services,id'
-            ]);
-
-            $subServices = SubService::where([
-                'service_id' => $request->service_id,
-                'isDelete' => 0,
-                'iStatus' => 1
-            ])
-                ->select(
-                    'sub_service_id',
-                    'subservice_name'
-                )
-                ->orderBy('subservice_name', 'ASC')
-                ->get();
-
-            $doctors = AssociatedMember::where([
-                'service_id' => $request->service_id,
-                'isDelete' => 0,
-                'iStatus' => 1
-            ])->orderBy('dr_name', 'ASC')
-                ->get()
-                ->map(function ($doctor) {
-
-                    $doctor->photo = !empty($doctor->photo)
-                        ? url('upload/photo/' . $doctor->photo)
-                        : url('assets/images/noimage.png');
-
-                    return $doctor;
-                });
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Data Found',
-                'data' => [
-                    'sub_services' => $subServices,
-                    'doctors' => $doctors
-                ]
-            ]);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
     public function getTimeSlots()
     {
         $slots = [];
@@ -183,7 +185,9 @@ class FrontApiController extends Controller
                 "id",
                 "name",
                 "description",
-                "photo"
+                "photo",
+                "is_primary",
+                "content_display_flag"
             )->where(['iStatus' => 1, 'isDelete' => 0])
                 ->orderBy('name', 'asc')
                 ->get();
@@ -279,6 +283,66 @@ class FrontApiController extends Controller
             ], 500);
         }
     }
+
+    // public function Planoverview(Request $request)
+    // {
+    //     try {
+    //         $request->validate([
+    //             'member_id' => 'required'
+    //         ]);
+    //         $member = Member::where('id', $request->member_id)->first();
+    //         if (!$member) {
+    //             return response()->json(['success' => false, 'message' => 'Member not found'], 404);
+    //         }
+
+    //         $orderId  = $member->Order_id;
+    //         $order = CorporateOrder::with('plan')->where('Corporate_Order_id', $orderId)->get();
+
+    //         $LabReportRequestMasters = LabReportRequestMaster::where('member_id', $request->member_id)->get();  // Use get() for multiple records
+    //         $usedwalletbalance = $LabReportRequestMasters->sum('discount_amount');  // Sum all discount_amount values
+
+
+    //         $formatted = $order->map(function ($item) use ($usedwalletbalance) {
+    //             $expiryDate = $item->end_date;
+    //             $planFlag = ($expiryDate && $expiryDate >= now()->toDateString()) ? 1 : 0;
+    //             $extraMember = $item->iExtraMember ?? 0;
+    //             $extraMemberwalletbal = $item->plan->extra_amount_per_person_in_wallet ?? 0;
+    //             $extramemamount = $extraMember * $extraMemberwalletbal;
+    //             $plan = $item->plan;
+    //             if ($plan) {
+    //                 $plan->wallet_balance =
+    //                     ($plan->wallet_balance ?? 0) + $extramemamount;
+
+    //                 $plan->plan_detail_pdf = $plan->plan_detail_pdf
+    //                     ? url('upload/plan-detail-pdf/' . $plan->plan_detail_pdf)
+    //                     : null;
+
+    //                 $plan->plan_image = $plan->plan_image
+    //                     ? url('upload/plan-images/' . $plan->plan_image)
+    //                     : null;
+
+    //                 $plan->plan_detail_image = $plan->plan_detail_image
+    //                     ? url('upload/plan-detail-image/' . $plan->plan_detail_image)
+    //                     : null;
+    //             }
+    //             return [
+    //                 'Order_id' => $item->Corporate_Order_id,
+    //                 'expiry_date' => $item->end_date,
+    //                 'plan_flag' => $planFlag,
+    //                 'used_wallet_balance' => $usedwalletbalance,
+    //                 'plan' => $plan
+    //             ];
+    //         })->first();
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => "successfully fetched plan...",
+    //             'data' => $formatted
+
+    //         ], 200);
+    //     } catch (\Throwable $th) {
+    //         return response()->json(['error' => $th->getMessage()], 500);
+    //     }
+    // }
 
     public function Planoverview(Request $request)
     {
@@ -664,7 +728,11 @@ class FrontApiController extends Controller
                 "member_id" => 'required',
                 "member_name" => 'required',
                 "DOB" => 'required',
-                "gender" => 'required'
+                "gender" => 'required',
+                "blood_pressure" => 'nullable',
+                "diabetes" => 'nullable',
+                "thyroid" => 'nullable',
+                "others" => 'nullable'
 
             ]);
 
@@ -673,6 +741,10 @@ class FrontApiController extends Controller
                 'member_id' => $request->member_id,
                 'DOB' => $request->DOB,
                 'gender' => $request->gender,
+                'blood_pressure' => $request->blood_pressure,
+                'diabetes' => $request->diabetes,
+                'thyroid' => $request->thyroid,
+                'others' => $request->others,
                 'created_at' => now()
 
             ]);
@@ -728,6 +800,8 @@ class FrontApiController extends Controller
                 }
 
                 $image->move($destinationpath, $policy);
+                //$policy = 'https://medicalboons.com/upload/policy/' . $policyFileName;
+
             }
 
             $DoctorConsultationAppointment = LabReportRequestMaster::create([
@@ -735,15 +809,15 @@ class FrontApiController extends Controller
                 'family_member_id' => $request->family_member_id ?? '',
                 'service_id' => $request->service_id ?? '',
                 'sub_service_id' => $request->sub_service_id ?? 0,
-                'doctor_id' => $request->doctor_id ?? 0,
+                'associated_id' => $request->doctor_id ?? 0,
                 'hospital_name' => $request->hospital_name ?? '',
                 'concern_requirement' => $request->concern_requirement ?? '',
                 'preference_time' => $request->preference_time ?? '',
                 'time' => $request->time ?? '',
-                'policy' => $policy ?? '',
+                'policy' => 'https://medicalboons.com/upload/policy/' . $policy,
                 'service_required' => $request->service_required ?? '',
                 'Address' => $request->Address ?? '',
-                'preference_date' => $request->filled('date') ? $request->date : null,
+                'date' => $request->filled('date') ? $request->date : null,
                 'type' => $request->Type ?? '',
                 'member_name' => $request->member_name ?? '',
                 'service_Interested' => $request->service_Interested ?? '',
@@ -780,6 +854,8 @@ class FrontApiController extends Controller
                 "time" => 'nullable',
                 "name_sample_collection" => 'nullable',
                 "note" => 'nullable',
+                "Price" => 'nullable',
+                "MRP_Price" => 'nullable',
             ]);
             $Packagesubmit = Packagesubmit::create([
                 'member_id' => $request->member_id ?? '',
@@ -790,6 +866,8 @@ class FrontApiController extends Controller
                 'time_slot' => $request->time ?? '',
                 'name_sample_collection' => $request->name_sample_collection ?? '',
                 'note' => $request->note ?? '',
+                'Price' => $request->Price ?? '',
+                'MRP_Price' => $request->MRP_Price ?? '',
                 'created_at' => now()
             ]);
 
@@ -1116,6 +1194,7 @@ class FrontApiController extends Controller
     {
         try {
             $request->validate([
+                'plan_id'          => 'nullable',
                 'lab_id'          => 'required|integer',
                 'labtestmasterid' => 'required',
                 'member_id' => 'required',
@@ -1154,8 +1233,12 @@ class FrontApiController extends Controller
                 ? $netAfterDiscounts + $VISIT_CHARGE
                 : $netAfterDiscounts;
 
-            $familymember = FamilyMember::where('family_member_id', $request->family_member_id)
-                ->first();
+            $familymember = FamilyMember::where('family_member_id', $request->family_member_id)->first();
+
+
+            $Plan = Plan::where('id', $request->plan_id)->first();
+            $wallet_balance = $Plan->wallet_balance ?? 0;
+
             if (!$familymember) {
                 return response()->json([
                     'success' => false,
@@ -1168,6 +1251,7 @@ class FrontApiController extends Controller
                 'message' => 'Lab test amount summary',
                 'data' => [
                     'total_tests_selected'   => $totalTests,
+                    'wallet_balance'   => $wallet_balance,
                     'discount_apply'   => $familymember->discount_apply,
                     'labMinimumOrderValue' => $MIN_PAYABLE_FLOOR,
                     'total_mrp'              => round($totalMrp, 2),
@@ -1370,11 +1454,12 @@ class FrontApiController extends Controller
             $request->validate([
                 'member_id' => 'required',
                 'lab_id' => 'required',
-                'date' => 'required|date',
+                'date' => 'required',
                 'visit' => 'required',
                 'total_amount' => 'nullable',
                 'dis_amount' => 'nullable',
                 'net_amount' => 'nullable',
+                'preference_time' => 'nullable',
                 'special_discount' => 'nullable',
                 'family_member_id' => 'required'
             ]);
@@ -1389,12 +1474,15 @@ class FrontApiController extends Controller
                     'message' => 'No lab test data found in temp table.'
                 ], 404);
             }
+            $date = \Carbon\Carbon::createFromFormat('d-m-Y', $request->date)
+                ->format('Y-m-d');
 
             $masterId = DB::table('LabReport_Request_Master')
                 ->insertGetId([
                     'Lab_id' => $request->lab_id,
                     'appointments_flag' => 2,
-                    'date' => $request->date,
+                    'date' => $date,
+                    'preference_time' => $request->preference_time ?? '',
                     'visit' => $request->visit,
                     'total_amount' => $request->total_amount,
                     'discount_amount' => $request->dis_amount,
@@ -1439,8 +1527,6 @@ class FrontApiController extends Controller
             ], 500);
         }
     }
-
-
 
     public function BookingTreatmentSubmit(Request $request)
     {
@@ -1659,7 +1745,6 @@ class FrontApiController extends Controller
         // }
     }
 
-
     // public function AppointmentDisplay_DocorLabwise(Request $request)
     // {
     //     try {
@@ -1685,32 +1770,31 @@ class FrontApiController extends Controller
     //             ->get();
 
     //         $associatedMemberAppointments = $allAppointments
-    //             ->where('appointments_flag', 1)
-    //             ->sortByDesc('LabReport_Request_id')
-    //             ->values(); // flag = 1
+    //         ->where('appointments_flag', 1)
+    //         ->sortByDesc('LabReport_Request_id')
+    //         ->values(); // flag = 1
     //         $labWiseAppointments = $allAppointments
-    //             ->where('appointments_flag', 2)
-    //             ->sortByDesc('LabReport_Request_id')
-    //             ->values(); // flag = 2
+    //         ->where('appointments_flag', 2)
+    //         ->sortByDesc('LabReport_Request_id')
+    //         ->values(); // flag = 2
 
     //         $mergedData = [];
 
     //         // ➤ Associated Member Appointments: One family member
     //         foreach ($associatedMemberAppointments as $appointment) {
     //             $firstDetail = $appointment->labreqmasterdetail->first();
-
     //             $mergedData[] = [
     //                 'type' => 'associated',
     //                 'preference_date' => $appointment->preference_date,
     //                 'preference_time' => $appointment->preference_time,
+    //                 'Type' => $appointment->type ?? '',
     //                 'DoctorName' => optional($appointment->AssociatedMember)->dr_name,
     //                 'service' => optional($appointment->service)->name,
-    //                 'Type' => $appointment->type ?? '',
     //                 'subservice' => optional($appointment->subservice)->subservice_name,
-    //                 'family_member_name' => optional($firstDetail?->family_member)->member_name,
+    //                 'family_member_name' => optional($appointment->family_membername)->member_name,
+    //                 //'family_member_name' => optional($firstDetail?->family_member)->member_name,
     //             ];
     //         }
-
 
     //         foreach ($labWiseAppointments as $lab) {
     //             // $memberNames = [];
@@ -1740,6 +1824,76 @@ class FrontApiController extends Controller
     //         return response()->json(['error' => $th->getMessage()], 500);
     //     }
     // }
+
+    public function recentAppointments(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'member_id' => 'required'
+            ]);
+
+            $appointments = LabReportRequestMaster::with([
+                'AssociatedMember',
+                'service',
+                'subservice',
+                'family_membername',
+                'labreqmasterdetail.Test_Name',
+                'labreqmasterdetail.family_member'
+            ])
+                ->where('member_id', $request->member_id)
+                ->orderByDesc('LabReport_Request_id')
+                ->take(5)
+                ->get();
+            // dd($appointments);
+
+            $data = $appointments->map(function ($appointment) {
+
+                return [
+                    'doctor_name' => $appointment->AssociatedMember->dr_name ?? '',
+                    'flag' => $appointment->flag ?? '',
+                    'LabReport_Request_id' => $appointment->LabReport_Request_id ?? '',
+
+                    //'service_name' => $appointment->service->name ?? '',
+                    'service_name' => ($appointment->appointments_flag == 2)
+                        ? 'Lab Test'
+                        : ($appointment->service->name ?? ''),
+
+                    'sub_service_name' => $appointment->subservice->sub_service_name ?? '',
+
+                    'lab_test_name' => $appointment->labreqmasterdetail
+                        ->pluck('Test_Name.Test_Name')
+                        ->filter()
+                        ->implode(', '),
+
+                    'family_member_name' =>
+                    $appointment->family_membername->member_name
+                        ?? $appointment->labreqmasterdetail->first()?->family_member?->member_name
+                        ?? '',
+
+                    'created_at' => $appointment->created_at
+                        ? date('d-m-Y H:i:s', strtotime($appointment->created_at))
+                        : '',
+
+                    'date' => $appointment->date
+                        ? date('d-m-Y H:i:s', strtotime($appointment->date))
+                        : '',
+                ];
+            });
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Recent appointments fetched successfully.',
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     public function AppointmentDisplay_DocorLabwise(Request $request)
     {
@@ -1775,10 +1929,10 @@ class FrontApiController extends Controller
                 'Lab' => [],
                 'HomeCare' => [],
                 'Insurance_Support' => [],
-                'Radiology_Scan' => [],
+                'Radiology' => [],
                 'IPD_Support' => [],
                 'Wellness_Support' => [],
-                'Other' => [],
+                //'Other' => [],
                 'Packages' => []
             ];
 
@@ -1796,8 +1950,8 @@ class FrontApiController extends Controller
                     'package_submit_id' => $packageBooking->id,
                     'package_id' => $packageBooking->package_id,
                     'package_name' => optional($packageBooking->package)->name,
-                    'package_price' => optional($packageBooking->package)->Price,
-                    'package_mrp' => optional($packageBooking->package)->MRP_Price,
+                    'package_price' => $packageBooking->Price,
+                    'package_mrp' => $packageBooking->MRP_Price,
                     'package_tests' => optional($packageBooking->package)->Tests,
                     'fasting_required' => optional($packageBooking->package)->fasting_required == 1 ? 'Yes' : 'No',
                     'logo' => optional($packageBooking->package)->logo ? url('/upload/logo/' . $packageBooking->package->logo) : '',
@@ -1815,9 +1969,15 @@ class FrontApiController extends Controller
 
             foreach ($allAppointments as $appointment) {
 
+                //$firstDetail = $appointment->labreqmasterdetail->first();
+
+                //$familyMemberName = optional($firstDetail?->family_member)->member_name;
+
                 $firstDetail = $appointment->labreqmasterdetail->first();
 
-                $familyMemberName = optional($firstDetail?->family_member)->member_name;
+                $familyMemberName = optional($appointment->family_membername)->member_name
+                    ?? optional($firstDetail?->family_member)->member_name
+                    ?? '';
 
                 /*
             |--------------------------------------------------------------------------
@@ -1835,6 +1995,8 @@ class FrontApiController extends Controller
                         'family_member_name' => $familyMemberName,
                         'date' => $appointment->date,
                         'time' => $appointment->time,
+                        'preference_time' => $appointment->preference_time ?? '',
+                        'NetAmount' => $appointment->NetAmount ?? '',
                         'service_id' => $appointment->service_id,
                         'service' => optional($appointment->service)->name,
                         'sub_service_id' => $appointment->sub_service_id,
@@ -1856,6 +2018,27 @@ class FrontApiController extends Controller
             */
                 $type = $appointment->type;
 
+                $policy = '';
+
+                if (!empty($appointment->policy)) {
+
+                    $policyValue = trim($appointment->policy);
+
+                    // Agar sirf folder path hai to blank rakho
+                    if (
+                        $policyValue != 'upload/policy/' &&
+                        $policyValue != '/upload/policy/' &&
+                        $policyValue != 'https://medicalboons.com/upload/policy/' &&
+                        basename($policyValue) != 'policy'
+                    ) {
+                        if (filter_var($policyValue, FILTER_VALIDATE_URL)) {
+                            $policy = $policyValue;
+                        } else {
+                            $policy = asset('upload/policy/' . basename($policyValue));
+                        }
+                    }
+                }
+
                 $appointmentData = [
                     'type' => $type,
                     'LabReport_Request_id' => $appointment->LabReport_Request_id,
@@ -1866,12 +2049,18 @@ class FrontApiController extends Controller
                     'service' => optional($appointment->service)->name,
                     'sub_service_id' => $appointment->sub_service_id,
                     'subservice' => optional($appointment->subservice)->subservice_name,
+                    'service_Interested' => $appointment->service_Interested,
+                    'insurance_audit_service' => $appointment->insurance_audit_service,
                     'family_member_name' => $familyMemberName,
                     'hospital_name' => $appointment->hospital_name,
                     'concern_requirement' => $appointment->concern_requirement,
                     'time' => $appointment->time,
+                    'date' => $appointment->date,
                     'service_required' => $appointment->service_required,
                     'address' => $appointment->Address,
+                    'prefered_contact_time' => $appointment->prefered_contact_time ?? '',
+                    'insurance_company_name' => $appointment->insurance_company_name ?? '',
+                    'policy' => $policy,
                 ];
 
                 if ($type == 'DoctorConsultation') {
@@ -1880,14 +2069,14 @@ class FrontApiController extends Controller
                     $data['HomeCare'][] = $appointmentData;
                 } elseif ($type == 'Insurance_Support') {
                     $data['Insurance_Support'][] = $appointmentData;
-                } elseif ($type == 'Radiology_Scan' || $type == 'Radiology/Scan') {
-                    $data['Radiology_Scan'][] = $appointmentData;
+                } elseif ($type == 'Radiology' || $type == 'Radiology') {
+                    $data['Radiology'][] = $appointmentData;
                 } elseif ($type == 'IPD_Support') {
                     $data['IPD_Support'][] = $appointmentData;
                 } elseif ($type == 'Wellness_Support') {
                     $data['Wellness_Support'][] = $appointmentData;
                 } else {
-                    $data['Other'][] = $appointmentData;
+                    // $data['Other'][] = $appointmentData;
                 }
             }
 

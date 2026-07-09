@@ -1,271 +1,269 @@
 // Medical Boons - JavaScript
 
-// Wait for DOM to load
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Mobile menu toggle
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* ===============================
+       MOBILE MENU FINAL FIX
+    =============================== */
     const navToggle = document.querySelector('.navbar-toggle');
     const navMenu = document.querySelector('.navbar-menu');
-    
-    if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
+
+    if (navToggle && navMenu) {
+        const navIcon = navToggle.querySelector('i');
+
+        function openMenu() {
+            navMenu.classList.add('active');
+            navToggle.setAttribute('aria-expanded', 'true');
+
+            if (navIcon) {
+                navIcon.classList.remove('fa-bars');
+                navIcon.classList.add('fa-times');
+            }
+        }
+
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+
+            if (navIcon) {
+                navIcon.classList.remove('fa-times');
+                navIcon.classList.add('fa-bars');
+            }
+        }
+
+        navToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (navMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        navMenu.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (
+                navMenu.classList.contains('active') &&
+                !navMenu.contains(e.target) &&
+                !navToggle.contains(e.target)
+            ) {
+                closeMenu();
+            }
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 992) {
+                closeMenu();
+            }
         });
     }
-    
-    // Close mobile menu when clicking a link
-    const navLinks = document.querySelectorAll('.navbar-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-        });
-    });
-    
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+
+    /* ===============================
+       SMOOTH SCROLL
+    =============================== */
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const href = this.getAttribute('href');
+
+            if (!href || href === '#') return;
+
+            const target = document.querySelector(href);
+
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                e.preventDefault();
+
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
                 });
             }
         });
     });
-    
-    // Animate elements on scroll
-    const animateOnScroll = () => {
+
+
+    /* ===============================
+       ANIMATE ON SCROLL
+    =============================== */
+    const animateOnScroll = function () {
         const elements = document.querySelectorAll('.animate');
-        elements.forEach(element => {
+
+        elements.forEach(function (element) {
             const elementTop = element.getBoundingClientRect().top;
             const elementBottom = element.getBoundingClientRect().bottom;
-            
-            if (elementTop < window.innerHeight && elementBottom > 0) {
+
+            if (elementTop < window.innerHeight - 80 && elementBottom > 0) {
                 const delay = element.getAttribute('data-delay') || 0;
-                setTimeout(() => {
+
+                setTimeout(function () {
                     element.classList.add('show');
                 }, delay);
             }
         });
     };
-    
+
     window.addEventListener('scroll', animateOnScroll);
-    animateOnScroll(); // Run once on load
-    
-    // Counter animation for stats
-    const animateCounters = () => {
+    animateOnScroll();
+
+
+    /* ===============================
+       COUNTER ANIMATION
+    =============================== */
+    const animateCounters = function () {
         const counters = document.querySelectorAll('.stat-number');
-        counters.forEach(counter => {
+
+        counters.forEach(function (counter) {
             if (counter.classList.contains('counted')) return;
-            
-            const target = parseInt(counter.textContent);
-            const duration = 2000;
-            const step = target / (duration / 16);
-            let current = 0;
-            
-            const updateCounter = () => {
-                current += step;
-                if (current < target) {
-                    counter.textContent = Math.floor(current) + '+';
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    counter.textContent = target + '+';
-                    counter.classList.add('counted');
-                }
-            };
-            
+
+            const target = parseInt(counter.textContent.replace(/\D/g, ''), 10);
+
+            if (isNaN(target)) return;
+
             const elementTop = counter.getBoundingClientRect().top;
+
             if (elementTop < window.innerHeight) {
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = function () {
+                    current += step;
+
+                    if (current < target) {
+                        counter.textContent = Math.floor(current) + '+';
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target + '+';
+                        counter.classList.add('counted');
+                    }
+                };
+
                 updateCounter();
             }
         });
     };
-    
+
     window.addEventListener('scroll', animateCounters);
-    
-    // WhatsApp button pulse animation
+    animateCounters();
+
+
+    /* ===============================
+       WHATSAPP BUTTON PULSE
+    =============================== */
     const whatsappBtn = document.querySelector('.whatsapp-float');
+
     if (whatsappBtn) {
-        setInterval(() => {
+        setInterval(function () {
             whatsappBtn.classList.add('pulse');
-            setTimeout(() => {
+
+            setTimeout(function () {
                 whatsappBtn.classList.remove('pulse');
             }, 1000);
         }, 5000);
     }
+
 });
 
-// jQuery version (if jQuery is loaded)
+
+/* ===============================
+   TESTIMONIALS SLIDER
+   Keep this only if jQuery is loaded
+================================ */
 if (typeof jQuery !== 'undefined') {
-    (function($) {
-        $(document).ready(function() {
-            
-            // Smooth scrolling
-            $('a[href^="#"]').on('click', function(event) {
-                var target = $(this.getAttribute('href'));
-                if(target.length) {
-                    event.preventDefault();
-                    $('html, body').stop().animate({
-                        scrollTop: target.offset().top - 70
-                    }, 1000);
-                }
-            });
-            
-            // Animate on scroll
-            function animateOnScroll() {
-                $('.animate').each(function() {
-                    var elementTop = $(this).offset().top;
-                    var viewportBottom = $(window).scrollTop() + $(window).height();
-                    
-                    if (elementTop < viewportBottom - 100) {
-                        var $element = $(this);
-                        var delay = $element.attr('data-delay') || 0;
-                        setTimeout(function() {
-                            $element.addClass('show');
-                        }, delay);
-                    }
-                });
-            }
-            
-            $(window).on('scroll', animateOnScroll);
-            animateOnScroll();
-            
-            // Counter animation
-            function animateCounters() {
-                $('.stat-number').each(function() {
-                    if ($(this).hasClass('counted')) return;
-                    
-                    var $this = $(this);
-                    var elementTop = $this.offset().top;
-                    var viewportBottom = $(window).scrollTop() + $(window).height();
-                    
-                    if (elementTop < viewportBottom) {
-                        var countTo = parseInt($this.text());
-                        
-                        $({ countNum: 0 }).animate({
-                            countNum: countTo
-                        }, {
-                            duration: 2000,
-                            easing: 'swing',
-                            step: function() {
-                                $this.text(Math.floor(this.countNum) + '+');
-                            },
-                            complete: function() {
-                                $this.text(countTo + '+');
-                                $this.addClass('counted');
-                            }
-                        });
-                    }
-                });
-            }
-            
-            $(window).on('scroll', animateCounters);
-            
-            // Mobile menu toggle
-            $('.navbar-toggle').on('click', function() {
-                $('.navbar-menu').toggleClass('active');
-            });
-            
-            // Close mobile menu when clicking a link
-            $('.navbar-menu a').on('click', function() {
-                $('.navbar-menu').removeClass('active');
-            });
-            
-            // WhatsApp button pulse
-            setInterval(function() {
-                $('.whatsapp-float').addClass('pulse');
-                setTimeout(function() {
-                    $('.whatsapp-float').removeClass('pulse');
-                }, 1000);
-            }, 5000);
-            
-        });
-    })(jQuery);
-}
+    jQuery(document).ready(function ($) {
+        const track = $('.testimonial-track');
+        const cards = $('.testimonial-card');
+        const totalCards = cards.length;
+        const dotsContainer = $('.slider-dots');
 
-// Testimonials Slider
-$(document).ready(function() {
-    const track = $('.testimonial-track');
-    const cards = $('.testimonial-card');
-    const totalCards = cards.length;
-    let currentIndex = 0;
-    let cardsToShow = 3;
-    
-    // Adjust cards to show based on screen size
-    function updateCardsToShow() {
-        if ($(window).width() < 768) {
-            cardsToShow = 1;
-        } else if ($(window).width() < 992) {
-            cardsToShow = 2;
-        } else {
-            cardsToShow = 3;
+        if (!track.length || !cards.length) return;
+
+        let currentIndex = 0;
+        let cardsToShow = 3;
+        let totalDots = 1;
+
+        function updateCardsToShow() {
+            if ($(window).width() < 768) {
+                cardsToShow = 1;
+            } else if ($(window).width() < 992) {
+                cardsToShow = 2;
+            } else {
+                cardsToShow = 3;
+            }
+
+            totalDots = Math.ceil(totalCards / cardsToShow);
         }
-    }
-    
-    // Create dots
-    const dotsContainer = $('.slider-dots');
-    const totalDots = Math.ceil(totalCards / cardsToShow);
-    for (let i = 0; i < totalDots; i++) {
-        dotsContainer.append(`<span class="slider-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`);
-    }
-    
-    // Update slider position
-    function updateSlider() {
-        const cardWidth = $('.testimonial-card').outerWidth(true);
-        const offset = -(currentIndex * cardWidth * cardsToShow);
-        track.css('transform', `translateX(${offset}px)`);
-        
-    // Update dots
-    $('.slider-dot').removeClass('active');
-    $(`.slider-dot[data-index="${currentIndex}"]`).addClass('active');
-        
-    // Update button states
-    $('.prev-btn').prop('disabled', currentIndex === 0);
-    $('.next-btn').prop('disabled', currentIndex >= totalDots - 1);
+
+        function createDots() {
+            dotsContainer.empty();
+
+            for (let i = 0; i < totalDots; i++) {
+                dotsContainer.append(
+                    `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`
+                );
+            }
+        }
+
+        function updateSlider() {
+            const cardWidth = $('.testimonial-card').outerWidth(true);
+            const offset = -(currentIndex * cardWidth * cardsToShow);
+
+            track.css('transform', `translateX(${offset}px)`);
+
+            $('.slider-dot').removeClass('active');
+            $(`.slider-dot[data-index="${currentIndex}"]`).addClass('active');
+
+            $('.prev-btn').prop('disabled', currentIndex === 0);
+            $('.next-btn').prop('disabled', currentIndex >= totalDots - 1);
+        }
+
+        $('.next-btn').on('click', function () {
+            if (currentIndex < totalDots - 1) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+
+        $('.prev-btn').on('click', function () {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+
+        $(document).on('click', '.slider-dot', function () {
+            currentIndex = $(this).data('index');
+            updateSlider();
+        });
+
+        setInterval(function () {
+            if (currentIndex < totalDots - 1) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+
+            updateSlider();
+        }, 5000);
+
+        $(window).on('resize', function () {
+            updateCardsToShow();
+            createDots();
+            currentIndex = 0;
+            updateSlider();
+        });
+
+        updateCardsToShow();
+        createDots();
+        updateSlider();
+    });
 }
-    
-    // Next button
-    $('.next-btn').on('click', function() {
-    if (currentIndex < totalDots - 1) {
-        currentIndex++;
-        updateSlider();
-    }
-});
-    
-// Previous button
-$('.prev-btn').on('click', function() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        updateSlider();
-    }
-});
-    
-// Dot click
-$(document).on('click', '.slider-dot', function() {
-    currentIndex = $(this).data('index');
-    updateSlider();
-});
-    
-// Auto-slide every 5 seconds
-setInterval(function() {
-    if (currentIndex < totalDots - 1) {
-        currentIndex++;
-    } else {
-        currentIndex = 0;
-    }
-    updateSlider();
-}, 5000);
-    
-// Update on window resize
-$(window).on('resize', function() {
-    updateCardsToShow();
-    currentIndex = 0;
-    updateSlider();
-});
-    
-// Initial setup
-updateCardsToShow();
-updateSlider();
-});
