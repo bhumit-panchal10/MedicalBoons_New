@@ -1189,7 +1189,6 @@ class FrontApiController extends Controller
     //     }
     // }
 
-
     public function Labwise_disornetamount(Request $request)
     {
         try {
@@ -1228,16 +1227,25 @@ class FrontApiController extends Controller
             $specialDiscount = max(0, ($totalTests - 1) * 100);
 
             $netAfterDiscounts = $totalMrp - ($totalRoutineDiscount + $specialDiscount);
-            // If net < 700, add visit charge
-            $finalPayable = $netAfterDiscounts < $MIN_PAYABLE_FLOOR
-                ? $netAfterDiscounts + $VISIT_CHARGE
-                : $netAfterDiscounts;
-
-            $familymember = FamilyMember::where('family_member_id', $request->family_member_id)->first();
-
 
             $Plan = Plan::where('id', $request->plan_id)->first();
             $wallet_balance = $Plan->wallet_balance ?? 0;
+
+            // Wallet balance ka 30%
+            $walletDiscount = $wallet_balance * 0.30;
+
+            // Payable amount se jyada wallet discount nahi hona chahiye
+            $walletDiscount = min($walletDiscount, $netAfterDiscounts);
+
+            // Wallet discount apply karne ke baad amount
+            $netAfterWalletDiscount = $netAfterDiscounts - $walletDiscount;
+
+            // If net < 700, add visit charge
+            $finalPayable = $netAfterWalletDiscount < $MIN_PAYABLE_FLOOR
+                ? $netAfterWalletDiscount + $VISIT_CHARGE
+                : $netAfterWalletDiscount;
+
+            $familymember = FamilyMember::where('family_member_id', $request->family_member_id)->first();
 
             if (!$familymember) {
                 return response()->json([
@@ -1252,13 +1260,15 @@ class FrontApiController extends Controller
                 'data' => [
                     'total_tests_selected'   => $totalTests,
                     'wallet_balance'   => $wallet_balance,
+                    'wallet_discount'          => round($walletDiscount, 2),
                     'discount_apply'   => $familymember->discount_apply,
                     'labMinimumOrderValue' => $MIN_PAYABLE_FLOOR,
                     'total_mrp'              => round($totalMrp, 2),
                     'routine_discount'       => round($totalRoutineDiscount, 2),
                     'special_discount'       => round($specialDiscount, 2),
                     'net_after_discounts'    => round($netAfterDiscounts, 2),
-                    'visit_charge'         => ($netAfterDiscounts < $MIN_PAYABLE_FLOOR ? $VISIT_CHARGE : 0),
+                    'net_after_wallet_discount' => round($netAfterWalletDiscount, 2),
+                    'visit_charge'         => ($netAfterWalletDiscount < $MIN_PAYABLE_FLOOR ? $VISIT_CHARGE : 0),
                     'final_payable'          => round($finalPayable, 2),
                 ]
             ], 200);
@@ -1270,7 +1280,6 @@ class FrontApiController extends Controller
             ], 500);
         }
     }
-
 
     public function Customer_discountApply(Request $request)
     {
