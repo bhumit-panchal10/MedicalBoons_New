@@ -62,6 +62,9 @@
                                                         data-sort="are_name">Email</th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                        data-sort="are_name">Payment Status</th>
+
+                                                    <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
                                                         data-sort="are_name">Address</th>
 
                                                     <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
@@ -127,6 +130,11 @@
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
                                                             {{ $CorporateOrder->email ?? '-' }}</td>
+
+                                                        <td
+                                                            class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
+                                                            {{ $CorporateOrder->isPayment ? 'Success' : 'Fail' }}
+                                                        </td>
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
                                                             {{ $CorporateOrder->address ?? '-' }}</td>

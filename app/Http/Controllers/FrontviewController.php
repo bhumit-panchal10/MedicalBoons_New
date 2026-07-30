@@ -99,6 +99,19 @@ class FrontviewController extends Controller
         }
     }
 
+    public function privacypolicy(Request $request)
+    {
+        return view('frontview.privacypolicy');
+    }
+    public function termscondition(Request $request)
+    {
+        return view('frontview.termscondition');
+    }
+
+    public function refundcancellation(Request $request)
+    {
+        return view('frontview.refundcancellation');
+    }
     public function AboutUs(Request $request, $id = null)
     {
         // dd($id);

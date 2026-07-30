@@ -182,8 +182,8 @@
     <section class="sheet">
         <!-- Header -->
         <div class="brand">
-            <img class="logo" src="https://medicalboons.com/assets/images/Front/new-logo-color.png" alt="Logo">
-            <span class="pill mono">MEDICALBOONS INVOICE</span>
+            <img class="logo" src="https://medicalboons.com/Front/images/logo.jpeg" alt="Logo">
+            {{-- <span class="pill mono">MEDICALBOONS INVOICE</span> --}}
         </div>
 
         <!-- Big title -->

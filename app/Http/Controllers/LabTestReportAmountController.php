@@ -218,7 +218,6 @@ class LabTestReportAmountController extends Controller
     }
 
 
-
     public function edit(Request $request, $id)
 
     {
@@ -236,8 +235,6 @@ class LabTestReportAmountController extends Controller
         }
     }
 
-
-
     public function update(Request $request)
 
     {
@@ -251,17 +248,19 @@ class LabTestReportAmountController extends Controller
                 'Edit_Discount_Amount' => 'required',
 
             ]);
+            $netAmount = $request->MRP - $request->Edit_Discount_Amount;
             LabTestRportAmount::where(['Lab_Test_Report_Amount_id' => $request->Lab_Test_Report_Amount_id])->update([
 
                 'Discount' => $request->Edit_Discount,
                 'DiscountAmount' => $request->Edit_Discount_Amount,
+                'NetAmount' => $netAmount,
                 'updated_at' => date('Y-m-d H:i:s'),
                 'strIP' => $request->ip(),
 
             ]);
             DB::commit();
             Toastr::success('Lab Test Report Amount updated successfully :)', 'Success');
-
+            return redirect()->back();
             // return back();
             return redirect()->route('lab_test_report_amount.index');
         } catch (ValidationException $e) {

@@ -28,8 +28,9 @@
                  <h3>Support</h3>
                  <ul>
                      <li><a href="#">FAQs</a></li>
-                     <li><a href="#">Privacy Policy</a></li>
-                     <li><a href="#">Terms &amp; Conditions</a></li>
+                     <li><a href="{{ route('Front.privacypolicy') }}">Privacy Policy</a></li>
+                     <li><a href="{{ route('Front.termscondition') }}">Terms &amp; Conditions</a></li>
+                     <li><a href="{{ route('Front.refundcancellation') }}">Refund &amp; Cancellation</a></li>
                  </ul>
              </div>
              <div class="footer-section">

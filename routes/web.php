@@ -75,6 +75,9 @@ Route::get('/phpinfo', function () {
 // Front
 //Route::get('/index', [FrontviewController::class, 'index'])->name('Front.index');
 Route::get('/', [FrontviewController::class, 'index'])->name('Front.index');
+Route::get('/privacy-policy', [FrontviewController::class, 'privacypolicy'])->name('Front.privacypolicy');
+Route::get('/terms-condition', [FrontviewController::class, 'termscondition'])->name('Front.termscondition');
+Route::get('/refund-cancellation', [FrontviewController::class, 'refundcancellation'])->name('Front.refundcancellation');
 
 Route::get('/Plan/{guid?}', [FrontviewController::class, 'Plan'])->name('Front.Plan');
 Route::get('/Plan/Detail/{planid?}/{guid?}', [FrontviewController::class, 'PlanDetail'])->name('Front.PlanDetail');
