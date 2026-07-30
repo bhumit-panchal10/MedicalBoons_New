@@ -213,7 +213,7 @@
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                            {{ $LabTestRport->labtestmaster->MRP ?? '' }}</td>
+                                                            {{ $LabTestRport->MRP ?? '' }}</td>
 
                                                         <td
                                                             class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">

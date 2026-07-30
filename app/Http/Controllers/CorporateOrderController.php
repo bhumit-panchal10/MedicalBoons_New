@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use NunoMaduro\Collision\Adapters\Phpunit\State;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CorporateOrderController extends Controller
 
@@ -30,8 +30,16 @@ class CorporateOrderController extends Controller
     {
         try {
 
-            $CorporateOrder = CorporateOrder::with('plan', 'companyname')->where('Corporate_Order_id', $id)->first();
-            return view('pdf.payment_receipt', compact('CorporateOrder'));
+            $CorporateOrder = CorporateOrder::with('plan', 'companyname')
+                ->where('Corporate_Order_id', $id)
+                ->firstOrFail();
+
+            $pdf = Pdf::loadView('pdf.payment_receipt', compact('CorporateOrder'));
+
+            return $pdf->download('PaymentReceipt_' . $CorporateOrder->invoice_no . '.pdf');
+
+            // $CorporateOrder = CorporateOrder::with('plan', 'companyname')->where('Corporate_Order_id', $id)->first();
+            // return view('pdf.payment_receipt', compact('CorporateOrder'));
         } catch (\Throwable $th) {
             //throw $th;
         }

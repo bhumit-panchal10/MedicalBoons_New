@@ -1115,7 +1115,9 @@ class FrontApiController extends Controller
                     DB::raw('SUM(MRP) as total_mrp'),
                     DB::raw('SUM(DiscountAmount) as total_discount'),
                     DB::raw('SUM(NetAmount) as total_net_amount'),
-                    DB::raw('(SELECT name FROM Lab_Master WHERE Lab_Master_id = ltra.Lab_Master_id) as labname')
+                    DB::raw('(SELECT name 
+                    FROM Lab_Master 
+                    WHERE Lab_Master_id = ltra.Lab_Master_id AND iStatus = 1) as labname')
                 )
                 ->whereIn('Lab_Test_Master_id', explode(',', $request->labtestmasterid))
                 ->groupBy('Lab_Master_id')
