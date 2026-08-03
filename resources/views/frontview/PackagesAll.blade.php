@@ -81,8 +81,8 @@
 
     <style>
         /* ============================================
-                                                                           NEW PLAN CARDS DESIGN
-                                                                           ============================================ */
+                       NEW PLAN CARDS DESIGN
+                       ============================================ */
 
         .plans-grid {
             display: grid;
@@ -263,13 +263,13 @@
             margin: 0 0 8px 0;
         }
 
-        .suited-list {
+        .suited-list ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        .suited-list li {
+        .suited-list ul li {
             font-size: 13px;
             color: #666;
             line-height: 1.8;
@@ -277,12 +277,33 @@
             padding-left: 12px;
         }
 
-        .suited-list li:before {
+        .suited-list ul li:before {
             content: "•";
             position: absolute;
             left: 0;
             color: #2d9d91;
         }
+
+        /*.suited-list {*/
+        /*    list-style: none;*/
+        /*    padding: 0;*/
+        /*    margin: 0;*/
+        /*}*/
+
+        /*.suited-list li {*/
+        /*    font-size: 13px;*/
+        /*    color: #666;*/
+        /*    line-height: 1.8;*/
+        /*    position: relative;*/
+        /*    padding-left: 12px;*/
+        /*}*/
+
+        /*.suited-list li:before {*/
+        /*    content: "•";*/
+        /*    position: absolute;*/
+        /*    left: 0;*/
+        /*    color: #2d9d91;*/
+        /*}*/
 
         /* Includes Section */
         .includes-section {
@@ -298,13 +319,35 @@
             margin: 0 0 12px 0;
         }
 
-        .includes-list {
+        /*.includes-list {*/
+        /*    list-style: none;*/
+        /*    padding: 0;*/
+        /*    margin: 0;*/
+        /*}*/
+
+        /*.includes-list li {*/
+        /*    font-size: 13px;*/
+        /*    color: #666;*/
+        /*    line-height: 2;*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    gap: 8px;*/
+        /*}*/
+
+        /*.includes-list i {*/
+        /*    color: #2d9d91;*/
+        /*    font-size: 14px;*/
+        /*    margin-top: 3px;*/
+        /*    flex-shrink: 0;*/
+        /*}*/
+
+        .includes-list ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        .includes-list li {
+        .includes-list ul li {
             font-size: 13px;
             color: #666;
             line-height: 2;
@@ -313,10 +356,13 @@
             gap: 8px;
         }
 
-        .includes-list i {
+        .includes-list ul li::before {
+            content: "\f058";
+            /* Font Awesome check-circle */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
             color: #2d9d91;
             font-size: 14px;
-            margin-top: 3px;
             flex-shrink: 0;
         }
 
@@ -457,8 +503,8 @@
 
 
         /* ============================================
-                                                                           FAQs SECTION - NEW DESIGN
-                                                                           ============================================ */
+                       FAQs SECTION - NEW DESIGN
+                       ============================================ */
 
         /* FAQs Header */
         .faqs-header {
@@ -624,6 +670,24 @@
             border-color: #2d9d91;
         }
 
+        .buy-now-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 20px;
+            background: #0d6efd;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .buy-now-btn:hover {
+            background: #0b5ed7;
+            color: #fff;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 992px) {
             .faqs-grid {
@@ -710,253 +774,107 @@
             </div>
 
             <div class="plans-grid">
+
+                <!-- Silver Plan -->
                 @foreach ($plans as $plan)
                     @php
-                        $color = strtolower(str_replace(' Plan', '', $plan->name));
+                        $color = '';
+
+                        if ($plan->name == 'Gold Plan') {
+                            $color = 'gold';
+                        } elseif ($plan->name == 'Platinum Plan') {
+                            $color = 'platinum';
+                        } elseif ($plan->name == 'Silver Plan') {
+                            $color = 'silver';
+                        }
                     @endphp
 
-                    <div class="plan-card animate" data-delay="0">
-                        <div class="plan-icon {{ $color }}">
-                            <i class="{{ $plan->icon ?? '' }}"></i>
+                    <div class="plan-card-new animate" data-delay="0">
+
+                        <!-- Plan Header with Shield Icon -->
+                        <div class="plan-header-new">
+                            <div class="plan-shield-icon {{ $color }}">
+                                <i class="{{ $plan->icon ?? '' }}"></i>
+                            </div>
+
+                            <h3 class="plan-name-new">{{ $plan->name }}</h3>
+                            <p class="plan-tagline">{{ $plan->title }}</p>
                         </div>
 
-                        <h3 class="plan-name">{{ $plan->name ?? '' }}</h3>
+                        <!-- Plan Price -->
+                        <div class="plan-price-new">
+                            <span class="currency">₹</span>
+                            <span class="amount">{{ number_format($plan->amount) }}</span>
+                            <span class="period">/ year</span>
+                        </div>
 
-                        <p class="plan-description">{{ $plan->title ?? '' }}</p>
+                        <!-- Coverage Info -->
+                        <div class="coverage-info mb-3">
+                            <span>
+                                <i class="fas fa-users"></i>
+                                Covers up to {{ $plan->no_of_members }} members
+                            </span>
+                            <span class="separator">|</span>
+                            <span>
+                                <i class="fas fa-calendar-check"></i>
+                                1 Year validity
+                            </span>
+                        </div>
 
-                        <p class="plan-description">
-                            <strong>Best for </strong>{{ $plan->sub_title ?? '' }}
-                        </p>
+                        <!-- Best Suited For -->
+                        <div class="best-suited-section">
+                            <div class="best-suited-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h4 class="best-suited-title">Best suited for</h4>
 
-                        <a href="{{ route('Front.Plan') }}" class="plan-btn">
-                            View Benefits <i class="fas fa-arrow-right"></i>
-                        </a>
+                                <div class="suited-list">
+                                    {!! $plan->best_suited_for !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Includes Section -->
+                        <div class="includes-section">
+                            <h4 class="includes-title">Includes</h4>
+
+                            <div class="includes-list">
+                                {!! $plan->includes !!}
+                            </div>
+                        </div>
+
+                        <!-- Healthcare Value Support -->
+                        <div class="healthcare-value-box">
+                            <h4>Healthcare Value Support</h4>
+                            <p class="value-amount">
+                                Up to ₹{{ number_format($plan->health_value_support) }}
+                                <span>/ year</span>
+                            </p>
+                        </div>
+
+                        <!-- Add-On Member -->
+                        <div class="addon-member-box">
+                            <div class="addon-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="addon-text">
+                                <p class="addon-label">Add-On Member</p>
+                                <p class="addon-price">
+                                    ₹{{ number_format($plan->extra_amount_per_person) }}
+                                    <span>per additional member</span>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Buy Now Button -->
+                        <div class="text-center mt-4">
+                            <a href="{{ route('Front.Booking', $plan->slugname) }}" class="buy-now-btn">
+                                Buy Now
+                            </a>
+                        </div>
                     </div>
                 @endforeach
-                <!-- Silver Plan -->
-                {{-- <div class="plan-card-new animate" data-delay="0">
-                    <!-- Plan Header with Shield Icon -->
-                    <div class="plan-header-new">
-                        <div class="plan-shield-icon silver">
-                            <i class="fas fa-star"></i>
-                            <!-- <i class="fas fa-plus plan-plus-icon"></i> -->
-                        </div>
-                        <h3 class="plan-name-new">SILVER CARE</h3>
-                        <p class="plan-tagline">For preventive and everyday healthcare support.</p>
-                    </div>
 
-                    <!-- Plan Price -->
-                    <div class="plan-price-new">
-                        <span class="currency">₹</span>
-                        <span class="amount">499</span>
-                        <span class="period">/ year</span>
-                    </div>
-
-                    <!-- Coverage Info -->
-                    <div class="coverage-info mb-3">
-                        <span><i class="fas fa-users"></i> Covers up to 4 members</span>
-                        <span class="separator">|</span>
-                        <span><i class="fas fa-calendar-check"></i> 1 Year validity</span>
-                    </div>
-
-                    <!-- Best Suited For -->
-                    <div class="best-suited-section">
-                        <div class="best-suited-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div>
-                            <h4 class="best-suited-title">Best suited for</h4>
-                            <ul class="suited-list">
-                                <li>Young families</li>
-                                <li>Healthy individuals</li>
-                                <li>Preventive healthcare focus</li>
-                                <li>Routine healthcare seekers</li>
-                                <li>All Services Accessible</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Includes Section -->
-                    <div class="includes-section">
-                        <h4 class="includes-title">Includes</h4>
-                        <ul class="includes-list">
-                            <li><i class="fas fa-check-circle"></i> Access to all Medical Boons services</li>
-                            <li><i class="fas fa-check-circle"></i> Consultation & diagnostics support</li>
-                            <li><i class="fas fa-check-circle"></i> Preventive healthcare assistance</li>
-                            <li><i class="fas fa-check-circle"></i> Wellness support access</li>
-                            <li><i class="fas fa-check-circle"></i> Standard care coordination</li>
-                        </ul>
-                    </div>
-
-                    <!-- Healthcare Value Support -->
-                    <div class="healthcare-value-box">
-                        <h4>Healthcare Value Support</h4>
-                        <p class="value-amount">Up to ₹10,000 <span>/ year</span></p>
-                    </div>
-
-                    <!-- Add-On Member -->
-                    <div class="addon-member-box">
-                        <div class="addon-icon">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div class="addon-text">
-                            <p class="addon-label">Add-On Member</p>
-                            <p class="addon-price">₹100 <span>per additional member</span></p>
-                        </div>
-                    </div>
-
-
-                </div> --}}
-
-                <!-- Gold Plan -->
-                {{-- <div class="plan-card-new featured-new animate" data-delay="100">
-                    <!-- Recommended Badge -->
-                    <div class="recommended-badge">
-                        <i class="fas fa-star"></i> RECOMMENDED
-                    </div>
-
-                    <!-- Plan Header with Shield Icon -->
-                    <div class="plan-header-new">
-                        <div class="plan-shield-icon gold">
-                            <i class="fas  fa-crown"></i>
-                            <!-- <i class="fas fa-plus plan-plus-icon"></i> -->
-                        </div>
-                        <h3 class="plan-name-new">GOLD CARE</h3>
-                        <p class="plan-tagline">Enhanced healthcare coordination with personalized preventive healthcare
-                            support.</p>
-                    </div>
-
-                    <!-- Plan Price -->
-                    <div class="plan-price-new">
-                        <span class="currency">₹</span>
-                        <span class="amount">999</span>
-                        <span class="period">/ year</span>
-                    </div>
-
-                    <!-- Best Suited For -->
-                    <div class="best-suited-section">
-                        <div class="best-suited-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div>
-                            <h4 class="best-suited-title">Best suited for</h4>
-                            <ul class="suited-list">
-                                <li>Families with elderly members</li>
-                                <li>Diabetes, BP, thyroid, heart-risk monitoring</li>
-                                <li>Regular medication follow-up</li>
-                                <li>Frequent health check requirements</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Includes Section -->
-                    <div class="includes-section">
-                        <h4 class="includes-title">Includes</h4>
-                        <ul class="includes-list">
-                            <li><i class="fas fa-check-circle"></i> Access to all Medical Boons services</li>
-                            <li><i class="fas fa-check-circle"></i> Priority healthcare coordination</li>
-                            <li><i class="fas fa-check-circle"></i> Personalized preventive health profiles</li>
-                            <li><i class="fas fa-check-circle"></i> Regular diagnostics & wellness support</li>
-                            <li><i class="fas fa-check-circle"></i> Enhanced healthcare assistance</li>
-                        </ul>
-                    </div>
-
-                    <!-- Healthcare Value Support -->
-                    <div class="healthcare-value-box">
-                        <h4>Healthcare Value Support</h4>
-                        <p class="value-amount">Up to ₹20,000 <span>/ year</span></p>
-                    </div>
-
-                    <!-- Add-On Member -->
-                    <div class="addon-member-box">
-                        <div class="addon-icon">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div class="addon-text">
-                            <p class="addon-label">Add-On Member</p>
-                            <p class="addon-price">₹200 <span>per additional member</span></p>
-                        </div>
-                    </div>
-
-                    <!-- Coverage Info -->
-                    <div class="coverage-info">
-                        <span><i class="fas fa-users"></i> Covers upto 4 members</span>
-                        <span class="separator">|</span>
-                        <span><i class="fas fa-calendar-check"></i> 1 Year validity</span>
-                    </div>
-                </div> --}}
-
-                <!-- Platinum Plan -->
-                {{-- <div class="plan-card-new animate" data-delay="200">
-                    <!-- Plan Header with Shield Icon -->
-                    <div class="plan-header-new">
-                        <div class="plan-shield-icon platinum">
-                            <i class="fas fa-gem"></i>
-                            <!-- <i class="fas fa-plus plan-plus-icon"></i> -->
-                        </div>
-                        <h3 class="plan-name-new">PLATINUM CARE</h3>
-                        <p class="plan-tagline">Advanced healthcare monitoring & coordinated family support.</p>
-                    </div>
-
-                    <!-- Plan Price -->
-                    <div class="plan-price-new">
-                        <span class="currency">₹</span>
-                        <span class="amount">1,499</span>
-                        <span class="period">/ year</span>
-                    </div>
-
-                    <!-- Best Suited For -->
-                    <div class="best-suited-section">
-                        <div class="best-suited-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div>
-                            <h4 class="best-suited-title">Best suited for</h4>
-                            <ul class="suited-list">
-                                <li>Families needing regular health monitoring</li>
-                                <li>Chronic illness-based testing</li>
-                                <li>Continuous healthcare tracking</li>
-                                <li>Coordinated care scheduling support</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Includes Section -->
-                    <div class="includes-section">
-                        <h4 class="includes-title">Includes</h4>
-                        <ul class="includes-list">
-                            <li><i class="fas fa-check-circle"></i> Access to all Medical Boons services</li>
-                            <li><i class="fas fa-check-circle"></i> Dedicated support coordination</li>
-                            <li><i class="fas fa-check-circle"></i> Personalized preventive health profiles</li>
-                            <li><i class="fas fa-check-circle"></i> Advanced wellness & monitoring support</li>
-                            <li><i class="fas fa-check-circle"></i> Priority healthcare assistance</li>
-                        </ul>
-                    </div>
-
-                    <!-- Healthcare Value Support -->
-                    <div class="healthcare-value-box">
-                        <h4>Healthcare Value Support</h4>
-                        <p class="value-amount">Up to ₹30,000 <span>/ year</span></p>
-                    </div>
-
-                    <!-- Add-On Member -->
-                    <div class="addon-member-box">
-                        <div class="addon-icon">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div class="addon-text">
-                            <p class="addon-label">Add-On Member</p>
-                            <p class="addon-price">₹300 <span>per additional member</span></p>
-                        </div>
-                    </div>
-
-                    <!-- Coverage Info -->
-                    <div class="coverage-info">
-                        <span><i class="fas fa-users"></i> Covers up to 4 members</span>
-                        <span class="separator">|</span>
-                        <span><i class="fas fa-calendar-check"></i> 1 Year validity</span>
-                    </div>
-                </div> --}}
             </div>
 
             <!-- Info Note -->
@@ -974,7 +892,9 @@
             <!-- Header with View All Link -->
             <div class="faqs-header">
                 <h2 class="faqs-title">Frequently Asked Questions</h2>
-
+                <!-- <a href="#" class="view-all-faqs">
+                                        View all FAQs <i class="fas fa-arrow-right"></i>
+                                    </a> -->
             </div>
 
             <!-- FAQs Grid (2 columns) -->
@@ -1086,11 +1006,12 @@
             <h2>Start Your Healthcare Journey Today</h2>
             <p>Choose your plan and get expert guidance and support.</p>
             <div class="footer-cta-buttons">
-                <a class="btn-primary" href="contact.html" style="background: white; color: #1e3a5f;">
+                <a class="btn-primary" href="https://wa.me/919974660451" target="_blank"
+                    style="background: white; color: #1e3a5f;">
                     <i class="fas fa-gift"></i>
                     Choose Your Plan
                 </a>
-                <a class="btn-secondary" href="tel:+918655774949">
+                <a class="btn-secondary" href="tel:+919974660451">
                     <i class="fas fa-phone"></i>
                     Talk to Expert
                 </a>

@@ -84,6 +84,29 @@
                                     <span class="error-text">{{ $message }}</span>
                                 @enderror
                             </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group" style="margin-top:20px; text-align:justify;">
+                                <label>
+                                    <input type="checkbox" id="has_pdf">
+                                    I have read and agree to the Terms & Conditions, Privacy Policy, and Refund &
+                                    Cancellation Policy of Medical Boons. I understand that my membership will be activated
+                                    only after payment verification, and I consent to receive service-related communications
+                                    from Medical Boons via phone, SMS, WhatsApp, and email.
+                                </label>
+                            </div>
+
+                            @if (!empty($plan->plan_detail_pdf))
+                                <div class="form-group" id="pdf_upload_div">
+                                    <label>Plan PDF</label><br>
+                                    <a href="{{ url('upload/plan-detail-pdf/' . $plan->plan_detail_pdf) }}"
+                                        target="_blank">
+                                        View PDF
+                                    </a>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="booking-submit">

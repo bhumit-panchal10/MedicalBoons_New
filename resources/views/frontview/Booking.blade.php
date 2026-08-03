@@ -1,195 +1,364 @@
 @extends('layouts.front')
+
 @section('content')
     <style>
-        .text-red-500 {
-            color: red;
+        /* ===== Booking Page - colors follow site header/footer theme ===== */
+        :root {
+            --booking-primary: #1e3a5f;
+            /* dark navy (header / footer CTA) */
+            --booking-accent: #2e9e8f;
+            /* teal green (logo / phone button) */
+            --booking-accent-dark: #23806f;
+            /* hover state */
+            --booking-bg: #f4f9f8;
+            /* light teal-tinted background */
+        }
+
+        .booking-section {
+            background: var(--booking-bg);
+            padding: 50px 0 70px;
+            min-height: 60vh;
+        }
+
+        .booking-wrapper {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .booking-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title-dark {
+            color: var(--booking-primary);
+        }
+
+        .title-accent {
+            color: var(--booking-accent);
+        }
+
+        /* --- Form layout --- */
+        .booking-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 25px;
+            row-gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 7px;
+        }
+
+        .required {
+            color: #e53935;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            background: #fff;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input::placeholder {
+            color: #9e9e9e;
+        }
+
+        .form-input:focus {
+            border-color: var(--booking-accent);
+        }
+
+        .form-input[readonly] {
+            background: #fff;
+            cursor: default;
+        }
+
+        .error-text {
+            color: #e53935;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .booking-submit {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-book-now {
+            background: var(--booking-accent);
+            color: #fff;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-book-now:hover {
+            background: var(--booking-accent-dark);
+        }
+
+        /* --- Plan Details Card --- */
+        .plan-details-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px 35px 35px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .plan-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: 20px;
+            row-gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .plan-details-grid.two-col {
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 0;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 991px) {
+            .booking-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-details-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 575px) {
+
+            .booking-form-grid,
+            .plan-details-grid,
+            .plan-details-grid.two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-submit {
+                justify-content: center;
+            }
         }
     </style>
-    <section class="py-2 bg-light AccesibleServiceBody" id="partner-with-us">
+    <!-- Booking Section - Same layout as reference -->
+    <section class="booking-section">
         <div class="container">
-            <!--<h2 class="fw-bold text-center mb-5">-->
-            <!--    <span class="text-1">Book</span>-->
-            <!--    <span class="text-2">Now</span>-->
-            <!--</h2>-->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            <div class="booking-wrapper">
 
-            <form action="{{ route('checkoutstore') }}" method="POST">
-                @csrf
-                <div class="row  justify-content-between">
-                    <div class="col-md-6 mt-3 order-2 order-md-1">
-                        <div class='row'>
-                            <h2 class="fw-bold text-center mb-3">
-                                <span class="text-1">Book</span>
-                                <span class="text-2">Now</span>
-                            </h2>
+                <!-- Left Side - Book Now Form -->
+                <div class="booking-form-side animate">
+                    <h2 class="booking-title"><span class="title-dark">Book</span> <span class="title-accent">Now</span></h2>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">Name <span class="text-red-500">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control" required
-                                    placeholder="Enter Your name" value="{{ old('name') }}" />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" name="email" placeholder="Enter Your email"
-                                    value="{{ old('email') }}" />
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                    <form action="{{ route('checkoutstore') }}" method="POST" id="bookingForm">
+                        @csrf
+                        <input type="hidden" name="plan_id" value="{{ $plan->id ?? '' }}">
+
+                        <div class="booking-form-grid">
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label>Name <span class="required">*</span></label>
+                                <input type="text" name="name" class="form-input" placeholder="Enter Your name"
+                                    value="{{ old('name') }}" required>
+                                @error('name')
+                                    <span class="error-text">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="mobile" class="form-label">Mobile Number <span
-                                        class="text-red-500">*</span></label>
-                                <input type="tel" class="form-control" id="mobile" name="mobile" maxlength="10"
-                                    required placeholder="Enter Your number" value="{{ old('mobile') }}" />
+
+                            <!-- Email Address -->
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" name="email" class="form-input" placeholder="Enter Your email"
+                                    value="{{ old('email') }}">
+                                @error('email')
+                                    <span class="error-text">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <div class=" col-md-6 mb-3">
-                                <label for="name" class="form-label">Address <span class="text-red-500">*</span></label>
-                                <input type="text" name="address" id="address" class="form-control" required
-                                    placeholder="Enter Your Address" value="{{ old('address') }}" />
+
+                            <!-- Mobile Number -->
+                            <div class="form-group">
+                                <label>Mobile Number <span class="required">*</span></label>
+                                <input type="tel" name="mobile" class="form-input" placeholder="Enter Your number"
+                                    value="{{ old('mobile') }}" maxlength="10" required>
+                                @error('mobile')
+                                    <span class="error-text">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">State <span class="text-red-500">*</span></label>
-                                <input type="text" name="state" id="state" class="form-control" required
-                                    placeholder="Enter your State" value="{{ old('state') }}" />
+
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label>Address <span class="required">*</span></label>
+                                <input type="text" name="address" class="form-input" placeholder="Enter Your Address"
+                                    value="{{ old('address') }}" required>
+                                @error('address')
+                                    <span class="error-text">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">City <span class="text-red-500">*</span></label>
-                                <input type="text" name="city" id="city" class="form-control" required
-                                    placeholder="Enter Your City" value="{{ old('city') }}" />
+
+                            <!-- State -->
+                            <div class="form-group">
+                                <label>State <span class="required">*</span></label>
+                                <input type="text" name="state" class="form-input" placeholder="Enter your State"
+                                    value="{{ old('state') }}" required>
+                                @error('state')
+                                    <span class="error-text">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">Pincode <span class="text-red-500">*</span></label>
-                                <input type="text" name="pincode" id="pincode" class="form-control" required
-                                    placeholder="Enter Your Pincode" value="{{ old('pincode') }}" />
+
+                            <!-- City -->
+                            <div class="form-group">
+                                <label>City <span class="required">*</span></label>
+                                <input type="text" name="city" class="form-input" placeholder="Enter Your City"
+                                    value="{{ old('city') }}" required>
+                                @error('city')
+                                    <span class="error-text">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Pincode -->
+                            <div class="form-group">
+                                <label>Pincode <span class="required">*</span></label>
+                                <input type="text" name="pincode" class="form-input" placeholder="Enter Your Pincode"
+                                    value="{{ old('pincode') }}" maxlength="6" required>
+                                @error('pincode')
+                                    <span class="error-text">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
-                        <div class="text-end">
-                            <button type="submit" class="btn  btn-success text-white rounded-pill px-4 py-2">
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
 
-
-
-                    <div class="col-md-5 mt-3 order-1 order-md-2">
-                        <div class="card shadow-sm border-0">
-                            <div class="card-body">
-                                <!--<h5 class="card-title mb-4">Plan Details</h5>-->
-                                <h2 class="fw-bold text-center mb-3">
-                                    <span class="text-1">Plan</span>
-                                    <span class="text-2">Details</span>
-                                </h2>
-
-                                <!-- next two fields -->
-                                <div class="row mb-3">
-                                    <div class="col-md-4 mb-2 mb-md-0">
-                                        <label class="form-label">Plan Name:</label>
-                                        <!--<p class="form-control-plaintext mb-0">{{ $plans->name }}</p>-->
-                                        <input type="text" class="form-control" id="plan_name" name="plan_name"
-                                            value="{{ $plans->name }}" readonly />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label">Plan Amount:</label>
-                                        <!--<p class="form-control-plaintext mb-0" id="plan_amount">{{ $plans->amount }}</p>-->
-                                        <input type="text" class="form-control" id="plan_amount"
-                                            name="plan_amount_display" value="{{ $plans->amount }}" readonly />
-                                    </div>
-                                    <div class="col-md-4 ">
-                                        <label class="form-label">Duration Days:</label>
-                                        <!--<p class="form-control-plaintext mb-0">{{ $plans->duration_in_days }}</p>-->
-                                        <input type="text" class="form-control" id="duration_days"
-                                            name="duration_days_display" value="{{ $plans->duration_in_days }}"
-                                            readonly />
-                                    </div>
-                                </div>
-
-                                <!-- first two fields in one row -->
-                                <div class="row mb-3">
-
-
-                                </div>
-
-                                <!-- next two fields in one row -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6 mb-2 mb-md-0">
-                                        <label for="start_date" class="form-label">Start Date: <span
-                                                class="text-red-500">*</span></label>
-                                        <input type="date" class="form-control" id="start_date" name="start_date"
-                                            required />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="end_date" class="form-label">End Date:</label>
-                                        <input type="date" class="form-control" id="end_date" name="end_date"
-                                            readonly />
-                                    </div>
-
-                                </div>
-
-                                <!-- next two fields -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6 mb-2 mb-md-0">
-                                        <label class="form-label">Total Member Plan:</label>
-                                        <!--<p class="form-control-plaintext mb-0">{{ $plans->no_of_members }}</p>-->
-                                        <input type="text" class="form-control" id="total_member_plan"
-                                            name="total_member_plan_display" value="{{ $plans->no_of_members }}"
-                                            readonly />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Extra Member Amount Per Person:</label>
-                                        <!--<p class="form-control-plaintext mb-0" id="extra_amount">{{ $plans->extra_amount_per_person }}</p>-->
-                                        <input type="text" class="form-control" id="extra_amount"
-                                            name="extra_amount_display" value="{{ $plans->extra_amount_per_person }}"
-                                            readonly />
-                                    </div>
-                                </div>
-
-                                <!-- last field (can pair with another if needed) -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6 mb-2 mb-md-0">
-                                        <label for="extra_memeber" class="form-label">Extra Member:</label>
-                                        <select name="extra_memeber" id="extra_memeber" class="form-control">
-                                            <option value="">Please Select</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="net_amount" class="form-label">Net Amount:</label>
-                                        <input type="text" class="form-control" id="net_amount" name="net_amount"
-                                            maxlength="10" placeholder="Enter Net Amount" readonly
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
-                                    </div>
-                                </div>
-
-                                <!-- keep your hidden inputs as-is -->
-                                <input type="hidden" name="plan_member" value="{{ $plans->no_of_members }}">
-                                <input type="hidden" name="plan_id" value="{{ $plans->id }}">
-                                <input type="hidden" name="plan_amount" value="{{ $plans->amount }}">
-                                <input type="hidden" name="extra_amount_per_person"
-                                    value="{{ $plans->extra_amount_per_person }}">
-                                <input type="hidden" name="Guid" value="{{ $guid }}">
-
+                        <div class="row">
+                            <div class="form-group" style="margin-top:20px; text-align:justify;">
+                                <label>
+                                    <input type="checkbox" id="has_pdf" required>
+                                    I have read and agree to the Terms & Conditions, Privacy Policy, and Refund &
+                                    Cancellation Policy of Medical Boons. I understand that my membership will be activated
+                                    only after payment verification, and I consent to receive service-related communications
+                                    from Medical Boons via phone, SMS, WhatsApp, and email.
+                                </label>
                             </div>
 
+                            @if (!empty($plan->plan_detail_pdf))
+                                <div class="form-group" id="pdf_upload_div">
+                                    <label>Plan PDF</label><br>
+                                    <a href="{{ url('upload/plan-detail-pdf/' . $plan->plan_detail_pdf) }}"
+                                        target="_blank">
+                                        View PDF
+                                    </a>
+                                </div>
+                            @endif
                         </div>
-                    </div>
 
+                        <div class="booking-submit">
+                            <button type="submit" class="btn-book-now">Book Now</button>
+                        </div>
                 </div>
+
+                <!-- Right Side - Plan Details Card -->
+                <div class="plan-details-side animate">
+                    <div class="plan-details-card">
+                        <h2 class="booking-title"><span class="title-dark">Plan</span> <span
+                                class="title-accent">Details</span></h2>
+                        <div class="plan-details-grid">
+                            <!-- Row 1: Plan Name / Plan Amount / Duration Days -->
+                            <div class="form-group">
+                                <label>Plan Name:</label>
+                                <input type="text" id="plan_name" name="plan_name" class="form-input"
+                                    value="{{ $plan->name ?? 'Gold Plan' }}" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Plan Amount:</label>
+                                <input type="text" id="plan_amount" name="plan_amount" class="form-input"
+                                    value="{{ $plan->amount ?? '699' }}" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Duration Days:</label>
+                                <input type="text" id="duration_days" class="form-input"
+                                    value="{{ $plan->duration_in_days }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="plan-details-grid two-col">
+                            <!-- Row 2: Start Date / End Date -->
+                            <div class="form-group">
+                                <label>Start Date: <span class="required">*</span></label>
+                                <input type="date" id="start_date" name="start_date" class="form-input"
+                                    value="{{ old('start_date') }}"
+                                    min="{{ \Carbon\Carbon::tomorrow()->format('Y-m-d') }}" required>
+                                @error('start_date')
+                                    <span class="error-text">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label>End Date:</label>
+                                <input type="date" id="end_date" name="end_date" class="form-input" readonly>
+                            </div>
+
+                            <!-- Row 3: Total Member Plan / Extra Member Amount -->
+                            <div class="form-group">
+                                <label>Total Member Plan:</label>
+                                <input type="text" id="total_member" name="total_member" class="form-input"
+                                    value="{{ $plan->no_of_members ?? '2' }}" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Extra Member Amount Per Person:</label>
+                                <input type="text" id="extra_member_amount" name="extra_member_amount"
+                                    class="form-input" value="{{ $plan->extra_amount_per_person ?? '300' }}" readonly>
+                            </div>
+
+                            <!-- Row 4: Extra Member / Net Amount -->
+                            <div class="form-group">
+                                <label>Extra Member:</label>
+                                <select id="extra_memeber" name="extra_memeber" class="form-input">
+                                    <option value="">Please Select</option>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Net Amount:</label>
+                                <input type="text" id="net_amount" name="net_amount" class="form-input"
+                                    value="" readonly>
+                            </div>
+                            <input type="hidden" name="plan_member" value="{{ $plan->no_of_members }}">
+                            <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                            <input type="hidden" name="plan_amount" value="{{ $plan->amount }}">
+                            <input type="hidden" name="extra_amount_per_person"
+                                value="{{ $plan->extra_amount_per_person }}">
+                            <input type="hidden" name="Guid" value="{{ $guid }}">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             </form>
         </div>
     </section>
@@ -197,15 +366,16 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Elements
+
             const extraMemberSelect = document.getElementById('extra_memeber');
             const netAmountInput = document.getElementById('net_amount');
 
-            // Read from the HIDDEN fields (safest; unformatted numbers)
-            const planAmountRaw = document.querySelector('input[name="plan_amount"]')?.value;
-            const extraPerPersonAmountRaw = document.querySelector('input[name="extra_amount_per_person"]')?.value;
+            const planAmountRaw =
+                document.querySelector('input[name="plan_amount"]').value;
 
-            // Helper: robust number parser
+            const extraPerPersonAmountRaw =
+                document.querySelector('input[name="extra_amount_per_person"]').value;
+
             const toNumber = (v) => {
                 if (v == null) return 0;
                 const n = parseFloat(String(v).replace(/,/g, '').trim());
@@ -218,49 +388,105 @@
             function updateNetAmount() {
                 const extraMembers = parseInt(extraMemberSelect.value, 10) || 0;
                 const net = PLAN_AMOUNT + (extraMembers * EXTRA_PER_PERSON);
-                netAmountInput.value = net.toFixed(2); // keep 2 decimals
+                netAmountInput.value = net.toFixed(2);
             }
 
-            // Init & bind
             updateNetAmount();
-            extraMemberSelect.addEventListener('change', updateNetAmount);
+
+            extraMemberSelect.addEventListener(
+                'change',
+                updateNetAmount
+            );
+
         });
     </script>
 
     <script>
+        // document.addEventListener('DOMContentLoaded', function () {
+
+        //     const startDateInput = document.getElementById('start_date');
+        //     const endDateInput = document.getElementById('end_date');
+
+        //     const durationInDays = {{ $plan->duration_in_days ?? 0 }};
+
+        //     function formatDate(date) {
+        //         return date.toISOString().split('T')[0];
+        //     }
+
+        //     const today = new Date();
+        //     today.setDate(today.getDate() + 1);
+
+        //     startDateInput.value = formatDate(today);
+
+        //     if (durationInDays > 0) {
+        //         const endDate = new Date(today);
+        //         endDate.setDate(today.getDate() + durationInDays - 1);
+        //         endDateInput.value = formatDate(endDate);
+        //     }
+
+        //     startDateInput.addEventListener('change', function () {
+
+        //         if (this.value && durationInDays > 0) {
+
+        //             const startDate = new Date(this.value);
+        //             const endDate = new Date(startDate);
+
+        //             endDate.setDate(startDate.getDate() + durationInDays - 1);
+
+        //             endDateInput.value =
+        //                 endDate.toISOString().split('T')[0];
+        //         }
+        //     });
+
+        // });
+
         document.addEventListener('DOMContentLoaded', function() {
+
             const startDateInput = document.getElementById('start_date');
             const endDateInput = document.getElementById('end_date');
-            const durationInDays = {{ $plans->duration_in_days ?? 0 }};
+
+            const durationInDays = {{ $plan->duration_in_days ?? 0 }};
 
             function formatDate(date) {
                 return date.toISOString().split('T')[0];
             }
 
-            // --- Default start date = today + 2 days ---
-            const today = new Date();
-            today.setDate(today.getDate() + 1);
-            startDateInput.value = formatDate(today);
+            // Tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
 
-            // --- Calculate and set end date immediately ---
-            if (durationInDays > 0) {
-                const endDate = new Date(today);
-                endDate.setDate(today.getDate() + durationInDays - 1);
-                endDateInput.value = formatDate(endDate);
+            const minDate = formatDate(tomorrow);
+
+            // Disable all dates before tomorrow
+            startDateInput.min = minDate;
+
+            // Set default value
+            startDateInput.value = minDate;
+
+            function updateEndDate() {
+                if (startDateInput.value && durationInDays > 0) {
+                    const startDate = new Date(startDateInput.value);
+                    const endDate = new Date(startDate);
+
+                    endDate.setDate(endDate.getDate() + durationInDays - 1);
+
+                    endDateInput.value = formatDate(endDate);
+                }
             }
 
+            updateEndDate();
+
             startDateInput.addEventListener('change', function() {
-                const startDateValue = startDateInput.value;
-                if (startDateValue && durationInDays > 0) {
-                    const startDate = new Date(startDateValue);
-                    const endDate = new Date(startDate);
-                    // inclusive range: add (duration - 1)
-                    endDate.setDate(startDate.getDate() + durationInDays - 1);
-                    endDateInput.value = endDate.toISOString().split('T')[0];
-                } else {
-                    endDateInput.value = '';
+
+                // If user somehow selects a date before tomorrow
+                if (this.value < minDate) {
+                    alert('Please select tomorrow or a future date.');
+                    this.value = minDate;
                 }
+
+                updateEndDate();
             });
+
         });
     </script>
 @endsection
