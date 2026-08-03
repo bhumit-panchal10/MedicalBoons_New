@@ -139,13 +139,13 @@ class FrontviewController extends Controller
             return redirect()->back()->withInput();
         }
     }
-    public function Booking(Request $request, $planid = null)
+    public function Booking(Request $request, $planid)
     {
         try {
-            //$plans = Plan::where('slugname', $planid)->first();
+            $plan = Plan::where('slugname', $planid)->first();
             //dd($plans);
-            // $guid = request()->cookie('GUid');
-            return view('frontview.booking');
+            $guid = request()->cookie('GUid');
+            return view('frontview.booking', compact('plan', 'guid'));
         } catch (\Throwable $th) {
             Toastr::error('Error: ' . $th->getMessage());
             return redirect()->back()->withInput();
